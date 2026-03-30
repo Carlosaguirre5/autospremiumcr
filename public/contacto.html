@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Contáctenos — Autos Premium CR</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="responsive.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0e1a;color:#fff}
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(0,45,71,0.97);position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(0,81,186,0.3)}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer}
+.logo-mark{background:#0051BA;color:#fff;font-weight:900;font-size:22px;padding:6px 10px;border-radius:6px}
+.logo-text{font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase}
+.logo-text span{color:#0051BA;background:#fff;padding:1px 5px;border-radius:3px;margin:0 2px}
+nav ul{display:flex;gap:32px;list-style:none}
+nav ul a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:14px}
+nav ul a:hover{color:#fff}
+.btn-nav{background:#0051BA;color:#fff;border:none;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
+.hero-bar{background:linear-gradient(135deg,#002D47,#001a2e);padding:56px 48px;text-align:center;border-bottom:1px solid rgba(0,81,186,0.2)}
+.hero-bar h1{font-size:36px;font-weight:900;margin-bottom:10px}
+.hero-bar h1 span{color:#0051BA}
+.hero-bar p{color:rgba(255,255,255,0.5);font-size:16px;max-width:500px;margin:0 auto;font-weight:300}
+.main{max-width:1000px;margin:0 auto;padding:56px 48px;display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.contact-info h2{font-size:22px;font-weight:800;margin-bottom:8px}
+.contact-info p{color:rgba(255,255,255,0.5);font-size:14px;line-height:1.7;margin-bottom:32px;font-weight:300}
+.contact-item{display:flex;align-items:flex-start;gap:14px;margin-bottom:24px;padding:18px;background:#0d1929;border:1px solid rgba(255,255,255,0.08);border-radius:12px}
+.contact-icon{width:40px;height:40px;background:rgba(0,81,186,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.contact-label{font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.contact-val{font-size:14px;font-weight:600}
+.contact-val a{color:#6ab4ff;text-decoration:none}
+.social-row{display:flex;gap:12px;margin-top:8px}
+.social-btn{display:flex;align-items:center;gap:8px;background:#0d1929;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 16px;font-size:13px;font-weight:600;color:#fff;text-decoration:none;transition:all .2s;cursor:pointer}
+.social-btn:hover{border-color:#0051BA;background:rgba(0,81,186,0.1)}
+.form-card{background:#0d1929;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px}
+.form-card h2{font-size:20px;font-weight:800;margin-bottom:6px}
+.form-card p{color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:24px;font-weight:300}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.field label{font-size:11px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.8px}
+.field input,.field select,.field textarea{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:#fff;padding:11px 14px;font-size:14px;font-family:'Inter',sans-serif;transition:border-color .2s}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#0051BA}
+.field select option{background:#002D47}
+.field textarea{resize:vertical;min-height:100px;line-height:1.6}
+.btn-send{width:100%;background:#0051BA;color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;transition:background .2s;margin-top:4px}
+.btn-send:hover{background:#0040a0}
+.success-msg{display:none;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);border-radius:10px;padding:16px;text-align:center;color:#4ade80;font-size:14px;font-weight:600;margin-top:12px}
+footer{background:#000d1a;padding:40px 48px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.07)}
+.footer-copy{color:rgba(255,255,255,0.3);font-size:13px}
+.footer-links{display:flex;gap:24px}
+.footer-links a{color:rgba(255,255,255,0.3);font-size:13px;text-decoration:none}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo" onclick="location.href='index.html'">
+    <div class="logo-mark">AP</div>
+    <div class="logo-text">AUTOS <span>PREMIUM</span> CR</div>
+  </div>
+  <ul>
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="resultados.html">Vehículos</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contacto.html">Contáctenos</a></li>
+  </ul>
+  <button class="btn-nav" onclick="location.href='publicar.html'">+ Publicar anuncio</button>
+</nav>
+
+<div class="hero-bar">
+  <h1>Ponte en <span>contacto</span></h1>
+  <p>¿Tenés alguna pregunta? Estamos aquí para ayudarte con cualquier consulta sobre el sitio.</p>
+</div>
+
+<div class="main">
+  <div class="contact-info">
+    <h2>¿Cómo podemos ayudarte?</h2>
+    <p>Ya sea que tengas dudas sobre cómo publicar tu vehículo, reportar un problema o simplemente quieras saber más sobre Autos Premium CR, no dudes en escribirnos.</p>
+
+    <div class="contact-item">
+      <div class="contact-icon">💬</div>
+      <div>
+        <div class="contact-label">WhatsApp</div>
+        <div class="contact-val"><a href="https://wa.me/50683125939" target="_blank">+506 8312-5939</a></div>
+      </div>
+    </div>
+
+    <div class="contact-item">
+      <div class="contact-icon">📧</div>
+      <div>
+        <div class="contact-label">Correo electrónico</div>
+        <div class="contact-val"><a href="mailto:autospremiumcostarica5@gmail.com">autospremiumcostarica5@gmail.com</a></div>
+      </div>
+    </div>
+
+    <div class="contact-item">
+      <div class="contact-icon">📍</div>
+      <div>
+        <div class="contact-label">Ubicación</div>
+        <div class="contact-val">Escazú, Costa Rica</div>
+      </div>
+    </div>
+
+    <div style="margin-top:8px">
+      <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:12px;text-transform:uppercase;letter-spacing:.8px;font-weight:700">Seguinos en redes</div>
+      <div class="social-row">
+        <a class="social-btn" href="https://www.facebook.com/autospremiumcostarica" target="_blank">📘 Facebook</a>
+        <a class="social-btn" href="https://www.instagram.com/autospremiumcostarica?igsh=MXAxZjUzOWUxbzh2Mg%3D%3D&utm_source=qr" target="_blank">📸 Instagram</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <h2>Envianos un mensaje</h2>
+    <p>Te respondemos en menos de 24 horas.</p>
+    <div class="field">
+      <label>Nombre completo</label>
+      <input type="text" id="nombre" placeholder="Tu nombre">
+    </div>
+    <div class="field">
+      <label>Correo electrónico</label>
+      <input type="email" id="email" placeholder="tucorreo@email.com">
+    </div>
+    <div class="field">
+      <label>Asunto</label>
+      <select id="asunto">
+        <option value="">Seleccionar asunto</option>
+        <option>Tengo una pregunta sobre el sitio</option>
+        <option>Quiero publicar mi vehículo</option>
+        <option>Reportar un anuncio</option>
+        <option>Problema técnico</option>
+        <option>Alianzas o publicidad</option>
+        <option>Otro</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Mensaje</label>
+      <textarea id="mensaje" placeholder="Escribí tu mensaje aquí..."></textarea>
+    </div>
+    <button class="btn-send" onclick="enviarMensaje()">Enviar mensaje →</button>
+    <div class="success-msg" id="successMsg">✅ ¡Mensaje enviado! Te contactaremos pronto.</div>
+  </div>
+</div>
+
+<footer>
+  <div class="logo"><div class="logo-mark">AP</div><div class="logo-text">AUTOS <span>PREMIUM</span> CR</div></div>
+  <div class="footer-copy">© 2026 Autos Premium CR. Todos los derechos reservados.</div>
+  <div class="footer-links"><a href="#">Privacidad</a><a href="#">Términos</a><a href="contacto.html">Contacto</a></div>
+</footer>
+
+<script>
+function enviarMensaje(){
+  var nombre = document.getElementById('nombre').value.trim();
+  var email = document.getElementById('email').value.trim();
+  var asunto = document.getElementById('asunto').value;
+  var mensaje = document.getElementById('mensaje').value.trim();
+  if(!nombre || !email || !mensaje){
+    alert('Por favor completá todos los campos.');
+    return;
+  }
+  var texto = '🚗 *Autos Premium CR — Mensaje de contacto*\n\n'
+    + '*Nombre:* ' + nombre + '\n'
+    + '*Correo:* ' + email + '\n'
+    + (asunto ? '*Asunto:* ' + asunto + '\n' : '')
+    + '\n*Mensaje:*\n' + mensaje;
+  var waUrl = 'https://wa.me/50683125939?text=' + encodeURIComponent(texto);
+  window.open(waUrl, '_blank');
+  document.getElementById('successMsg').style.display = 'block';
+  document.querySelector('.btn-send').disabled = true;
+  document.querySelector('.btn-send').textContent = '✓ Enviado';
+}
+</script>
+</body>
+</html>

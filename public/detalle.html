@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Detalle — Autos Premium CR</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0e1a;color:#fff}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:rgba(0,45,71,0.97);border-bottom:1px solid rgba(0,81,186,0.3);position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer}
+.logo-mark{background:#0051BA;color:#fff;font-weight:900;font-size:20px;padding:5px 9px;border-radius:6px}
+.logo-text{font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase}
+.logo-text span{color:#0051BA;background:#fff;padding:1px 4px;border-radius:3px;margin:0 2px}
+nav ul{display:flex;gap:28px;list-style:none}
+nav ul a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px}
+.btn-nav{background:#0051BA;color:#fff;border:none;padding:9px 20px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer}
+.breadcrumb{padding:14px 40px;background:#060c17;border-bottom:1px solid rgba(255,255,255,0.06);font-size:12px;color:rgba(255,255,255,0.35)}
+.breadcrumb a{color:rgba(255,255,255,0.35);text-decoration:none}
+.main{display:grid;grid-template-columns:1fr 340px;gap:28px;padding:28px 40px;max-width:1200px;margin:0 auto}
+.gallery-main{background:linear-gradient(135deg,#001a2e,#002D47);border-radius:14px;height:400px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:10px;border:1px solid rgba(255,255,255,0.07);overflow:hidden}
+.gallery-main img{width:100%;height:100%;object-fit:cover;border-radius:14px}
+.gallery-main-placeholder{font-size:120px}
+.gallery-badge{position:absolute;top:16px;left:16px;background:#c8960a;color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:5px;text-transform:uppercase;z-index:2}
+.gallery-thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:24px}
+.thumb{background:linear-gradient(135deg,#001829,#002040);border-radius:8px;height:72px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid transparent;overflow:hidden;transition:border-color .2s}
+.thumb:hover,.thumb.active{border-color:#0051BA}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.info-header h1{font-size:28px;font-weight:800;margin-bottom:6px}
+.info-meta{display:flex;gap:16px;color:rgba(255,255,255,0.4);font-size:13px;flex-wrap:wrap;margin-bottom:20px}
+.price-block{background:#0d1929;border:1px solid rgba(0,81,186,0.3);border-radius:12px;padding:20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
+.price-main{font-size:32px;font-weight:900}
+.price-usd{font-size:14px;color:rgba(255,255,255,0.4);margin-top:3px}
+.specs-title{font-size:16px;font-weight:700;margin-bottom:14px}
+.specs-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(255,255,255,0.05);border-radius:12px;overflow:hidden;margin-bottom:24px}
+.spec-item{background:#0d1929;padding:14px 16px}
+.spec-label{font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.spec-val{font-size:14px;font-weight:600}
+.desc-block{margin-bottom:24px}
+.desc-block p{font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;font-weight:300;white-space:pre-line}
+.sidebar{position:sticky;top:80px;height:fit-content}
+.contact-card{background:#0d1929;border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:24px;margin-bottom:16px}
+.seller-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.07)}
+.seller-avatar{width:48px;height:48px;background:#0051BA;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0}
+.seller-name{font-size:15px;font-weight:700}
+.seller-sub{font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px}
+.btn-whatsapp{width:100%;background:#25D366;color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-call{width:100%;background:rgba(255,255,255,0.06);color:#fff;border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px}
+.contact-note{font-size:11px;color:rgba(255,255,255,0.25);text-align:center;margin-top:14px;line-height:1.6}
+.safety-card{background:#0d1929;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:18px}
+.safety-card h4{font-size:13px;font-weight:700;margin-bottom:12px;color:rgba(255,255,255,0.7)}
+.safety-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:12px;color:rgba(255,255,255,0.4);line-height:1.5}
+.loading{text-align:center;padding:80px;color:rgba(255,255,255,0.4);font-size:16px}
+.share-row{display:flex;align-items:center;gap:10px;margin-bottom:24px}
+.share-label{font-size:13px;color:rgba(255,255,255,0.4)}
+.share-btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:7px;color:rgba(255,255,255,0.6);padding:6px 14px;font-size:12px;cursor:pointer}
+</style>
+<link rel="stylesheet" href="responsive.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.svg"></head>
+<body>
+<nav>
+  <div class="logo" onclick="location.href='index.html'">
+    <div class="logo-mark">AP</div>
+    <div class="logo-text">AUTOS <span>PREMIUM</span> CR</div>
+  </div>
+  <ul>
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="resultados.html">Vehículos</a></li>
+    <li><a href="contacto.html">Contáctenos</a></li>
+  </ul>
+  <button class="btn-nav" onclick="location.href='publicar.html'">+ Publicar anuncio</button>
+</nav>
+<div class="breadcrumb">
+  <a href="index.html">Inicio</a> › <a href="resultados.html">Vehículos</a> › <span id="breadTitle">Cargando...</span>
+</div>
+<div id="mainContent"><div class="loading">Cargando anuncio...</div></div>
+
+<script>
+var API = 'https://autospremiumcostarica.com/api';
+var params = new URLSearchParams(window.location.search);
+var id = params.get('id');
+var fotos = [];
+var currentFoto = 0;
+
+if(!id){
+  document.getElementById('mainContent').innerHTML = '<div class="loading">Anuncio no encontrado. <a href="resultados.html" style="color:#6ab4ff">Ver todos</a></div>';
+} else {
+  fetch(API+'/anuncios/'+id)
+    .then(function(r){ return r.json(); })
+    .then(function(a){
+      document.getElementById('breadTitle').textContent = (a.marca||'')+' '+(a.modelo||'')+' '+(a.anio||'');
+      document.title = (a.marca||'')+' '+(a.modelo||'')+' '+(a.anio||'')+' — Autos Premium CR';
+
+      // Parsear fotos
+      if(a.fotos){
+        try{ fotos = typeof a.fotos === 'string' ? JSON.parse(a.fotos) : a.fotos; }
+        catch(e){ fotos = []; }
+      }
+
+      var precio = a.precio ? '₡'+parseInt(a.precio).toLocaleString('es-CR') : 'Consultar';
+      var precioUsd = a.precio ? '~$'+Math.round(a.precio/500).toLocaleString('en-US') : '';
+      var initials = (a.vendedor_nombre||'V').split(' ').map(function(x){return x[0];}).join('').substring(0,2).toUpperCase();
+      var tel = a.vendedor_telefono || '';
+      var waLink = tel ? 'https://wa.me/506'+tel.replace(/[^0-9]/g,'') : '#';
+
+      // Galería principal
+      var mainImgHtml = fotos.length > 0 && fotos[0].url
+        ? '<img id="mainImg" src="'+fotos[0].url+'" style="width:100%;height:100%;object-fit:cover;border-radius:14px">'
+        : '<span class="gallery-main-placeholder">🚗</span>';
+
+      // Thumbnails
+      var thumbsHtml = '';
+      if(fotos.length > 0){
+        fotos.slice(0,5).forEach(function(f,i){
+          thumbsHtml += '<div class="thumb'+(i===0?' active':'')+'" onclick="setFoto('+i+',this)">'+(f.url?'<img src="'+f.url+'">':'🚗')+'</div>';
+        });
+      } else {
+        thumbsHtml = '<div class="thumb active">🚗</div>';
+      }
+
+      document.getElementById('mainContent').innerHTML =
+        '<div class="main">'+
+          '<div>'+
+            '<div class="gallery-main">'+(a.destacado?'<div class="gallery-badge">Destacado</div>':'')+mainImgHtml+'</div>'+
+            '<div class="gallery-thumbs">'+thumbsHtml+'</div>'+
+            '<div class="info-header">'+
+              '<h1>'+(a.marca||'')+' '+(a.modelo||'')+' '+(a.anio||'')+'</h1>'+
+              '<div class="info-meta">'+
+                (a.anio?'<span>📅 '+a.anio+'</span>':'')+
+                (a.km?'<span>🛣️ '+a.km.toLocaleString()+' km</span>':'')+
+                (a.combustible?'<span>⛽ '+a.combustible+'</span>':'')+
+                (a.provincia?'<span>📍 '+a.provincia+'</span>':'')+
+              '</div>'+
+            '</div>'+
+            '<div class="price-block">'+
+              '<div><div class="price-main">'+precio+'</div><div class="price-usd">'+precioUsd+'</div></div>'+
+              '<div style="background:rgba(0,81,186,0.15);border:1px solid rgba(0,81,186,0.3);color:#6ab4ff;font-size:12px;font-weight:600;padding:6px 14px;border-radius:6px">En venta</div>'+
+            '</div>'+
+            '<div class="specs-title">Especificaciones</div>'+
+            '<div class="specs-grid">'+
+              '<div class="spec-item"><div class="spec-label">Marca</div><div class="spec-val">'+(a.marca||'—')+'</div></div>'+
+              '<div class="spec-item"><div class="spec-label">Modelo</div><div class="spec-val">'+(a.modelo||'—')+'</div></div>'+
+              '<div class="spec-item"><div class="spec-label">Año</div><div class="spec-val">'+(a.anio||'—')+'</div></div>'+
+              '<div class="spec-item"><div class="spec-label">Kilometraje</div><div class="spec-val">'+(a.km?a.km.toLocaleString()+' km':'—')+'</div></div>'+
+              '<div class="spec-item"><div class="spec-label">Combustible</div><div class="spec-val">'+(a.combustible||'—')+'</div></div>'+
+              '<div class="spec-item"><div class="spec-label">Transmisión</div><div class="spec-val">'+(a.transmision||'—')+'</div></div>'+
+              '<div class="spec-item"><div class="spec-label">Color</div><div class="spec-val">'+(a.color||'—')+'</div></div>'+
+              '<div class="spec-item"><div class="spec-label">Provincia</div><div class="spec-val">'+(a.provincia||'—')+'</div></div>'+
+            '</div>'+
+            '<div class="desc-block">'+
+              '<div class="specs-title">Descripción</div>'+
+              '<p>'+(a.descripcion||'Sin descripción.')+'</p>'+
+            '</div>'+
+            '<div class="share-row">'+
+              '<span class="share-label">Compartir:</span>'+
+              '<button class="share-btn" onclick="window.open(\'https://wa.me/?text='+encodeURIComponent('Mirá este vehículo en Autos Premium CR: '+window.location.href)+'\',\'_blank\')">WhatsApp</button>'+
+              '<button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href);this.textContent=\'✓ Copiado\'">Copiar enlace</button>'+
+            '</div>'+
+          '</div>'+
+          '<div class="sidebar">'+
+            '<div class="contact-card">'+
+              '<div class="seller-header">'+
+                '<div class="seller-avatar">'+initials+'</div>'+
+                '<div><div class="seller-name">'+(a.vendedor_nombre||'Vendedor')+'</div><div class="seller-sub">Vendedor particular</div></div>'+
+              '</div>'+
+              '<button class="btn-whatsapp" onclick="window.open(\''+waLink+'\',\'_blank\')">💬 Contactar por WhatsApp</button>'+
+              '<button class="btn-call" id="btnCall">📞 Ver teléfono</button>'+
+              '<div class="contact-note">Nunca hagas pagos por adelantado sin ver el vehículo.</div>'+
+            '</div>'+
+            '<div class="safety-card">'+
+              '<h4>🔒 Consejos de seguridad</h4>'+
+              '<div class="safety-item"><span style="color:#4ade80">✓</span><span>Revisá el vehículo en persona antes de comprar</span></div>'+
+              '<div class="safety-item"><span style="color:#4ade80">✓</span><span>Verificá que los papeles estén a nombre del vendedor</span></div>'+
+              '<div class="safety-item"><span style="color:#4ade80">✓</span><span>No realizés pagos anticipados</span></div>'+
+              '<div class="safety-item"><span style="color:#4ade80">✓</span><span>Llevá el auto a revisión mecánica independiente</span></div>'+
+            '</div>'+
+          '</div>'+
+        '</div>';
+
+      document.getElementById('btnCall').addEventListener('click', function(){
+        this.textContent = tel ? '📞 '+tel : 'No disponible';
+        this.style.color = '#4ade80';
+      });
+
+      window._fotos = fotos;
+    })
+    .catch(function(){
+      document.getElementById('mainContent').innerHTML = '<div class="loading">Error cargando el anuncio. <a href="resultados.html" style="color:#6ab4ff">Ver todos</a></div>';
+    });
+}
+
+function setFoto(idx, el){
+  document.querySelectorAll('.thumb').forEach(function(t){ t.classList.remove('active'); });
+  el.classList.add('active');
+  var main = document.querySelector('.gallery-main');
+  var f = window._fotos && window._fotos[idx];
+  if(f && f.url){
+    var img = document.getElementById('mainImg');
+    if(img){ img.src = f.url; }
+    else {
+      main.innerHTML = '<img id="mainImg" src="'+f.url+'" style="width:100%;height:100%;object-fit:cover;border-radius:14px">';
+    }
+  }
+}
+</script>
+</body>
+</html>

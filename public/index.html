@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autos Premium CR — Compra y vende autos en Costa Rica</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0e1a;color:#fff;overflow-x:hidden}
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(0,45,71,0.95);position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(0,81,186,0.3)}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{background:#0051BA;color:#fff;font-weight:900;font-size:22px;padding:6px 10px;border-radius:6px}
+.logo-text{font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase}
+.logo-text span{color:#0051BA;background:#fff;padding:1px 5px;border-radius:3px;margin:0 2px}
+nav ul{display:flex;gap:32px;list-style:none}
+nav ul a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:14px}
+nav ul a:hover{color:#fff}
+.btn-nav{background:#0051BA;color:#fff;border:none;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
+.hero{min-height:88vh;background:linear-gradient(135deg,#002D47 0%,#001a2e 50%,#0a0e1a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 48px 40px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-100px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,81,186,0.15) 0%,transparent 70%);pointer-events:none}
+.hero-badge{background:rgba(0,81,186,0.2);border:1px solid rgba(0,81,186,0.5);color:#6ab4ff;font-size:12px;font-weight:600;padding:6px 16px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;margin-bottom:24px}
+.hero h1{font-size:clamp(36px,6vw,72px);font-weight:900;text-align:center;line-height:1.05;margin-bottom:16px;max-width:800px}
+.hero h1 span{color:#0051BA}
+.hero p{color:rgba(255,255,255,0.6);font-size:18px;text-align:center;max-width:520px;margin-bottom:44px;line-height:1.6;font-weight:300}
+.search-box{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:24px;width:100%;max-width:860px}
+.search-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:10px;align-items:end}
+.search-field label{display:block;font-size:11px;font-weight:600;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1px;margin-bottom:7px}
+.search-field select{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#fff;padding:11px 14px;font-size:14px;font-family:'Inter',sans-serif;appearance:none;cursor:pointer}
+.search-field select option{background:#002D47}
+.btn-search{background:#0051BA;color:#fff;border:none;border-radius:8px;padding:12px 28px;font-size:15px;font-weight:700;cursor:pointer;height:44px}
+.hero-stats{display:flex;gap:48px;margin-top:36px}
+.stat{text-align:center}
+.stat-num{font-size:28px;font-weight:800}
+.stat-label{font-size:12px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+section{padding:72px 48px;background:#060c17}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px}
+.section-title{font-size:28px;font-weight:800}
+.section-title span{color:#0051BA}
+.section-link{color:#0051BA;font-size:14px;font-weight:500;text-decoration:none;border-bottom:1px solid rgba(0,81,186,0.4);padding-bottom:2px}
+.cars-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.car-card{background:#0d1929;border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .25s,border-color .25s}
+.car-card:hover{transform:translateY(-4px);border-color:rgba(0,81,186,0.5)}
+.car-img{height:180px;background:linear-gradient(135deg,#001a2e,#002D47);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.car-img img{width:100%;height:100%;object-fit:cover}
+.car-badge{position:absolute;top:10px;left:10px;background:#0051BA;color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;text-transform:uppercase;z-index:1}
+.car-badge.featured{background:#c8960a}
+.car-info{padding:16px}
+.car-name{font-size:16px;font-weight:700;margin-bottom:4px}
+.car-meta{color:rgba(255,255,255,0.45);font-size:12px;margin-bottom:12px;display:flex;gap:12px}
+.car-price{font-size:20px;font-weight:800}
+.car-price-usd{font-size:12px;color:rgba(255,255,255,0.4);font-weight:400;margin-left:4px}
+.car-footer{border-top:1px solid rgba(255,255,255,0.06);padding:10px 16px;display:flex;justify-content:space-between;align-items:center}
+.car-footer span{font-size:12px;color:rgba(255,255,255,0.4)}
+.car-contact{background:rgba(0,81,186,0.15);color:#6ab4ff;border:1px solid rgba(0,81,186,0.3);border-radius:6px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer}
+.brands-section{background:#040810;padding:56px 48px}
+.brands-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:16px;margin-top:36px}
+.brand-chip{background:#0d1929;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px 12px;text-align:center;cursor:pointer;transition:border-color .2s}
+.brand-chip:hover{border-color:#0051BA}
+.brand-chip span{font-size:13px;font-weight:600;color:rgba(255,255,255,0.7)}
+.how-section{background:#0a0e1a;padding:72px 48px}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:48px}
+.step{text-align:center;padding:32px 24px;background:#0d1929;border:1px solid rgba(255,255,255,0.08);border-radius:16px}
+.step-num{width:48px;height:48px;background:#0051BA;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;margin:0 auto 20px}
+.step h3{font-size:18px;font-weight:700;margin-bottom:10px}
+.step p{color:rgba(255,255,255,0.5);font-size:14px;line-height:1.6;font-weight:300}
+.cta-section{background:linear-gradient(135deg,#002D47,#0051BA);padding:80px 48px;text-align:center}
+.cta-section h2{font-size:40px;font-weight:900;margin-bottom:16px}
+.cta-section p{color:rgba(255,255,255,0.75);font-size:17px;margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto}
+.btn-cta{background:#fff;color:#002D47;border:none;padding:16px 40px;border-radius:10px;font-size:16px;font-weight:800;cursor:pointer}
+footer{background:#000d1a;padding:40px 48px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.07)}
+.footer-copy{color:rgba(255,255,255,0.3);font-size:13px}
+.footer-links{display:flex;gap:24px}
+.footer-links a{color:rgba(255,255,255,0.3);font-size:13px;text-decoration:none}
+.empty{color:rgba(255,255,255,0.4);font-size:14px;padding:40px 0}
+</style>
+<link rel="stylesheet" href="responsive.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.svg"></head>
+<body>
+<nav>
+  <div class="logo">
+    <div class="logo-mark">AP</div>
+    <div class="logo-text">AUTOS <span>PREMIUM</span> CR</div>
+  </div>
+  <ul>
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="resultados.html">Vehículos</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contacto.html">Contáctenos</a></li>
+  </ul>
+  <button class="btn-nav" onclick="location.href='publicar.html'">+ Publicar anuncio</button>
+</nav>
+<div class="hero">
+  <div class="hero-badge">N°1 en Costa Rica</div>
+  <h1>Encuentra tu próximo<br><span>auto premium</span><br>en segundos</h1>
+  <p>Miles de vehículos verificados. Vendedores reales. La plataforma más confiable de Costa Rica.</p>
+  <div class="search-box">
+    <div class="search-row">
+      <div class="search-field"><label>Marca</label><select id="sMarca"><option value="">Todas las marcas</option><option>Toyota</option><option>Honda</option><option>Hyundai</option><option>Kia</option><option>Nissan</option><option>BMW</option><option>Mercedes-Benz</option></select></div>
+      <div class="search-field"><label>Modelo</label><select><option>Todos los modelos</option></select></div>
+      <div class="search-field"><label>Año</label><select id="sAnio"><option value="">Cualquier año</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option></select></div>
+      <div class="search-field"><label>Precio máx.</label><select id="sPrecio"><option value="">Cualquier precio</option><option value="5000000">Hasta ₡5,000,000</option><option value="10000000">Hasta ₡10,000,000</option><option value="15000000">Hasta ₡15,000,000</option><option value="20000000">Hasta ₡20,000,000</option></select></div>
+      <button class="btn-search" onclick="buscar()">Buscar</button>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">18,000+</div><div class="stat-label">Publicaciones / año</div></div>
+    <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Anuncios / día</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Vendedores verificados</div></div>
+  </div>
+</div>
+<section>
+  <div class="section-header">
+    <h2 class="section-title">Anuncios <span>recientes</span></h2>
+    <a href="resultados.html" class="section-link">Ver todos →</a>
+  </div>
+  <div class="cars-grid" id="carsGrid"><p class="empty">Cargando anuncios...</p></div>
+</section>
+<div class="brands-section">
+  <div class="section-header"><h2 class="section-title">Buscar por <span>marca</span></h2></div>
+  <div class="brands-grid">
+    <div class="brand-chip" onclick="location.href='resultados.html?marca=Toyota'"><span>Toyota</span></div>
+    <div class="brand-chip" onclick="location.href='resultados.html?marca=Honda'"><span>Honda</span></div>
+    <div class="brand-chip" onclick="location.href='resultados.html?marca=Hyundai'"><span>Hyundai</span></div>
+    <div class="brand-chip" onclick="location.href='resultados.html?marca=Kia'"><span>Kia</span></div>
+    <div class="brand-chip" onclick="location.href='resultados.html?marca=Nissan'"><span>Nissan</span></div>
+    <div class="brand-chip" onclick="location.href='resultados.html?marca=Ford'"><span>Ford</span></div>
+    <div class="brand-chip" onclick="location.href='resultados.html?marca=BMW'"><span>BMW</span></div>
+    <div class="brand-chip" onclick="location.href='resultados.html?marca=Chevrolet'"><span>Chevrolet</span></div>
+  </div>
+</div>
+<div class="how-section">
+  <div style="text-align:center"><h2 class="section-title" style="font-size:32px">¿Cómo <span>funciona</span>?</h2></div>
+  <div class="steps-grid">
+    <div class="step"><div class="step-num">1</div><h3>Regístrate gratis</h3><p>Crea tu cuenta en menos de un minuto.</p></div>
+    <div class="step"><div class="step-num">2</div><h3>Publica tu anuncio</h3><p>Llena el formulario y tu anuncio queda visible de inmediato.</p></div>
+    <div class="step"><div class="step-num">3</div><h3>Conecta y vende</h3><p>Los compradores te contactan directamente.</p></div>
+  </div>
+</div>
+<div class="cta-section">
+  <h2>¿Tenés un auto para vender?</h2>
+  <p>Publicá tu anuncio gratis y llegá a miles de compradores en Costa Rica.</p>
+  <button class="btn-cta" onclick="location.href='publicar.html'">Publicar mi anuncio gratis</button>
+</div>
+<footer>
+  <div class="logo"><div class="logo-mark">AP</div><div class="logo-text">AUTOS <span>PREMIUM</span> CR</div></div>
+  <div class="footer-copy">© 2026 Autos Premium CR. Todos los derechos reservados.</div>
+  <div class="footer-links"><a href="#">Privacidad</a><a href="#">Términos</a><a href="#">Contacto</a></div>
+</footer>
+<script>
+var API = 'https://autospremiumcostarica.com/api';
+
+function buscar(){
+  var marca = document.getElementById('sMarca').value;
+  var anio = document.getElementById('sAnio').value;
+  var precio = document.getElementById('sPrecio').value;
+  var url = 'resultados.html?';
+  if(marca) url += 'marca='+encodeURIComponent(marca)+'&';
+  if(anio) url += 'anio_min='+anio+'&anio_max='+anio+'&';
+  if(precio) url += 'precio_max='+precio+'&';
+  location.href = url;
+}
+
+function getFotos(fotos){
+  try{ return typeof fotos === 'string' ? JSON.parse(fotos) : (fotos||[]); }
+  catch(e){ return []; }
+}
+
+fetch(API+'/anuncios?limit=4')
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    var grid = document.getElementById('carsGrid');
+    var cars = data.anuncios || [];
+    if(!cars.length){
+      grid.innerHTML = '<p class="empty">No hay anuncios aún. <a href="publicar.html" style="color:#6ab4ff">¡Sé el primero en publicar!</a></p>';
+      return;
+    }
+    grid.innerHTML = cars.map(function(a){
+      var fotos = getFotos(a.fotos);
+      var imgHtml = fotos.length > 0 && fotos[0].url
+        ? '<img src="'+fotos[0].url+'" alt="'+( a.marca||'')+' '+(a.modelo||'')+'">'
+        : '<span style="font-size:64px">🚗</span>';
+      var precio = a.precio ? '₡'+parseInt(a.precio).toLocaleString('es-CR') : 'Consultar';
+      var precioUsd = a.precio ? ' <span class="car-price-usd">~$'+Math.round(a.precio/500).toLocaleString('en-US')+'</span>' : '';
+      return '<div class="car-card" onclick="location.href=\'detalle.html?id='+a.id+'\'">'+
+        '<div class="car-img">'+
+          '<div class="car-badge'+(a.destacado?' featured':'')+'\">'+(a.destacado?'Destacado':'En venta')+'</div>'+
+          imgHtml+
+        '</div>'+
+        '<div class="car-info">'+
+          '<div class="car-name">'+(a.marca||'')+' '+(a.modelo||'')+' '+(a.anio||'')+'</div>'+
+          '<div class="car-meta">'+
+            '<span>'+(a.km?a.km.toLocaleString()+' km':'—')+'</span>'+
+            '<span>'+(a.combustible||'—')+'</span>'+
+          '</div>'+
+          '<div class="car-price">'+precio+precioUsd+'</div>'+
+        '</div>'+
+        '<div class="car-footer">'+
+          '<span>📍 '+(a.provincia||'Costa Rica')+'</span>'+
+          '<button class="car-contact">Ver más</button>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+  })
+  .catch(function(){
+    document.getElementById('carsGrid').innerHTML = '<p class="empty">Error cargando anuncios.</p>';
+  });
+</script>
+</body>
+</html>
