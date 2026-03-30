@@ -25,7 +25,7 @@ nav ul{display:flex;gap:32px;list-style:none}
 nav ul a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:14px}
 nav ul a:hover{color:#fff}
 .btn-nav{background:#0051BA;color:#fff;border:none;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
-.hero{min-height:88vh;background:linear-gradient(135deg,#002D47 0%,#001a2e 50%,#0a0e1a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 48px 40px;position:relative;overflow:hidden}
+.hero{ z-index: 0 !important;min-height:88vh;background:linear-gradient(135deg,#002D47 0%,#001a2e 50%,#0a0e1a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 48px 40px;position:relative;overflow:visible}
 .hero::before{content:'';position:absolute;top:-100px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,81,186,0.15) 0%,transparent 70%);pointer-events:none}
 .hero-badge{background:rgba(0,81,186,0.2);border:1px solid rgba(0,81,186,0.5);color:#6ab4ff;font-size:12px;font-weight:600;padding:6px 16px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;margin-bottom:24px}
 .hero h1{font-size:clamp(36px,6vw,72px);font-weight:900;text-align:center;line-height:1.05;margin-bottom:16px;max-width:800px}
@@ -49,7 +49,7 @@ section{padding:72px 48px;background:#060c17}
 .cars-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 .car-card{background:#0d1929;border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .25s,border-color .25s}
 .car-card:hover{transform:translateY(-4px);border-color:rgba(0,81,186,0.5)}
-.car-img{height:180px;background:linear-gradient(135deg,#001a2e,#002D47);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.car-img{height:180px;background:linear-gradient(135deg,#001a2e,#002D47);display:flex;align-items:center;justify-content:center;position:relative;overflow:visible}
 .car-img img{width:100%;height:100%;object-fit:cover}
 .car-badge{position:absolute;top:10px;left:10px;background:#0051BA;color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;text-transform:uppercase;z-index:1}
 .car-badge.featured{background:#c8960a}
@@ -213,5 +213,5 @@ fetch(API+'/anuncios?limit=4')
     document.getElementById('carsGrid').innerHTML = '<p class="empty">Error cargando anuncios.</p>';
   });
 </script>
-</body>
+<script src="/chat.js"></script><script src="/chat_fix.js"></script><script src="/chat.js"></script><script src="/chat.js"></script></body>
 </html>
