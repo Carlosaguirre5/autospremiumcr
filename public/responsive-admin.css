@@ -1,0 +1,36 @@
+@media (max-width: 900px) {
+  body { display: block !important; }
+  .sidenav { 
+    width: 100% !important;
+    height: auto !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+  }
+  .sidenav-logo { padding: 10px 14px !important; border-bottom: none !important; }
+  .sidenav-section { display: none !important; }
+  .nav-item { padding: 8px 10px !important; font-size: 11px !important; }
+  .nav-badge { display: none !important; }
+  .sidenav-bottom { display: none !important; }
+  .main { margin-left: 0 !important; width: 100% !important; }
+  .topbar { padding: 10px 12px !important; flex-wrap: wrap !important; gap: 8px !important; }
+  .metrics { grid-template-columns: 1fr 1fr !important; gap: 8px !important; padding: 12px !important; }
+  .metric { padding: 12px !important; }
+  .metric-val { font-size: 20px !important; }
+  .content { padding: 12px !important; }
+  .tabs { flex-wrap: wrap !important; }
+  .tab { font-size: 11px !important; padding: 6px 10px !important; }
+  .table-wrap { overflow-x: scroll !important; -webkit-overflow-scrolling: touch !important; }
+  table { min-width: 480px !important; font-size: 11px !important; }
+  td, th { padding: 8px !important; }
+  .car-thumb { width: 36px !important; height: 28px !important; }
+  .row-actions { flex-direction: column !important; gap: 4px !important; }
+  .act-btn { font-size: 10px !important; padding: 4px 6px !important; }
+  .modal-overlay { padding: 8px !important; align-items: flex-start !important; padding-top: 20px !important; }
+  .modal { width: 100% !important; }
+  .modal-specs { grid-template-columns: 1fr 1fr !important; }
+  .modal-actions { flex-wrap: wrap !important; }
+  .btn-modal { flex: 1 !important; }
+}

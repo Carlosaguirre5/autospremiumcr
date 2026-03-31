@@ -1,0 +1,20 @@
+@media (max-width: 900px) {
+  nav ul { display: none !important; }
+  nav { padding: 12px 16px !important; }
+  .btn-nav { font-size: 11px !important; padding: 8px 12px !important; }
+  .hero { padding: 28px 16px 32px !important; }
+  .hero h1 { font-size: 30px !important; }
+  .ai-badge { font-size: 10px !important; }
+  .valuador-form { padding: 16px !important; margin: 0 8px !important; }
+  .form-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+  .precio-field { grid-column: 1 !important; }
+  .btn-valuate { font-size: 14px !important; padding: 14px !important; }
+  .resultado { margin: 16px 8px 0 !important; }
+  .resultado-grid { grid-template-columns: 1fr !important; }
+  .resultado-header { padding: 16px !important; }
+  .precio-estimado { font-size: 32px !important; }
+  .how-section { padding: 32px 16px !important; }
+  .how-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+  .cta-resultado-btns { flex-direction: column !important; }
+  .btn-cta-pub, .btn-cta-share { width: 100% !important; }
+}

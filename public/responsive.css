@@ -141,3 +141,73 @@
   .hero h1 { font-size: 26px; }
   .search-row { grid-template-columns: 1fr; }
 }
+
+@media (max-width: 768px) {
+
+  /* NAV - ocultar links, solo logo y botón */
+  nav ul { display: none !important; }
+  nav { padding: 12px 16px !important; }
+  .btn-nav { font-size: 11px !important; padding: 8px 12px !important; white-space: nowrap; }
+
+  /* ADMIN - sidebar colapsado */
+  .sidenav { 
+    width: 100% !important; 
+    height: auto !important; 
+    position: relative !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    padding: 8px !important;
+  }
+  .sidenav-logo { padding: 8px 12px !important; border-bottom: none !important; }
+  .sidenav-section { display: none !important; }
+  .nav-item { 
+    padding: 6px 10px !important; 
+    font-size: 11px !important; 
+    margin: 2px !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+    text-align: center !important;
+  }
+  .nav-icon { font-size: 16px !important; }
+  .sidenav-bottom { display: none !important; }
+  .main { margin-left: 0 !important; }
+  .metrics { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+  .metric { padding: 12px !important; }
+  .metric-val { font-size: 22px !important; }
+  .content { padding: 12px !important; }
+  .table-wrap { overflow-x: auto !important; }
+  table { min-width: 500px !important; font-size: 12px !important; }
+  td, th { padding: 8px 10px !important; }
+  .row-actions { flex-wrap: wrap !important; gap: 4px !important; }
+  .act-btn { font-size: 10px !important; padding: 4px 8px !important; }
+  .tabs { flex-wrap: wrap !important; width: 100% !important; }
+  .tab { font-size: 12px !important; padding: 6px 12px !important; }
+  .topbar { padding: 10px 12px !important; }
+
+  /* VALUADOR */
+  .valuador-form { padding: 16px !important; border-radius: 12px !important; }
+  .form-grid { grid-template-columns: 1fr !important; }
+  .hero { padding: 24px 16px 32px !important; }
+  .hero h1 { font-size: 28px !important; }
+  .how-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+  .how-section { padding: 40px 16px !important; }
+
+  /* MODAL */
+  .modal-overlay { padding: 10px !important; }
+  .modal { border-radius: 12px !important; }
+  .modal-body { padding: 16px !important; }
+  .modal-specs { grid-template-columns: 1fr 1fr !important; }
+  .modal-actions { flex-wrap: wrap !important; }
+  .btn-modal { flex: 1 !important; min-width: 100px !important; }
+}
+
+/* Fix específico valuador móvil */
+@media (max-width: 600px) {
+  .valuador-form { padding: 16px !important; margin: 0 8px !important; }
+  .valuador-form .form-grid { grid-template-columns: 1fr !important; }
+  .valuador-form .precio-field { grid-column: 1 !important; }
+  .resultado-grid { grid-template-columns: 1fr !important; }
+  .precio-estimado { font-size: 30px !important; }
+  .loading-state { padding: 32px 16px !important; }
+  .resultado { padding: 0 8px !important; }
+}
