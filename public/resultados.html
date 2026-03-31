@@ -3,12 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Autos Usados en Costa Rica — Autos Premium CR</title>
-<meta name="description" content="Buscá y encontrá autos usados en Costa Rica. Filtrá por marca, precio, año y provincia. Toyota, Honda, Hyundai, Kia y más.">
-<meta name="keywords" content="autos usados Costa Rica, carros usados San José, Toyota usados CR, Honda usados Costa Rica">
-<meta property="og:title" content="Autos Usados en Costa Rica — Autos Premium CR">
-<meta property="og:description" content="Encontrá tu próximo auto en Autos Premium CR.">
-<meta name="robots" content="index, follow">
+<title>Vehículos — Autos Premium CR</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="responsive.css">
@@ -73,13 +68,13 @@ nav ul a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px}
 <body>
 <nav>
   <div class="logo" onclick="location.href='index.html'">
-    <img src="/logo.png" style="height:36px;width:auto">
+    <div class="logo-mark">AP</div>
     <div class="logo-text">AUTOS <span>PREMIUM</span> CR</div>
   </div>
   <ul>
     <li><a href="index.html">Inicio</a></li>
     <li><a href="resultados.html">Vehículos</a></li>
-    <li><a href="valuador.html">Valuador IA</a></li><li><a href="blog.html">Blog</a></li>
+    <li><a href="blog.html">Blog</a></li>
     <li><a href="contacto.html">Contáctenos</a></li>
   </ul>
   <button class="btn-nav" onclick="location.href='publicar.html'">+ Publicar anuncio</button>
@@ -175,18 +170,25 @@ function fmtUsd(n){ return n?'~$'+Math.round(n/500).toLocaleString('en-US'):''; 
 function setChip(el){
   document.querySelectorAll('.filter-chip').forEach(function(c){c.classList.remove('active');});
   el.classList.add('active');
-  page=1;loadCars();
+  page=1;var _up=new URLSearchParams(window.location.search);
+if(_up.get('marca')) document.getElementById('fMarca').value=_up.get('marca');
+if(_up.get('modelo')) document.getElementById('searchInput').value=_up.get('modelo');
+if(_up.get('provincia')) document.getElementById('fProv').value=_up.get('provincia');
+loadCars();
 }
 
 function buildParams(){
+  var urlP=new URLSearchParams(window.location.search);
   var p=new URLSearchParams();
-  var marca=document.getElementById('fMarca').value;
-  var prov=document.getElementById('fProv').value;
-  var km=document.getElementById('fKm').value;
-  var pmax=document.getElementById('precioMax').value;
-  var yf=document.getElementById('yearFrom').value;
-  var yt=document.getElementById('yearTo').value;
+  var marca=document.getElementById('fMarca').value || urlP.get('marca') || '';
+  var modelo=document.getElementById('searchInput').value || urlP.get('modelo') || '';
+  var prov=document.getElementById('fProv').value || urlP.get('provincia') || '';
+  var km=document.getElementById('fKm').value || '';
+  var pmax=document.getElementById('precioMax').value || '';
+  var yf=document.getElementById('yearFrom').value || '';
+  var yt=document.getElementById('yearTo').value || '';
   if(marca)p.append('marca',marca);
+  if(modelo)p.append('modelo',modelo);
   if(prov)p.append('provincia',prov);
   if(km)p.append('km_max',km);
   if(pmax)p.append('precio_max',pmax);
@@ -255,5 +257,5 @@ if(urlParams.get('provincia')) document.getElementById('fProv').value=urlParams.
 
 loadCars();
 </script>
-<script src="/chat.js"></script><script src="/chat_fix.js"></script><script src="/chat.js"></script><script src="/chat.js"></script></body>
+</body>
 </html>
