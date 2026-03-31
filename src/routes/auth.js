@@ -49,3 +49,31 @@ router.post('/login', async (req, res) => {
 });
 
 module.exports = router;
+
+router.post('/admin/login', async (req, res) => {
+  try {
+    const { usuario, password } = req.body;
+    if(usuario !== process.env.ADMIN_USER || password !== process.env.ADMIN_PASSWORD){
+      return res.status(401).json({ error: 'Credenciales inválidas' });
+    }
+    const token = jwt.sign(
+      { rol: 'admin' },
+      process.env.ADMIN_JWT_SECRET || process.env.JWT_SECRET,
+      { expiresIn: '8h' }
+    );
+    res.json({ token });
+  } catch(err){
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.get('/admin/verify', (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if(!token) return res.status(401).json({ error: 'No autorizado' });
+    jwt.verify(token, process.env.ADMIN_JWT_SECRET || process.env.JWT_SECRET);
+    res.json({ ok: true });
+  } catch(err){
+    res.status(401).json({ error: 'Token inválido' });
+  }
+});

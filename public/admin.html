@@ -68,6 +68,19 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 </style>
 <link rel="stylesheet" href="responsive.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.svg"></head>
 <body>
+<script>
+(function(){
+  var tk = localStorage.getItem('adminToken');
+  if(!tk){ window.location.replace('admin-login.html'); document.write(''); }
+  else {
+    fetch('https://autospremiumcostarica.com/api/auth/admin/verify',{
+      headers:{'Authorization':'Bearer '+tk}
+    }).then(function(r){
+      if(!r.ok){ localStorage.removeItem('adminToken'); window.location.replace('admin-login.html'); }
+    }).catch(function(){ window.location.replace('admin-login.html'); });
+  }
+})();
+</script>
 <div class="sidenav">
   <div class="sidenav-logo">
     <img src="/logo.png" style="height:36px;width:auto">
