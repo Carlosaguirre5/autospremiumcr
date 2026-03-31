@@ -71,6 +71,11 @@ router.post('/', upload.array('fotos', 15), async (req, res) => {
       [titulo || `${marca} ${modelo} ${anio}`, marca, modelo, anio, km, precio, combustible, transmision, color, motor, descripcion, vendedor_nombre, vendedor_telefono, provincia, canton, fuente || 'manual', facebook_post_id || null, JSON.stringify(fotos)]
     );
     res.status(201).json(result.rows[0]);
+    // Notificar por WhatsApp
+    try{
+      const { notificarWhatsApp } = require('../index');
+      notificarWhatsApp(result.rows[0]);
+    }catch(e){}
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

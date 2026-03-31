@@ -24,3 +24,20 @@ app.listen(PORT, () => {
 app.get('/api/config', (req, res) => {
   res.json({ anthropicKey: process.env.ANTHROPIC_KEY });
 });
+
+// Notificación WhatsApp
+async function notificarWhatsApp(anuncio){
+  try{
+    const twilio = require('twilio');
+    const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+    await client.messages.create({
+      from: process.env.TWILIO_WHATSAPP_FROM,
+      to: process.env.TWILIO_WHATSAPP_TO,
+      body: `🚗 *Nuevo anuncio publicado*\n\n*${anuncio.marca||''} ${anuncio.modelo||''} ${anuncio.anio||''}*\n💰 ${anuncio.precio ? '₡'+parseInt(anuncio.precio).toLocaleString('es-CR') : 'Precio no indicado'}\n🛣️ ${anuncio.km ? anuncio.km.toLocaleString()+' km' : '—'}\n📍 ${anuncio.provincia||'—'}\n👤 ${anuncio.vendedor_nombre||'—'}\n📞 ${anuncio.vendedor_telefono||'—'}\n\n🔗 https://autospremiumcostarica.com/admin.html`
+    });
+    console.log('✅ WhatsApp enviado');
+  } catch(e){
+    console.error('❌ Error WhatsApp:', e.message);
+  }
+}
+module.exports.notificarWhatsApp = notificarWhatsApp;
