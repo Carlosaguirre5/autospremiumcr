@@ -346,7 +346,26 @@ nav ul a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px}
       <div class="section-title"><div class="section-icon">📞</div>Contacto</div>
       <div class="form-grid">
         <div class="field"><label>Nombre <span>*</span></label><input type="text" id="nombre" placeholder="Tu nombre completo"></div>
-        <div class="field"><label>Teléfono / WhatsApp <span>*</span></label><input type="tel" id="telefono" placeholder="Ej: 8888-8888"></div>
+        <div class="field">
+          <label>Teléfono / WhatsApp <span>*</span></label>
+          <div style="display:flex;gap:8px">
+            <input type="tel" id="telefono" placeholder="Ej: 8888-8888" style="flex:1" oninput="resetVerificacion()">
+            <button type="button" id="btnOtp" onclick="enviarOTP()" style="background:#0051BA;color:#fff;border:none;border-radius:9px;padding:0 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0">Verificar</button>
+          </div>
+        </div>
+        <div id="otpBlock" style="display:none">
+          <div class="field">
+            <label>Código de verificación</label>
+            <div style="display:flex;gap:8px">
+              <input type="text" id="otpCodigo" placeholder="Ingresá el código de 6 dígitos" maxlength="6" style="flex:1;letter-spacing:4px;font-size:16px;text-align:center">
+              <button type="button" onclick="verificarOTP()" style="background:#22c55e;color:#fff;border:none;border-radius:9px;padding:0 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0">Confirmar</button>
+            </div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:4px">Revisá tu WhatsApp — el código vence en 10 minutos</div>
+          </div>
+        </div>
+        <div id="verificadoBadge" style="display:none;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);border-radius:8px;padding:10px 14px;font-size:13px;color:#4ade80;display:none">
+          ✅ Número verificado
+        </div>
         <div class="field"><label>Provincia <span>*</span></label><select id="provincia"><option value="">Seleccionar</option><option>San José</option><option>Alajuela</option><option>Heredia</option><option>Cartago</option><option>Guanacaste</option><option>Puntarenas</option><option>Limón</option></select></div>
         <div class="field"><label>Cantón</label><input type="text" id="canton" placeholder="Ej: Escazú"></div>
       </div>
@@ -379,6 +398,73 @@ nav ul a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px}
 </div>
 <script>
 var API = 'https://autospremiumcostarica.com/api';
+var telefonoVerificado = false;
+
+function resetVerificacion(){
+  telefonoVerificado = false;
+  document.getElementById('otpBlock').style.display = 'none';
+  var badge = document.getElementById('verificadoBadge');
+  badge.style.display = 'none';
+  document.getElementById('btnOtp').textContent = 'Verificar';
+  document.getElementById('btnOtp').style.background = '#0051BA';
+  document.getElementById('btnOtp').disabled = false;
+}
+
+async function enviarOTP(){
+  var tel = document.getElementById('telefono').value.replace(/[^0-9]/g,'');
+  if(tel.length < 8){ alert('Ingresá un número de teléfono válido'); return; }
+  var btn = document.getElementById('btnOtp');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  try {
+    var res = await fetch(API+'/otp/enviar', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({telefono: tel})
+    });
+    if(res.ok){
+      document.getElementById('otpBlock').style.display = 'block';
+      btn.textContent = 'Reenviar';
+      btn.disabled = false;
+      document.getElementById('otpCodigo').focus();
+    } else {
+      alert('Error enviando el código. Intentá de nuevo.');
+      btn.disabled = false;
+      btn.textContent = 'Verificar';
+    }
+  } catch(e){
+    alert('Error de conexión.');
+    btn.disabled = false;
+    btn.textContent = 'Verificar';
+  }
+}
+
+async function verificarOTP(){
+  var tel = document.getElementById('telefono').value.replace(/[^0-9]/g,'');
+  var codigo = document.getElementById('otpCodigo').value.trim();
+  if(codigo.length !== 6){ alert('Ingresá el código de 6 dígitos'); return; }
+  try {
+    var res = await fetch(API+'/otp/verificar', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({telefono: tel, codigo: codigo})
+    });
+    var data = await res.json();
+    if(res.ok && data.verificado){
+      telefonoVerificado = true;
+      document.getElementById('otpBlock').style.display = 'none';
+      var badge = document.getElementById('verificadoBadge');
+      badge.style.display = 'block';
+      document.getElementById('btnOtp').textContent = '✅ Verificado';
+      document.getElementById('btnOtp').style.background = '#22c55e';
+      document.getElementById('btnOtp').disabled = true;
+    } else {
+      alert(data.error || 'Código incorrecto. Intentá de nuevo.');
+    }
+  } catch(e){
+    alert('Error de conexión.');
+  }
+}
 var selectedFiles = [];
 
 var fileInput = document.createElement('input');
@@ -447,6 +533,10 @@ document.getElementById('btnSubmit').addEventListener('click', async function(){
   var modelo = document.getElementById('modelo').value;
   var nombre = document.getElementById('nombre').value;
   var telefono = document.getElementById('telefono').value;
+  if(!telefonoVerificado){
+    alert('Por favor verificá tu número de WhatsApp antes de publicar.');
+    return;
+  }
   if(!marca || !modelo || !nombre || !telefono){
     alert('Por favor completá los campos obligatorios (*)');
     return;

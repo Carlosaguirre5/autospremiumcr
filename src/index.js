@@ -41,3 +41,48 @@ async function notificarWhatsApp(anuncio){
   }
 }
 module.exports.notificarWhatsApp = notificarWhatsApp;
+
+// Store OTPs temporalmente en memoria
+const otpStore = new Map();
+
+app.post('/api/otp/enviar', async (req, res) => {
+  try {
+    const { telefono } = req.body;
+    if(!telefono) return res.status(400).json({ error: 'Teléfono requerido' });
+    
+    const codigo = Math.floor(100000 + Math.random() * 900000).toString();
+    const expira = Date.now() + 10 * 60 * 1000; // 10 minutos
+    otpStore.set(telefono, { codigo, expira });
+
+    const twilio = require('twilio');
+    const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+    await client.messages.create({
+      from: process.env.TWILIO_WHATSAPP_FROM,
+      to: 'whatsapp:+506' + telefono.replace(/[^0-9]/g,''),
+      body: '🔐 *Autos Premium CR*\n\nTu código de verificación es:\n\n*' + codigo + '*\n\nVálido por 10 minutos. No lo compartas con nadie.'
+    });
+
+    console.log('✅ OTP enviado a', telefono);
+    res.json({ ok: true });
+  } catch(e) {
+    console.error('❌ Error OTP:', e.message);
+    res.status(500).json({ error: 'Error enviando código' });
+  }
+});
+
+app.post('/api/otp/verificar', (req, res) => {
+  try {
+    const { telefono, codigo } = req.body;
+    const otp = otpStore.get(telefono);
+    if(!otp) return res.status(400).json({ error: 'Código no encontrado o expirado' });
+    if(Date.now() > otp.expira) {
+      otpStore.delete(telefono);
+      return res.status(400).json({ error: 'Código expirado' });
+    }
+    if(otp.codigo !== codigo) return res.status(400).json({ error: 'Código incorrecto' });
+    otpStore.delete(telefono);
+    res.json({ ok: true, verificado: true });
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
+});
