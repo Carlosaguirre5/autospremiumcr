@@ -88,7 +88,28 @@ router.patch('/:id/estado', async (req, res) => {
       'UPDATE anuncios SET estado = $1, actualizado_en = NOW() WHERE id = $2 RETURNING *',
       [estado, req.params.id]
     );
-    res.json(result.rows[0]);
+    const anuncio = result.rows[0];
+    res.json(anuncio);
+
+    // Notificar al vendedor
+    if(anuncio.vendedor_telefono && (estado === 'activo' || estado === 'rechazado')){
+      try{
+        const twilio = require('twilio');
+        const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+        const nombre = anuncio.marca + ' ' + anuncio.modelo + ' ' + (anuncio.anio||'');
+        const msg = estado === 'activo'
+          ? '✅ *¡Tu anuncio fue aprobado!*\n\n🚗 ' + nombre + '\n\nYa está visible en Autos Premium CR:\nhttps://autospremiumcostarica.com/detalle.html?id=' + anuncio.id
+          : '❌ *Tu anuncio fue rechazado*\n\n🚗 ' + nombre + '\n\nPor favor revisá los detalles y volvé a publicar en:\nhttps://autospremiumcostarica.com/publicar.html';
+        await client.messages.create({
+          from: process.env.TWILIO_WHATSAPP_FROM,
+          to: 'whatsapp:+506' + anuncio.vendedor_telefono.replace(/[^0-9]/g,''),
+          body: msg
+        });
+        console.log('✅ WhatsApp vendedor enviado');
+      } catch(e){
+        console.error('❌ Error WhatsApp vendedor:', e.message);
+      }
+    }
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
