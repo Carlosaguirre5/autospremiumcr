@@ -11,7 +11,7 @@ style.textContent = `
   #apcr-chat-btn { z-index: 99999 !important;
     position: fixed; bottom: 24px; right: 24px; z-index: 2147483647;
     width: 60px; height: 60px; border-radius: 50%;
-    background: linear-gradient(135deg, #0051BA, #0066e0);
+    background: #ffffff;
     border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,81,186,0.5);
     display: flex; align-items: center; justify-content: center;
     font-size: 26px; transition: transform .2s;
@@ -134,7 +134,7 @@ widget.innerHTML = `
   <div id="apcr-chat-bubble">
     <div id="apcr-chat-header">
       <div id="apcr-chat-header-info">
-        <div id="apcr-chat-avatar">AP</div>
+        <img src="/logo.png" style="width:36px;height:36px;object-fit:contain;border-radius:50%">
         <div>
           <div id="apcr-chat-title">Asistente de Autos Premium CR</div>
           <div id="apcr-chat-subtitle">● En línea</div>
@@ -168,7 +168,7 @@ function addTyping(){
   var div = document.createElement('div');
   div.className = 'apcr-msg bot';
   div.id = 'apcr-typing';
-  div.innerHTML = '<div class="apcr-msg-avatar">AP</div><div class="apcr-typing"><div class="apcr-dot"></div><div class="apcr-dot"></div><div class="apcr-dot"></div></div>';
+  div.innerHTML = '<div class="apcr-msg-avatar" style="background:transparent"><img src="/logo.svg" style="width:28px;height:28px;object-fit:contain"></div><div class="apcr-typing"><div class="apcr-dot"></div><div class="apcr-dot"></div><div class="apcr-dot"></div></div>';
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
 }
