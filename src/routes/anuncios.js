@@ -124,5 +124,36 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+router.get('/precios-referencia/comparables', async (req, res) => {
+  try {
+    const { marca, modelo, anio, km } = req.query;
+    if (!marca || !modelo || !anio) {
+      return res.status(400).json({ error: 'marca, modelo y anio son requeridos' });
+    }
+
+    const result = await db.query(`
+      SELECT marca, modelo, anio, km, precio, provincia, fecha_post
+      FROM precios_referencia
+      WHERE marca ILIKE $1
+        AND modelo ILIKE $2
+        AND anio BETWEEN $3 AND $4
+        AND precio IS NOT NULL
+      ORDER BY ABS(anio - $5) ASC, ABS(km - $6) ASC
+      LIMIT 15
+    `, [
+      `%${marca}%`,
+      `%${modelo}%`,
+      parseInt(anio) - 2,
+      parseInt(anio) + 2,
+      parseInt(anio),
+      parseInt(km) || 50000
+    ]);
+
+    res.json({ comparables: result.rows, total: result.rows.length });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
 
