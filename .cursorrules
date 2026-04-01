@@ -1,0 +1,115 @@
+# Autos Premium CR — Cursor Rules
+
+## Qué es este proyecto
+Plataforma de clasificados de vehículos usados en Costa Rica.
+- Sitio: https://autospremiumcostarica.com
+- Repo: https://github.com/Carlosaguirre5/autospremiumcr
+- Servidor: root@134.122.15.241 (DigitalOcean, Ubuntu 22.04)
+
+## Stack técnico
+- **Frontend:** HTML estático + CSS + JS vanilla (sin frameworks)
+- **Backend:** Node.js 20 + Express 4 (puerto 3000)
+- **Base de datos:** PostgreSQL 14
+- **Servidor web:** Nginx 1.18 (proxy reverso)
+- **Proceso manager:** PM2
+- **CDN / Protección:** Cloudflare (plan gratuito)
+- **IA:** Claude Haiku vía Anthropic API
+- **Notificaciones:** Twilio WhatsApp
+- **Bot Facebook:** Python 3.10 + Playwright
+- **SSL:** Let's Encrypt (vence 27 jun 2026)
+
+## Estructura de archivos clave
+```
+/var/www/autospremiumcr/
+├── public/              → Archivos HTML estáticos servidos por Nginx
+│   ├── index.html       → Página de inicio
+│   ├── resultados.html  → Búsqueda y listado
+│   ├── detalle.html     → Detalle de anuncio
+│   ├── publicar.html    → Formulario publicar (con OTP)
+│   ├── admin.html       → Panel admin
+│   ├── valuador.html    → Valuador IA
+│   ├── chat.js          → Widget chat IA flotante
+│   └── uploads/         → Fotos de anuncios
+├── src/
+│   ├── index.js         → Servidor principal Express
+│   ├── db.js            → Conexión PostgreSQL
+│   └── routes/
+│       ├── anuncios.js  → CRUD anuncios + notificaciones
+│       └── auth.js      → Autenticación + admin
+└── .env                 → Credenciales (nunca subir a GitHub)
+
+/var/www/bot/
+├── bot.py               → Bot Facebook con Playwright
+└── .env                 → Credenciales Facebook (nunca subir a GitHub)
+```
+
+## Base de datos
+**Conexión:** `sudo -u postgres psql -d autospremiumcr`
+
+**Tablas principales:**
+- `anuncios` — publicaciones activas de la plataforma
+- `usuarios` — vendedores y admins
+
+**Campos clave de anuncios:**
+`id, titulo, marca, modelo, anio, km, precio (BIGINT colones), combustible, transmision, provincia, estado (pendiente/activo/rechazado/vendido), destacado, fuente (web/facebook), fotos (JSONB), visitas, creado_en`
+
+## API REST
+**Base URL:** https://autospremiumcostarica.com/api
+
+Endpoints principales:
+- `GET /anuncios` — listar con filtros (?marca=, ?precio_max=, ?provincia=, etc.)
+- `POST /anuncios` — crear anuncio
+- `PATCH /anuncios/:id/estado` — aprobar/rechazar
+- `GET /config` — retorna API key de Anthropic
+- `GET /health` — health check
+
+## Convenciones de código
+- **JS:** ES6+, async/await, sin TypeScript
+- **Nombres:** español para variables de negocio (anuncio, vendedor, precio), inglés para lógica técnica
+- **CSS:** mobile-first, archivo responsive.css separado
+- **Errores:** siempre manejar con try/catch, loggear con console.error
+- **Secrets:** NUNCA hardcodear credenciales, siempre desde process.env
+
+## Comandos frecuentes del servidor
+```bash
+pm2 status                              # ver estado del servidor
+pm2 restart autospremiumcr --update-env # reiniciar con nuevas vars
+pm2 logs autospremiumcr                 # ver logs en tiempo real
+systemctl restart nginx                 # reiniciar Nginx
+tail -f /var/log/nginx/error.log        # logs de Nginx
+tail -f /var/log/bot.log                # logs del bot Facebook
+scp archivo root@134.122.15.241:/var/www/autospremiumcr/public/  # subir archivo
+```
+
+## Contexto de negocio
+- Mercado: Costa Rica, precios en colones (CRC)
+- Proviene de grupo de Facebook con ~18,000 posts/año (desde 2018)
+- El grupo es la fuente principal de datos históricos de precios
+- El valuador de IA es el feature diferenciador de la plataforma
+- Costos mensuales actuales: ~$19/mes total
+
+## Funcionalidades IA
+**Valuador** (`/valuador.html`):
+- Modelo: Claude Haiku
+- Input: marca, modelo, año, km
+- Output: precio estimado, rango, veredicto, recomendaciones
+- Pendiente: alimentar con datos reales de precios del mercado CR
+
+**Chat asistente** (`/chat.js`):
+- Modelo: Claude Haiku
+- Widget flotante en todas las páginas
+- Busca vehículos en la DB en lenguaje natural
+
+## Tareas en progreso
+- [ ] Twilio: pasar de sandbox a producción (esperando desbloqueo de cuenta)
+- [ ] Valuador: crear tabla `precios_referencia` y poblarla con datos de Facebook
+- [ ] Bot Facebook: activar scraping histórico del grupo (grupo público desde abr 2026)
+- [ ] Estrategia de monetización: anuncios destacados, planes agencias
+
+## Reglas importantes
+1. Este proyecto lo desarrolla un principiante — explicá cada paso
+2. Antes de modificar archivos del servidor, siempre hacer backup
+3. Nunca tocar `.env` ni subirlo a GitHub
+4. Probar siempre en staging o con un anuncio de prueba antes de producción
+5. Cuando hagas cambios en el backend, recordar: `pm2 restart autospremiumcr --update-env`
+6. Cloudflare cachea agresivamente — después de cambios en HTML hacer "Purge Everything"
