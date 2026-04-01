@@ -68,6 +68,62 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 </style>
 <link rel="stylesheet" href="responsive.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.svg"><link rel="stylesheet" href="/responsive-admin.css"></head>
 <body>
+<nav>
+  <div class="logo">
+    <img src="/logo.png" style="height:36px;width:auto" alt="Logo">
+    <div class="logo-text">AUTOS <span>PREMIUM</span> CR</div>
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="resultados.html">Vehículos</a></li>
+    <li><a href="valuador.html">Valuador IA</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contacto.html">Contáctenos</a></li>
+  </ul>
+
+  <button class="btn-nav" onclick="location.href='publicar.html'">+ Publicar anuncio</button>
+
+  <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menú">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- Mobile nav (outside nav for clean stacking) -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Inicio</a>
+  <a href="resultados.html">Vehículos</a>
+  <a href="valuador.html">Valuador IA</a>
+  <a href="blog.html">Blog</a>
+  <a href="contacto.html">Contáctenos</a>
+  <a href="publicar.html" style="color:#6ab4ff">+ Publicar anuncio</a>
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('hamburgerBtn');
+  var menu = document.getElementById('mobileNav');
+  function close(){
+    menu.classList.remove('open');
+    btn.children[0].style.transform='';
+    btn.children[1].style.opacity='1';
+    btn.children[2].style.transform='';
+  }
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var isOpen = menu.classList.toggle('open');
+    btn.children[0].style.transform = isOpen ? 'rotate(45deg) translate(6px,7px)' : '';
+    btn.children[1].style.opacity   = isOpen ? '0' : '1';
+    btn.children[2].style.transform = isOpen ? 'rotate(-45deg) translate(8px,-7px)' : '';
+  });
+  document.addEventListener('click', function(e){
+    if(menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) close();
+  });
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+})();
+</script>
 <script>
 (function(){
   var tk = localStorage.getItem('adminToken');

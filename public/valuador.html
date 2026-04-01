@@ -11,7 +11,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',sans-serif;background:#0a0e1a;color:#fff}
-nav{display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(0,45,71,0.97);position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(0,81,186,0.3)}
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(0,45,71,0.97);position:sticky;top:0;z-index:1000;border-bottom:1px solid rgba(0,81,186,0.3)} .hamburger-btn{display:none;flex-direction:column;justify-content:center;align-items:center;width:40px;height:40px;gap:6px;background:none;border:none;cursor:pointer;padding:4px}
 .logo{display:flex;align-items:center;gap:10px;cursor:pointer}
 .logo-mark{background:#0051BA;color:#fff;font-weight:900;font-size:22px;padding:6px 10px;border-radius:6px}
 .logo-text{font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase}
@@ -22,7 +22,7 @@ nav ul a:hover{color:#fff}
 .btn-nav{background:#0051BA;color:#fff;border:none;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
 
 /* HERO */
-.hero{background:linear-gradient(135deg,#002D47 0%,#001a2e 60%,#0a0e1a 100%);padding:60px 48px;text-align:center;position:relative;overflow:hidden}
+.hero{background:linear-gradient(135deg,#002D47 0%,#001a2e 60%,#0a0e1a 100%);padding:60px 48px;text-align:center;position:relative;overflow:visible}
 .hero::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,81,186,0.15) 0%,transparent 70%);pointer-events:none}
 .ai-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,81,186,0.2);border:1px solid rgba(0,81,186,0.5);color:#6ab4ff;font-size:12px;font-weight:600;padding:6px 16px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;margin-bottom:24px}
 .hero h1{font-size:clamp(32px,5vw,60px);font-weight:900;line-height:1.1;margin-bottom:16px}
@@ -95,22 +95,72 @@ footer{background:#000d1a;padding:40px 48px;display:flex;align-items:center;just
 .footer-links{display:flex;gap:24px}
 .footer-links a{color:rgba(255,255,255,0.3);font-size:13px;text-decoration:none}
 </style>
-<link rel="stylesheet" href="/responsive-valuador.css"></head>
+<style>.hamburger-btn{display:none;}.hamburger-btn span{display:block;height:3px;width:26px;background:#fff;border-radius:2px;transition:all .25s} @media(max-width:768px){nav{padding:14px 20px!important} nav ul,.nav-links{display:none!important} .btn-nav{display:none!important} .hamburger-btn{display:flex!important;flex-direction:column;justify-content:center;align-items:center;width:40px;height:40px;gap:6px;background:none;border:none;cursor:pointer;padding:4px}}</style><meta property="og:title" content="Valuador de Autos con IA — Autos Premium CR">
+<meta property="og:description" content="Descubrí cuánto vale tu auto en Costa Rica gratis e instantáneo.">
+<meta property="og:image" content="https://autospremiumcostarica.com/og-image.png">
+<meta property="og:url" content="https://autospremiumcostarica.com/valuador.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://autospremiumcostarica.com/og-image.png">
+</head>
 <body>
 <nav>
-  <div class="logo" onclick="location.href='index.html'">
-    <img src="/logo.png" style="height:36px;width:auto">
+  <div class="logo">
+    <img src="/logo.png" style="height:36px;width:auto" alt="Logo">
     <div class="logo-text">AUTOS <span>PREMIUM</span> CR</div>
   </div>
-  <ul>
+
+  <ul class="nav-links">
     <li><a href="index.html">Inicio</a></li>
     <li><a href="resultados.html">Vehículos</a></li>
-    <li><a href="valuador.html" style="color:#6ab4ff">Valuador IA</a></li>
+    <li><a href="valuador.html">Valuador IA</a></li>
     <li><a href="blog.html">Blog</a></li>
     <li><a href="contacto.html">Contáctenos</a></li>
   </ul>
+
   <button class="btn-nav" onclick="location.href='publicar.html'">+ Publicar anuncio</button>
+
+  <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menú">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
+
+<!-- Mobile nav (outside nav for clean stacking) -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Inicio</a>
+  <a href="resultados.html">Vehículos</a>
+  <a href="valuador.html">Valuador IA</a>
+  <a href="blog.html">Blog</a>
+  <a href="contacto.html">Contáctenos</a>
+  <a href="publicar.html" style="color:#6ab4ff">+ Publicar anuncio</a>
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('hamburgerBtn');
+  var menu = document.getElementById('mobileNav');
+  function close(){
+    menu.classList.remove('open');
+    btn.children[0].style.transform='';
+    btn.children[1].style.opacity='1';
+    btn.children[2].style.transform='';
+  }
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var isOpen = menu.classList.toggle('open');
+    btn.children[0].style.transform = isOpen ? 'rotate(45deg) translate(6px,7px)' : '';
+    btn.children[1].style.opacity   = isOpen ? '0' : '1';
+    btn.children[2].style.transform = isOpen ? 'rotate(-45deg) translate(8px,-7px)' : '';
+  });
+  document.addEventListener('click', function(e){
+    if(menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) close();
+  });
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+})();
+</script>
+
 
 <div class="hero">
   <div class="ai-badge">✨ Inteligencia Artificial</div>
@@ -554,7 +604,7 @@ function mostrarResultado(d, marca, modelo, anio, km, precioUsuario){
     '<div class="resultado-grid">'+
       '<div class="resultado-card">'+
         '<h4>✅ Factores positivos</h4>'+
-        '<ul>'+d.factores_positivos.map(function(f){return'<li>'+f+'</li>';}).join('')+'</ul>'+
+        '<ul class="nav-links nav-hide-mobile">'+d.factores_positivos.map(function(f){return'<li>'+f+'</li>';}).join('')+'</ul>'+
       '</div>'+
       '<div class="resultado-card">'+
         '<h4>⚠️ Factores a considerar</h4>'+
@@ -597,5 +647,5 @@ function compartir(){
   }
 }
 </script>
-<script src="/chat.js"></script><script src="/chat_fix.js"></script><script src="/chat.js"></script><script src="/chat.js"></script></body>
+<script src="/chat_fix.js"></script><script src="/chat.js"></script></body>
 </html>

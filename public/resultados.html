@@ -10,16 +10,19 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',sans-serif;background:#0a0e1a;color:#fff}
-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:rgba(0,45,71,0.97);border-bottom:1px solid rgba(0,81,186,0.3);position:sticky;top:0;z-index:100}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:rgba(0,45,71,0.97);border-bottom:1px solid rgba(0,81,186,0.3);position:sticky;top:0;z-index:1000}
 .logo{display:flex;align-items:center;gap:10px;cursor:pointer}
-.logo-mark{background:#0051BA;color:#fff;font-weight:900;font-size:20px;padding:5px 9px;border-radius:6px}
 .logo-text{font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase}
 .logo-text span{color:#0051BA;background:#fff;padding:1px 4px;border-radius:3px;margin:0 2px}
-nav ul{display:flex;gap:28px;list-style:none}
-nav ul a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px}
-.btn-nav{background:#0051BA;color:#fff;border:none;padding:9px 20px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center;margin:0;padding:0}
+.nav-links a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;font-weight:500}
+.nav-links a:hover{color:#fff}
+.btn-nav{background:#0051BA;color:#fff;border:none;padding:9px 20px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+.hamburger-btn{display:none;flex-direction:column;justify-content:center;align-items:center;width:40px;height:40px;gap:6px;background:none;border:none;cursor:pointer;padding:4px}
+.hamburger-btn span{display:block;height:3px;width:26px;background:#fff;border-radius:2px;transition:all .25s}
+@media(max-width:768px){nav{padding:14px 20px}.nav-links{display:none}.btn-nav{display:none}.hamburger-btn{display:flex}}
 .topbar{background:#060c17;border-bottom:1px solid rgba(255,255,255,0.07);padding:14px 40px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.topbar-search{flex:1;max-width:420px;position:relative}
+.topbar-search{flex:1;max-width:420px}
 .topbar-search input{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;color:#fff;padding:9px 14px;font-size:14px;font-family:'Inter',sans-serif}
 .topbar-search input:focus{outline:none;border-color:#0051BA}
 .topbar-filters{display:flex;gap:8px;flex-wrap:wrap}
@@ -63,22 +66,51 @@ nav ul a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px}
 .page-btn{width:36px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.6);font-size:13px;cursor:pointer;font-family:'Inter',sans-serif}
 .page-btn.active{background:#0051BA;border-color:#0051BA;color:#fff;font-weight:700}
 .loading{text-align:center;padding:60px;color:rgba(255,255,255,0.4)}
-</style>
+@media(max-width:480px){.cars-grid{grid-template-columns:1fr!important}}</style>
+<meta property="og:title" content="Vehículos Usados en Costa Rica — Autos Premium CR">
+<meta property="og:description" content="Encontrá tu próximo auto entre cientos de vehículos verificados.">
+<meta property="og:image" content="https://autospremiumcostarica.com/og-image.png">
+<meta property="og:url" content="https://autospremiumcostarica.com/resultados.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://autospremiumcostarica.com/og-image.png">
 </head>
 <body>
 <nav>
   <div class="logo" onclick="location.href='index.html'">
-    <div class="logo-mark">AP</div>
+    <img src="/logo.png" style="height:36px;width:auto" alt="Logo">
     <div class="logo-text">AUTOS <span>PREMIUM</span> CR</div>
   </div>
-  <ul>
+  <ul class="nav-links">
     <li><a href="index.html">Inicio</a></li>
     <li><a href="resultados.html">Vehículos</a></li>
+    <li><a href="valuador.html">Valuador IA</a></li>
     <li><a href="blog.html">Blog</a></li>
     <li><a href="contacto.html">Contáctenos</a></li>
   </ul>
   <button class="btn-nav" onclick="location.href='publicar.html'">+ Publicar anuncio</button>
+  <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Inicio</a>
+  <a href="resultados.html">Vehículos</a>
+  <a href="valuador.html">Valuador IA</a>
+  <a href="blog.html">Blog</a>
+  <a href="contacto.html">Contáctenos</a>
+  <a href="publicar.html" style="color:#6ab4ff">+ Publicar anuncio</a>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('hamburgerBtn');
+  var menu=document.getElementById('mobileNav');
+  function close(){menu.classList.remove('open');btn.children[0].style.transform='';btn.children[1].style.opacity='1';btn.children[2].style.transform='';}
+  btn.addEventListener('click',function(e){e.stopPropagation();var o=menu.classList.toggle('open');btn.children[0].style.transform=o?'rotate(45deg) translate(6px,7px)':'';btn.children[1].style.opacity=o?'0':'1';btn.children[2].style.transform=o?'rotate(-45deg) translate(8px,-7px)':'';});
+  document.addEventListener('click',function(e){if(menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target))close();});
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close);});
+})();
+</script>
 <div class="topbar">
   <div class="topbar-search"><input type="text" id="searchInput" placeholder="🔍  Buscar marca, modelo..."></div>
   <div class="topbar-filters">
@@ -103,16 +135,17 @@ nav ul a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px}
       <h4>Marca</h4>
       <select id="fMarca">
         <option value="">Todas las marcas</option>
-        <option>Toyota</option><option>Honda</option><option>Hyundai</option>
-        <option>Kia</option><option>Nissan</option><option>Ford</option>
-        <option>BMW</option><option>Mercedes-Benz</option><option>Chevrolet</option>
+        <option>Toyota</option><option>Honda</option><option>Hyundai</option><option>Kia</option>
+        <option>Nissan</option><option>Ford</option><option>BMW</option><option>Mercedes-Benz</option>
+        <option>Chevrolet</option><option>Mazda</option><option>Mitsubishi</option><option>Suzuki</option>
+        <option>Volkswagen</option><option>Audi</option><option>Jeep</option><option>Lexus</option>
       </select>
     </div>
     <div class="filter-group">
       <h4>Año</h4>
       <div class="price-row">
-        <input type="number" placeholder="Desde" id="yearFrom" min="2000" max="2026">
-        <input type="number" placeholder="Hasta" id="yearTo" min="2000" max="2026">
+        <input type="number" placeholder="Desde" id="yearFrom" min="1960" max="2026">
+        <input type="number" placeholder="Hasta" id="yearTo" min="1960" max="2026">
       </div>
     </div>
     <div class="filter-group">
@@ -158,35 +191,20 @@ nav ul a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px}
 <script>
 var API='https://autospremiumcostarica.com/api';
 var page=1;
-
-function getFotos(fotos){
-  try{ return typeof fotos==='string'?JSON.parse(fotos):(fotos||[]); }
-  catch(e){ return []; }
-}
-
-function fmt(n){ return n?'₡'+parseInt(n).toLocaleString('es-CR'):'Consultar'; }
-function fmtUsd(n){ return n?'~$'+Math.round(n/500).toLocaleString('en-US'):''; }
-
-function setChip(el){
-  document.querySelectorAll('.filter-chip').forEach(function(c){c.classList.remove('active');});
-  el.classList.add('active');
-  page=1;var _up=new URLSearchParams(window.location.search);
-if(_up.get('marca')) document.getElementById('fMarca').value=_up.get('marca');
-if(_up.get('modelo')) document.getElementById('searchInput').value=_up.get('modelo');
-if(_up.get('provincia')) document.getElementById('fProv').value=_up.get('provincia');
-loadCars();
-}
-
+function getFotos(f){try{return typeof f==='string'?JSON.parse(f):(f||[]);}catch(e){return[];}}
+function fmt(n){return n?'₡'+parseInt(n).toLocaleString('es-CR'):'Consultar';}
+function fmtUsd(n){return n?'~$'+Math.round(n/500).toLocaleString('en-US'):'';}
+function setChip(el){document.querySelectorAll('.filter-chip').forEach(function(c){c.classList.remove('active');});el.classList.add('active');page=1;loadCars();}
 function buildParams(){
-  var urlP=new URLSearchParams(window.location.search);
+  var u=new URLSearchParams(window.location.search);
   var p=new URLSearchParams();
-  var marca=document.getElementById('fMarca').value || urlP.get('marca') || '';
-  var modelo=document.getElementById('searchInput').value || urlP.get('modelo') || '';
-  var prov=document.getElementById('fProv').value || urlP.get('provincia') || '';
-  var km=document.getElementById('fKm').value || '';
-  var pmax=document.getElementById('precioMax').value || '';
-  var yf=document.getElementById('yearFrom').value || '';
-  var yt=document.getElementById('yearTo').value || '';
+  var marca=document.getElementById('fMarca').value||u.get('marca')||'';
+  var modelo=document.getElementById('searchInput').value||u.get('modelo')||'';
+  var prov=document.getElementById('fProv').value||u.get('provincia')||'';
+  var km=document.getElementById('fKm').value||'';
+  var pmax=document.getElementById('precioMax').value||'';
+  var yf=document.getElementById('yearFrom').value||'';
+  var yt=document.getElementById('yearTo').value||'';
   if(marca)p.append('marca',marca);
   if(modelo)p.append('modelo',modelo);
   if(prov)p.append('provincia',prov);
@@ -194,36 +212,19 @@ function buildParams(){
   if(pmax)p.append('precio_max',pmax);
   if(yf)p.append('anio_min',yf);
   if(yt)p.append('anio_max',yt);
-  p.append('page',page);
-  p.append('limit',9);
+  p.append('page',page);p.append('limit',9);
   return p.toString();
 }
-
 function renderCard(c){
   var fotos=getFotos(c.fotos);
-  var imgHtml=fotos.length>0&&fotos[0].url
-    ?'<img src="'+fotos[0].url+'" alt="'+( c.marca||'')+'">'
-    :'<span style="font-size:60px">🚗</span>';
+  var img=fotos.length>0&&fotos[0].url?'<img src="'+fotos[0].url+'" alt="'+(c.marca||'')+'">':'<span style="font-size:60px">🚗</span>';
   return '<div class="car-card" onclick="location.href=\'detalle.html?id='+c.id+'\'">'+
-    '<div class="car-img">'+
-      (c.destacado?'<div class="badge badge-dest">Destacado</div>':'<div class="badge badge-nuevo">En venta</div>')+
-      imgHtml+
-    '</div>'+
-    '<div class="car-info">'+
-      '<div class="car-name">'+(c.marca||'')+' '+(c.modelo||'')+' '+(c.anio||'')+'</div>'+
-      '<div class="car-meta">'+
-        '<span>🛣️ '+(c.km?c.km.toLocaleString()+' km':'—')+'</span>'+
-        '<span>⛽ '+(c.combustible||'—')+'</span>'+
-      '</div>'+
-      '<div class="car-price">'+fmt(c.precio)+'<span class="car-price-usd">'+fmtUsd(c.precio)+'</span></div>'+
-    '</div>'+
-    '<div class="car-footer">'+
-      '<span class="car-loc">📍 '+(c.provincia||'Costa Rica')+'</span>'+
-      '<button class="btn-contact">Ver más</button>'+
-    '</div>'+
-  '</div>';
+    '<div class="car-img">'+(c.destacado?'<div class="badge badge-dest">Destacado</div>':'<div class="badge badge-nuevo">En venta</div>')+img+'</div>'+
+    '<div class="car-info"><div class="car-name">'+(c.marca||'')+' '+(c.modelo||'')+' '+(c.anio||'')+'</div>'+
+    '<div class="car-meta"><span>🛣️ '+(c.km?c.km.toLocaleString()+' km':'—')+'</span><span>⛽ '+(c.combustible||'—')+'</span></div>'+
+    '<div class="car-price">'+fmt(c.precio)+'<span class="car-price-usd">'+fmtUsd(c.precio)+'</span></div></div>'+
+    '<div class="car-footer"><span class="car-loc">📍 '+(c.provincia||'Costa Rica')+'</span><button class="btn-contact">Ver más</button></div></div>';
 }
-
 async function loadCars(){
   document.getElementById('grid').innerHTML='<div class="loading">Cargando...</div>';
   try{
@@ -231,31 +232,22 @@ async function loadCars(){
     var data=await res.json();
     var cars=data.anuncios||[];
     document.getElementById('countLabel').textContent=(data.total||0)+' vehículos encontrados';
-    if(!cars.length){
-      document.getElementById('grid').innerHTML='<div class="loading">No se encontraron vehículos.</div>';
-      document.getElementById('pag').innerHTML='';
-      return;
-    }
+    if(!cars.length){document.getElementById('grid').innerHTML='<div class="loading">No se encontraron vehículos.</div>';document.getElementById('pag').innerHTML='';return;}
     document.getElementById('grid').innerHTML=cars.map(renderCard).join('');
     var total=Math.ceil((data.total||0)/9);
     var pHtml='';
-    for(var i=1;i<=Math.min(total,5);i++){
-      pHtml+='<button class="page-btn'+(i===page?' active':'')+'" onclick="goPage('+i+')">'+i+'</button>';
-    }
+    for(var i=1;i<=Math.min(total,5);i++)pHtml+='<button class="page-btn'+(i===page?' active':'')+'" onclick="goPage('+i+')">'+i+'</button>';
     document.getElementById('pag').innerHTML=pHtml;
-  }catch(e){
-    document.getElementById('grid').innerHTML='<div class="loading">Error cargando anuncios.</div>';
-  }
+  }catch(e){document.getElementById('grid').innerHTML='<div class="loading">Error cargando anuncios.</div>';}
 }
-
-function goPage(p){ page=p; loadCars(); window.scrollTo(0,200); }
-
-// Leer params de URL
+function goPage(p){page=p;loadCars();window.scrollTo(0,200);}
 var urlParams=new URLSearchParams(window.location.search);
-if(urlParams.get('marca')) document.getElementById('fMarca').value=urlParams.get('marca');
-if(urlParams.get('provincia')) document.getElementById('fProv').value=urlParams.get('provincia');
-
+if(urlParams.get('marca'))document.getElementById('fMarca').value=urlParams.get('marca');
+if(urlParams.get('modelo'))document.getElementById('searchInput').value=urlParams.get('modelo');
+if(urlParams.get('provincia'))document.getElementById('fProv').value=urlParams.get('provincia');
 loadCars();
 </script>
+<script src="/chat_fix.js"></script>
+<script src="/chat.js"></script>
 </body>
 </html>

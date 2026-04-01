@@ -71,20 +71,80 @@ nav ul a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px}
 .success-box h2{font-size:24px;font-weight:800;margin-bottom:10px}
 .success-box p{color:rgba(255,255,255,0.5);font-size:14px;line-height:1.7;margin-bottom:28px}
 .btn-success{background:#0051BA;color:#fff;border:none;border-radius:10px;padding:14px 32px;font-size:15px;font-weight:700;cursor:pointer;margin:0 6px}
+
+@media(max-width:768px){
+  .layout{padding:16px!important;grid-template-columns:1fr!important}
+  .sidebar{display:none!important}
+  .form-section{padding:16px!important;margin-bottom:12px!important}
+  .hero-bar{padding:24px 16px!important}
+}
 </style>
-<link rel="stylesheet" href="responsive.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.svg"></head>
+<link rel="stylesheet" href="responsive.css"><style>.hamburger-btn{display:none;}.hamburger-btn span{display:block;height:3px;width:26px;background:#fff;border-radius:2px;transition:all .25s} @media(max-width:768px){nav{padding:14px 20px!important} nav ul,.nav-links{display:none!important} .btn-nav{display:none!important} .hamburger-btn{display:flex!important;flex-direction:column;justify-content:center;align-items:center;width:40px;height:40px;gap:6px;background:none;border:none;cursor:pointer;padding:4px} .layout{grid-template-columns:1fr!important} .sidebar{display:none!important} .hero-bar{padding:24px 16px!important} .form-section{padding:20px 16px!important} .form-grid{grid-template-columns:1fr!important;gap:12px!important} .extras-grid{grid-template-columns:1fr 1fr!important}}</style><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.svg"><meta property="og:title" content="Publicar Anuncio Gratis — Autos Premium CR">
+<meta property="og:description" content="Publicá tu auto gratis y llegá a miles de compradores en Costa Rica.">
+<meta property="og:image" content="https://autospremiumcostarica.com/og-image.png">
+<meta property="og:url" content="https://autospremiumcostarica.com/publicar.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://autospremiumcostarica.com/og-image.png">
+</head>
 <body>
 <nav>
-  <div class="logo" onclick="location.href='index.html'">
-    <img src="/logo.png" style="height:36px;width:auto">
+  <div class="logo">
+    <img src="/logo.png" style="height:36px;width:auto" alt="Logo">
     <div class="logo-text">AUTOS <span>PREMIUM</span> CR</div>
   </div>
-  <ul>
+
+  <ul class="nav-links">
     <li><a href="index.html">Inicio</a></li>
     <li><a href="resultados.html">Vehículos</a></li>
+    <li><a href="valuador.html">Valuador IA</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contacto.html">Contáctenos</a></li>
   </ul>
-  <button class="btn-nav">Mi cuenta</button>
+
+  <button class="btn-nav" onclick="location.href='publicar.html'">+ Publicar anuncio</button>
+
+  <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menú">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
+
+<!-- Mobile nav (outside nav for clean stacking) -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Inicio</a>
+  <a href="resultados.html">Vehículos</a>
+  <a href="valuador.html">Valuador IA</a>
+  <a href="blog.html">Blog</a>
+  <a href="contacto.html">Contáctenos</a>
+  <a href="publicar.html" style="color:#6ab4ff">+ Publicar anuncio</a>
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('hamburgerBtn');
+  var menu = document.getElementById('mobileNav');
+  function close(){
+    menu.classList.remove('open');
+    btn.children[0].style.transform='';
+    btn.children[1].style.opacity='1';
+    btn.children[2].style.transform='';
+  }
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var isOpen = menu.classList.toggle('open');
+    btn.children[0].style.transform = isOpen ? 'rotate(45deg) translate(6px,7px)' : '';
+    btn.children[1].style.opacity   = isOpen ? '0' : '1';
+    btn.children[2].style.transform = isOpen ? 'rotate(-45deg) translate(8px,-7px)' : '';
+  });
+  document.addEventListener('click', function(e){
+    if(menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) close();
+  });
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+})();
+</script>
+
 <div class="hero-bar">
   <h1>Publicar anuncio</h1>
   <p>Completá el formulario y tu vehículo estará visible en minutos. ¡Es gratis!</p>
@@ -577,5 +637,5 @@ document.getElementById('btnSubmit').addEventListener('click', async function(){
   }
 });
 </script>
-<script src="/chat.js"></script><script src="/chat_fix.js"></script><script src="/chat.js"></script><script src="/chat.js"></script></body>
+<script src="/chat_fix.js"></script><script src="/chat.js"></script></body>
 </html>

@@ -69,22 +69,90 @@ footer{background:#000d1a;padding:40px 48px;display:flex;align-items:center;just
 .article-body ul li{font-size:15px;color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:6px;font-weight:300}
 .article-tip{background:#0d1929;border-left:3px solid #0051BA;border-radius:0 10px 10px 0;padding:16px 20px;margin:20px 0}
 .article-tip p{color:rgba(255,255,255,0.75);font-size:14px;margin:0}
+
+@media(max-width:768px){
+  .content{padding:24px 16px}
+  .blog-grid{grid-template-columns:1fr!important;gap:16px}
+  .featured-card{grid-template-columns:1fr!important}
+  .featured-img{height:180px}
+  .featured-info{padding:20px}
+  .featured-info .blog-title{font-size:18px}
+  .hero-bar{padding:32px 16px}
+  .hero-bar h1{font-size:24px}
+  .cta-section{padding:28px 16px}
+  .cta-section h2{font-size:22px}
+  .article-view{padding:24px 16px}
+  .article-title{font-size:24px}
+  footer{flex-direction:column;gap:12px;text-align:center;padding:24px 16px}
+  .footer-links{justify-content:center}
+}
 </style>
+<style>.hamburger-btn{display:none;}.hamburger-btn span{display:block;height:3px;width:26px;background:#fff;border-radius:2px;transition:all .25s} @media(max-width:768px){nav{padding:14px 20px!important} nav ul,.nav-links{display:none!important} .btn-nav{display:none!important} .hamburger-btn{display:flex!important;flex-direction:column;justify-content:center;align-items:center;width:40px;height:40px;gap:6px;background:none;border:none;cursor:pointer;padding:4px}}</style><meta property="og:title" content="Blog de Autos — Autos Premium CR">
+<meta property="og:description" content="Consejos para comprar y vender autos en Costa Rica.">
+<meta property="og:image" content="https://autospremiumcostarica.com/og-image.png">
+<meta property="og:url" content="https://autospremiumcostarica.com/blog.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://autospremiumcostarica.com/og-image.png">
 </head>
 <body>
 <nav>
-  <div class="logo" onclick="showList()">
-    <img src="/logo.png" style="height:36px;width:auto">
+  <div class="logo">
+    <img src="/logo.png" style="height:36px;width:auto" alt="Logo">
     <div class="logo-text">AUTOS <span>PREMIUM</span> CR</div>
   </div>
-  <ul>
+
+  <ul class="nav-links">
     <li><a href="index.html">Inicio</a></li>
     <li><a href="resultados.html">Vehículos</a></li>
-    <li><a href="valuador.html">Valuador IA</a></li><li><a href="blog.html">Blog</a></li>
+    <li><a href="valuador.html">Valuador IA</a></li>
+    <li><a href="blog.html">Blog</a></li>
     <li><a href="contacto.html">Contáctenos</a></li>
   </ul>
+
   <button class="btn-nav" onclick="location.href='publicar.html'">+ Publicar anuncio</button>
+
+  <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menú">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
+
+<!-- Mobile nav (outside nav for clean stacking) -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Inicio</a>
+  <a href="resultados.html">Vehículos</a>
+  <a href="valuador.html">Valuador IA</a>
+  <a href="blog.html">Blog</a>
+  <a href="contacto.html">Contáctenos</a>
+  <a href="publicar.html" style="color:#6ab4ff">+ Publicar anuncio</a>
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('hamburgerBtn');
+  var menu = document.getElementById('mobileNav');
+  function close(){
+    menu.classList.remove('open');
+    btn.children[0].style.transform='';
+    btn.children[1].style.opacity='1';
+    btn.children[2].style.transform='';
+  }
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var isOpen = menu.classList.toggle('open');
+    btn.children[0].style.transform = isOpen ? 'rotate(45deg) translate(6px,7px)' : '';
+    btn.children[1].style.opacity   = isOpen ? '0' : '1';
+    btn.children[2].style.transform = isOpen ? 'rotate(-45deg) translate(8px,-7px)' : '';
+  });
+  document.addEventListener('click', function(e){
+    if(menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) close();
+  });
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+})();
+</script>
+
 
 <div id="heroBar" class="hero-bar">
   <h1>Blog <span>Autos Premium CR</span></h1>
@@ -177,7 +245,7 @@ var articles = [
       <div class="article-tip"><p>💡 Un precio 5% por debajo del mercado puede generar el doble de consultas y cerrar la venta en la mitad del tiempo.</p></div>
       <h2>2. Las fotos lo son todo</h2>
       <p>El 80% de los compradores decide si va a contactarte o no basándose únicamente en las fotos. Tomá fotos de día, con buena luz, desde múltiples ángulos: frente, perfil, trasera, interior, tablero, motor y detalles importantes.</p>
-      <ul>
+      <ul class="nav-links nav-hide-mobile">
         <li>Lavá el auto antes de fotografiarlo</li>
         <li>Usá un fondo limpio y despejado</li>
         <li>Subí mínimo 8 fotos</li>
@@ -347,5 +415,5 @@ function showList(){
   window.scrollTo(0,0);
 }
 </script>
-<script src="/chat.js"></script><script src="/chat_fix.js"></script><script src="/chat.js"></script><script src="/chat.js"></script></body>
+<script src="/chat_fix.js"></script><script src="/chat.js"></script></body>
 </html>
