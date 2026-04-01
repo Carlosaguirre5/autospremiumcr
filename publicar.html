@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Publicar Anuncio Gratis — Vender Auto en Costa Rica</title>
+<meta name="description" content="Publicá tu auto gratis en Autos Premium CR y llegá a miles de compradores en Costa Rica. Rápido, fácil y seguro.">
+<meta name="keywords" content="vender auto Costa Rica, publicar anuncio auto gratis CR">
+<meta name="robots" content="index, follow">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0e1a;color:#fff}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:rgba(0,45,71,0.97);border-bottom:1px solid rgba(0,81,186,0.3);position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer}
+.logo-mark{background:#0051BA;color:#fff;font-weight:900;font-size:20px;padding:5px 9px;border-radius:6px}
+.logo-text{font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase}
+.logo-text span{color:#0051BA;background:#fff;padding:1px 4px;border-radius:3px;margin:0 2px}
+nav ul{display:flex;gap:28px;list-style:none}
+nav ul a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px}
+.btn-nav{background:#0051BA;color:#fff;border:none;padding:9px 20px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer}
+.hero-bar{background:linear-gradient(135deg,#002D47,#001a2e);padding:36px 40px;border-bottom:1px solid rgba(0,81,186,0.2)}
+.hero-bar h1{font-size:26px;font-weight:800;margin-bottom:6px}
+.hero-bar p{color:rgba(255,255,255,0.45);font-size:14px;font-weight:300}
+.layout{display:grid;grid-template-columns:1fr 300px;gap:28px;padding:32px 40px;max-width:1100px;margin:0 auto}
+.form-section{background:#0d1929;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px;margin-bottom:20px}
+.section-title{font-size:16px;font-weight:700;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:10px}
+.section-icon{width:32px;height:32px;background:rgba(0,81,186,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-full{grid-column:1/-1}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;font-weight:600;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:.8px}
+.field label span{color:#e05252;margin-left:2px}
+.field input,.field select,.field textarea{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:#fff;padding:11px 14px;font-size:14px;font-family:'Inter',sans-serif;transition:border-color .2s}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#0051BA}
+.field select{appearance:none;cursor:pointer}
+.field select option{background:#002D47}
+.field textarea{resize:vertical;min-height:120px;line-height:1.6}
+.field-hint{font-size:11px;color:rgba(255,255,255,0.25);margin-top:2px}
+.char-count{font-size:11px;color:rgba(255,255,255,0.25);text-align:right}
+.extras-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.extra-item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:rgba(255,255,255,0.03);border-radius:7px}
+.extra-item input{accent-color:#0051BA}
+.extra-item label{font-size:13px;color:rgba(255,255,255,0.6);cursor:pointer}
+.upload-area{border:2px dashed rgba(255,255,255,0.2);border-radius:12px;padding:36px 20px;text-align:center;background:rgba(255,255,255,0.02);cursor:pointer;transition:all .2s}
+.upload-area:hover{border-color:#0051BA;background:rgba(0,81,186,0.05)}
+.upload-icon{font-size:36px;margin-bottom:12px}
+.upload-title{font-size:15px;font-weight:600;margin-bottom:6px}
+.upload-sub{font-size:13px;color:rgba(255,255,255,0.35);line-height:1.5}
+.photos-preview{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.photo-thumb{border-radius:9px;height:80px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.1)}
+.photo-thumb img{width:100%;height:100%;object-fit:cover}
+.photo-remove{position:absolute;top:4px;right:4px;background:rgba(224,82,82,0.9);border:none;border-radius:50%;width:20px;height:20px;color:#fff;font-size:11px;cursor:pointer;font-weight:700}
+.photo-main-badge{position:absolute;bottom:4px;left:4px;background:rgba(0,81,186,0.85);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px}
+.submit-section{display:flex;gap:12px;margin-top:4px}
+.btn-submit{flex:1;background:#0051BA;color:#fff;border:none;border-radius:11px;padding:16px;font-size:15px;font-weight:700;cursor:pointer;transition:background .2s}
+.btn-submit:hover{background:#0040a0}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed}
+.sidebar{height:fit-content;position:sticky;top:80px}
+.preview-card{background:#0d1929;border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;margin-bottom:16px}
+.preview-img{height:160px;background:linear-gradient(135deg,#001a2e,#002D47);display:flex;align-items:center;justify-content:center;font-size:64px;overflow:hidden}
+.preview-img img{width:100%;height:100%;object-fit:cover}
+.preview-info{padding:16px}
+.preview-name{font-size:15px;font-weight:700;margin-bottom:4px}
+.preview-meta{font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:10px}
+.preview-price{font-size:20px;font-weight:800}
+.success-overlay{display:none;position:fixed;inset:0;background:rgba(0,10,20,0.92);z-index:200;align-items:center;justify-content:center}
+.success-overlay.show{display:flex}
+.success-box{background:#0d1929;border:1px solid rgba(0,81,186,0.4);border-radius:20px;padding:48px 40px;text-align:center;max-width:440px}
+.success-icon{font-size:56px;margin-bottom:20px}
+.success-box h2{font-size:24px;font-weight:800;margin-bottom:10px}
+.success-box p{color:rgba(255,255,255,0.5);font-size:14px;line-height:1.7;margin-bottom:28px}
+.btn-success{background:#0051BA;color:#fff;border:none;border-radius:10px;padding:14px 32px;font-size:15px;font-weight:700;cursor:pointer;margin:0 6px}
+</style>
+<link rel="stylesheet" href="responsive.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.svg"><style>@media(max-width:768px){.nav-hide-mobile{display:none!important}.hamburger{display:flex!important}}</style></head>
+<body>
+<nav>
+  <div class="logo">
+    <img src="/logo.png" style="height:36px;width:auto" alt="Logo">
+    <div class="logo-text">AUTOS <span>PREMIUM</span> CR</div>
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="resultados.html">Vehículos</a></li>
+    <li><a href="valuador.html">Valuador IA</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contacto.html">Contáctenos</a></li>
+  </ul>
+
+  <button class="btn-nav" onclick="location.href='publicar.html'">+ Publicar anuncio</button>
+
+  <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menú">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- Mobile nav (outside nav for clean stacking) -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Inicio</a>
+  <a href="resultados.html">Vehículos</a>
+  <a href="valuador.html">Valuador IA</a>
+  <a href="blog.html">Blog</a>
+  <a href="contacto.html">Contáctenos</a>
+  <a href="publicar.html" style="color:#6ab4ff">+ Publicar anuncio</a>
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('hamburgerBtn');
+  var menu = document.getElementById('mobileNav');
+  function close(){
+    menu.classList.remove('open');
+    btn.children[0].style.transform='';
+    btn.children[1].style.opacity='1';
+    btn.children[2].style.transform='';
+  }
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var isOpen = menu.classList.toggle('open');
+    btn.children[0].style.transform = isOpen ? 'rotate(45deg) translate(6px,7px)' : '';
+    btn.children[1].style.opacity   = isOpen ? '0' : '1';
+    btn.children[2].style.transform = isOpen ? 'rotate(-45deg) translate(8px,-7px)' : '';
+  });
+  document.addEventListener('click', function(e){
+    if(menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) close();
+  });
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+})();
+</script>
+
+<div class="hero-bar">
+  <h1>Publicar anuncio</h1>
+  <p>Completá el formulario y tu vehículo estará visible en minutos. ¡Es gratis!</p>
+</div>
+<div class="layout">
+  <div>
+    <div class="form-section">
+      <div class="section-title"><div class="section-icon">🚗</div>Información del vehículo</div>
+      <div class="form-grid">
+        <div class="field"><label>Marca <span>*</span></label><select id="marca">
+<option value="">Todas las marcas</option>
+<option value="Aion">Aion</option>
+<option value="Alfa Romeo">Alfa Romeo</option>
+<option value="AMC">AMC</option>
+<option value="Aro">Aro</option>
+<option value="Asia">Asia</option>
+<option value="Aston Martin">Aston Martin</option>
+<option value="Audi">Audi</option>
+<option value="Austin">Austin</option>
+<option value="BAIC">BAIC</option>
+<option value="Baw">Baw</option>
+<option value="Bentley">Bentley</option>
+<option value="Bluebird">Bluebird</option>
+<option value="BMW">BMW</option>
+<option value="Brilliance">Brilliance</option>
+<option value="Buick">Buick</option>
+<option value="BYD">BYD</option>
+<option value="Cadillac">Cadillac</option>
+<option value="Chana">Chana</option>
+<option value="Changan">Changan</option>
+<option value="Chery">Chery</option>
+<option value="Chevrolet">Chevrolet</option>
+<option value="Chrysler">Chrysler</option>
+<option value="Citroen">Citroen</option>
+<option value="CMC">CMC</option>
+<option value="Dacia">Dacia</option>
+<option value="Daewoo">Daewoo</option>
+<option value="Daihatsu">Daihatsu</option>
+<option value="Datsun">Datsun</option>
+<option value="Dodge/RAM">Dodge/RAM</option>
+<option value="Donfeng">Donfeng</option>
+<option value="Eagle">Eagle</option>
+<option value="Faw">Faw</option>
+<option value="Ferrari">Ferrari</option>
+<option value="Fiat">Fiat</option>
+<option value="Ford">Ford</option>
+<option value="Foton">Foton</option>
+<option value="Freightliner">Freightliner</option>
+<option value="Geely">Geely</option>
+<option value="Genesis">Genesis</option>
+<option value="Geo">Geo</option>
+<option value="GMC">GMC</option>
+<option value="Gonow">Gonow</option>
+<option value="Great Wall">Great Wall</option>
+<option value="Hafei">Hafei</option>
+<option value="Haima">Haima</option>
+<option value="Haval">Haval</option>
+<option value="Heibao">Heibao</option>
+<option value="Higer">Higer</option>
+<option value="Hino">Hino</option>
+<option value="Honda">Honda</option>
+<option value="Hummer">Hummer</option>
+<option value="Hycan">Hycan</option>
+<option value="Hyundai">Hyundai</option>
+<option value="Infiniti">Infiniti</option>
+<option value="International">International</option>
+<option value="Isuzu">Isuzu</option>
+<option value="Iveco">Iveco</option>
+<option value="JAC">JAC</option>
+<option value="Jaecoo">Jaecoo</option>
+<option value="Jaguar">Jaguar</option>
+<option value="Jeep">Jeep</option>
+<option value="Jetour">Jetour</option>
+<option value="Jinbei">Jinbei</option>
+<option value="JMC">JMC</option>
+<option value="Jonway">Jonway</option>
+<option value="Kaiyi">Kaiyi</option>
+<option value="Kenworth">Kenworth</option>
+<option value="Kia">Kia</option>
+<option value="Lada">Lada</option>
+<option value="Lamborghini">Lamborghini</option>
+<option value="Lancia">Lancia</option>
+<option value="Land Rover">Land Rover</option>
+<option value="Lexus">Lexus</option>
+<option value="Lifan">Lifan</option>
+<option value="Lincoln">Lincoln</option>
+<option value="Lotus">Lotus</option>
+<option value="Mack">Mack</option>
+<option value="Magiruz">Magiruz</option>
+<option value="Mahindra">Mahindra</option>
+<option value="Marcopolo">Marcopolo</option>
+<option value="Maserati">Maserati</option>
+<option value="Maxus">Maxus</option>
+<option value="Mazda">Mazda</option>
+<option value="Mercedes-Benz">Mercedes-Benz</option>
+<option value="Mercury">Mercury</option>
+<option value="MG">MG</option>
+<option value="Mini">Mini</option>
+<option value="Mitsubishi">Mitsubishi</option>
+<option value="Neta">Neta</option>
+<option value="Nissan">Nissan</option>
+<option value="Oldsmobile">Oldsmobile</option>
+<option value="Omoda">Omoda</option>
+<option value="Opel">Opel</option>
+<option value="Peterbilt">Peterbilt</option>
+<option value="Peugeot">Peugeot</option>
+<option value="Piaggio">Piaggio</option>
+<option value="Plymouth">Plymouth</option>
+<option value="Polarsun">Polarsun</option>
+<option value="Pontiac">Pontiac</option>
+<option value="Porsche">Porsche</option>
+<option value="Proton">Proton</option>
+<option value="Rambler">Rambler</option>
+<option value="Renault">Renault</option>
+<option value="Reva">Reva</option>
+<option value="Rivian">Rivian</option>
+<option value="Rolls Royce">Rolls Royce</option>
+<option value="Rover">Rover</option>
+<option value="Saab">Saab</option>
+<option value="Samsung">Samsung</option>
+<option value="Saturn">Saturn</option>
+<option value="Scania">Scania</option>
+<option value="Scion">Scion</option>
+<option value="Seat">Seat</option>
+<option value="Shineray">Shineray</option>
+<option value="Skoda">Skoda</option>
+<option value="Smart">Smart</option>
+<option value="Soueast">Soueast</option>
+<option value="Ssang Yong">Ssang Yong</option>
+<option value="Subaru">Subaru</option>
+<option value="Suzuki">Suzuki</option>
+<option value="Tesla">Tesla</option>
+<option value="Tianma">Tianma</option>
+<option value="Tiger Truck">Tiger Truck</option>
+<option value="Toyota">Toyota</option>
+<option value="VGV">VGV</option>
+<option value="Volkswagen">Volkswagen</option>
+<option value="Volvo">Volvo</option>
+<option value="Western Star">Western Star</option>
+<option value="Xiaomi">Xiaomi</option>
+<option value="Xpeng">Xpeng</option>
+<option value="Yugo">Yugo</option>
+<option value="Zap">Zap</option>
+<option value="Zeekr">Zeekr</option>
+<option value="Zotye">Zotye</option>
+</select></div>
+        <div class="field"><label>Modelo <span>*</span></label><input type="text" id="modelo" placeholder="Ej: Corolla, Civic"></div>
+        <div class="field"><label>Año <span>*</span></label><select id="anio">
+<option value="">Cualquier año</option>
+<option value="2026">2026</option>
+<option value="2025">2025</option>
+<option value="2024">2024</option>
+<option value="2023">2023</option>
+<option value="2022">2022</option>
+<option value="2021">2021</option>
+<option value="2020">2020</option>
+<option value="2019">2019</option>
+<option value="2018">2018</option>
+<option value="2017">2017</option>
+<option value="2016">2016</option>
+<option value="2015">2015</option>
+<option value="2014">2014</option>
+<option value="2013">2013</option>
+<option value="2012">2012</option>
+<option value="2011">2011</option>
+<option value="2010">2010</option>
+<option value="2009">2009</option>
+<option value="2008">2008</option>
+<option value="2007">2007</option>
+<option value="2006">2006</option>
+<option value="2005">2005</option>
+<option value="2004">2004</option>
+<option value="2003">2003</option>
+<option value="2002">2002</option>
+<option value="2001">2001</option>
+<option value="2000">2000</option>
+<option value="1999">1999</option>
+<option value="1998">1998</option>
+<option value="1997">1997</option>
+<option value="1996">1996</option>
+<option value="1995">1995</option>
+<option value="1994">1994</option>
+<option value="1993">1993</option>
+<option value="1992">1992</option>
+<option value="1991">1991</option>
+<option value="1990">1990</option>
+<option value="1989">1989</option>
+<option value="1988">1988</option>
+<option value="1987">1987</option>
+<option value="1986">1986</option>
+<option value="1985">1985</option>
+<option value="1984">1984</option>
+<option value="1983">1983</option>
+<option value="1982">1982</option>
+<option value="1981">1981</option>
+<option value="1980">1980</option>
+<option value="1979">1979</option>
+<option value="1978">1978</option>
+<option value="1977">1977</option>
+<option value="1976">1976</option>
+<option value="1975">1975</option>
+<option value="1974">1974</option>
+<option value="1973">1973</option>
+<option value="1972">1972</option>
+<option value="1971">1971</option>
+<option value="1970">1970</option>
+<option value="1969">1969</option>
+<option value="1968">1968</option>
+<option value="1967">1967</option>
+<option value="1966">1966</option>
+<option value="1965">1965</option>
+<option value="1964">1964</option>
+<option value="1963">1963</option>
+<option value="1962">1962</option>
+<option value="1961">1961</option>
+<option value="1960">1960</option>
+</select></div>
+        <div class="field"><label>Kilometraje <span>*</span></label><input type="number" id="km" placeholder="Ej: 45000"></div>
+        <div class="field"><label>Combustible</label><select id="combustible"><option value="">Seleccionar</option><option>Gasolina</option><option>Diésel</option><option>Híbrido</option><option>Eléctrico</option></select></div>
+        <div class="field"><label>Transmisión</label><select id="transmision"><option value="">Seleccionar</option><option>Automático</option><option>Manual</option><option>CVT</option></select></div>
+        <div class="field"><label>Color</label><input type="text" id="color" placeholder="Ej: Blanco, Negro"></div>
+        <div class="field"><label>Motor</label><input type="text" id="motor" placeholder="Ej: 1.8L"></div>
+        <div class="field form-full"><label>Descripción <span>*</span></label><textarea id="desc" placeholder="Describí tu vehículo..."></textarea><div class="char-count"><span id="charNum">0</span> / 1000</div></div>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="section-title"><div class="section-icon">📷</div>Fotos del vehículo</div>
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-icon">📤</div>
+        <div class="upload-title">Tocá para subir fotos</div>
+        <div class="upload-sub">JPG, PNG hasta 10MB · Máximo 15 imágenes</div>
+      </div>
+      <div class="photos-preview" id="photosPreview"></div>
+    </div>
+    <div class="form-section">
+      <div class="section-title"><div class="section-icon">⚙️</div>Accesorios</div>
+      <div class="extras-grid">
+        <div class="extra-item"><input type="checkbox" id="e1"><label for="e1">Aire acondicionado</label></div>
+        <div class="extra-item"><input type="checkbox" id="e2"><label for="e2">Cámara de reversa</label></div>
+        <div class="extra-item"><input type="checkbox" id="e3"><label for="e3">Sensores de parqueo</label></div>
+        <div class="extra-item"><input type="checkbox" id="e4"><label for="e4">Pantalla táctil</label></div>
+        <div class="extra-item"><input type="checkbox" id="e5"><label for="e5">Bluetooth</label></div>
+        <div class="extra-item"><input type="checkbox" id="e6"><label for="e6">Vidrios eléctricos</label></div>
+        <div class="extra-item"><input type="checkbox" id="e7"><label for="e7">Sunroof</label></div>
+        <div class="extra-item"><input type="checkbox" id="e8"><label for="e8">RITEVE vigente</label></div>
+        <div class="extra-item"><input type="checkbox" id="e9"><label for="e9">Un solo dueño</label></div>
+        <div class="extra-item"><input type="checkbox" id="e10"><label for="e10">Servicio en agencia</label></div>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="section-title"><div class="section-icon">💰</div>Precio</div>
+      <div class="form-grid">
+        <div class="field"><label>Precio en colones <span>*</span></label><input type="number" id="precio" placeholder="Ej: 9500000"><div class="field-hint">Sin puntos ni comas</div></div>
+        <div class="field"><label>Equivalente en dólares</label><input type="text" id="precioUsd" readonly style="opacity:.5;cursor:not-allowed"></div>
+        <div class="field form-full"><label>Condiciones</label><select id="condiciones"><option value="">Ninguna</option><option>Acepta vehículo menor valor</option><option>Acepta financiamiento</option><option>Solo contado</option></select></div>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="section-title"><div class="section-icon">📞</div>Contacto</div>
+      <div class="form-grid">
+        <div class="field"><label>Nombre <span>*</span></label><input type="text" id="nombre" placeholder="Tu nombre completo"></div>
+        <div class="field">
+          <label>Teléfono / WhatsApp <span>*</span></label>
+          <div style="display:flex;gap:8px">
+            <input type="tel" id="telefono" placeholder="Ej: 8888-8888" style="flex:1" oninput="resetVerificacion()">
+            <button type="button" id="btnOtp" onclick="enviarOTP()" style="background:#0051BA;color:#fff;border:none;border-radius:9px;padding:0 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0">Verificar</button>
+          </div>
+        </div>
+        <div id="otpBlock" style="display:none">
+          <div class="field">
+            <label>Código de verificación</label>
+            <div style="display:flex;gap:8px">
+              <input type="text" id="otpCodigo" placeholder="Ingresá el código de 6 dígitos" maxlength="6" style="flex:1;letter-spacing:4px;font-size:16px;text-align:center">
+              <button type="button" onclick="verificarOTP()" style="background:#22c55e;color:#fff;border:none;border-radius:9px;padding:0 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0">Confirmar</button>
+            </div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:4px">Revisá tu WhatsApp — el código vence en 10 minutos</div>
+          </div>
+        </div>
+        <div id="verificadoBadge" style="display:none;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);border-radius:8px;padding:10px 14px;font-size:13px;color:#4ade80;display:none">
+          ✅ Número verificado
+        </div>
+        <div class="field"><label>Provincia <span>*</span></label><select id="provincia"><option value="">Seleccionar</option><option>San José</option><option>Alajuela</option><option>Heredia</option><option>Cartago</option><option>Guanacaste</option><option>Puntarenas</option><option>Limón</option></select></div>
+        <div class="field"><label>Cantón</label><input type="text" id="canton" placeholder="Ej: Escazú"></div>
+      </div>
+    </div>
+    <div class="submit-section">
+      <button class="btn-submit" id="btnSubmit">Publicar anuncio gratis →</button>
+    </div>
+  </div>
+  <div class="sidebar">
+    <div class="preview-card">
+      <div class="preview-img" id="prevImg">🚗</div>
+      <div class="preview-info">
+        <div class="preview-name" id="prevName">Tu anuncio aparecerá así</div>
+        <div class="preview-meta" id="prevMeta">Completá el formulario</div>
+        <div class="preview-price" id="prevPrice">₡ —</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="success-overlay" id="successOverlay">
+  <div class="success-box">
+    <div class="success-icon">🎉</div>
+    <h2>¡Anuncio enviado!</h2>
+    <p>Tu vehículo fue recibido y está pendiente de aprobación.</p>
+    <div>
+      <button class="btn-success" onclick="location.href='index.html'">Ver el sitio</button>
+      <button class="btn-success" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15)" onclick="location.reload()">Publicar otro</button>
+    </div>
+  </div>
+</div>
+<script>
+var API = 'https://autospremiumcostarica.com/api';
+var telefonoVerificado = false;
+
+function resetVerificacion(){
+  telefonoVerificado = false;
+  document.getElementById('otpBlock').style.display = 'none';
+  var badge = document.getElementById('verificadoBadge');
+  badge.style.display = 'none';
+  document.getElementById('btnOtp').textContent = 'Verificar';
+  document.getElementById('btnOtp').style.background = '#0051BA';
+  document.getElementById('btnOtp').disabled = false;
+}
+
+async function enviarOTP(){
+  var tel = document.getElementById('telefono').value.replace(/[^0-9]/g,'');
+  if(tel.length < 8){ alert('Ingresá un número de teléfono válido'); return; }
+  var btn = document.getElementById('btnOtp');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  try {
+    var res = await fetch(API+'/otp/enviar', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({telefono: tel})
+    });
+    if(res.ok){
+      document.getElementById('otpBlock').style.display = 'block';
+      btn.textContent = 'Reenviar';
+      btn.disabled = false;
+      document.getElementById('otpCodigo').focus();
+    } else {
+      alert('Error enviando el código. Intentá de nuevo.');
+      btn.disabled = false;
+      btn.textContent = 'Verificar';
+    }
+  } catch(e){
+    alert('Error de conexión.');
+    btn.disabled = false;
+    btn.textContent = 'Verificar';
+  }
+}
+
+async function verificarOTP(){
+  var tel = document.getElementById('telefono').value.replace(/[^0-9]/g,'');
+  var codigo = document.getElementById('otpCodigo').value.trim();
+  if(codigo.length !== 6){ alert('Ingresá el código de 6 dígitos'); return; }
+  try {
+    var res = await fetch(API+'/otp/verificar', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({telefono: tel, codigo: codigo})
+    });
+    var data = await res.json();
+    if(res.ok && data.verificado){
+      telefonoVerificado = true;
+      document.getElementById('otpBlock').style.display = 'none';
+      var badge = document.getElementById('verificadoBadge');
+      badge.style.display = 'block';
+      document.getElementById('btnOtp').textContent = '✅ Verificado';
+      document.getElementById('btnOtp').style.background = '#22c55e';
+      document.getElementById('btnOtp').disabled = true;
+    } else {
+      alert(data.error || 'Código incorrecto. Intentá de nuevo.');
+    }
+  } catch(e){
+    alert('Error de conexión.');
+  }
+}
+var selectedFiles = [];
+
+var fileInput = document.createElement('input');
+fileInput.type = 'file';
+fileInput.multiple = true;
+fileInput.accept = 'image/*';
+fileInput.style.cssText = 'position:fixed;top:-200px;left:-200px;width:1px;height:1px;opacity:0';
+document.body.appendChild(fileInput);
+
+document.getElementById('uploadArea').addEventListener('click', function(){
+  fileInput.click();
+});
+
+fileInput.addEventListener('change', function(){
+  if(!this.files || this.files.length === 0) return;
+  Array.from(this.files).forEach(function(f){
+    if(selectedFiles.length >= 15) return;
+    selectedFiles.push(f);
+    var idx = selectedFiles.length - 1;
+    var reader = new FileReader();
+    reader.onload = function(e){
+      var prev = document.getElementById('photosPreview');
+      var div = document.createElement('div');
+      div.className = 'photo-thumb';
+      div.innerHTML = '<img src="'+e.target.result+'"><button class="photo-remove">✕</button>'+(idx===0?'<div class="photo-main-badge">Principal</div>':'');
+      div.querySelector('.photo-remove').onclick = function(){
+        selectedFiles.splice(idx,1);
+        div.remove();
+      };
+      prev.appendChild(div);
+      if(idx === 0){
+        document.getElementById('prevImg').innerHTML = '<img src="'+e.target.result+'">';
+      }
+    };
+    reader.readAsDataURL(f);
+  });
+  fileInput.value = '';
+});
+
+document.getElementById('marca').addEventListener('change', updatePreview);
+document.getElementById('modelo').addEventListener('input', updatePreview);
+document.getElementById('anio').addEventListener('change', updatePreview);
+document.getElementById('km').addEventListener('input', updatePreview);
+document.getElementById('precio').addEventListener('input', function(){
+  updatePreview();
+  var p = parseInt(this.value);
+  document.getElementById('precioUsd').value = p ? '~$'+Math.round(p/500).toLocaleString('en-US') : '';
+});
+document.getElementById('desc').addEventListener('input', function(){
+  document.getElementById('charNum').textContent = this.value.length;
+});
+
+function updatePreview(){
+  var m = document.getElementById('marca').value;
+  var mo = document.getElementById('modelo').value;
+  var a = document.getElementById('anio').value;
+  var km = document.getElementById('km').value;
+  var p = document.getElementById('precio').value;
+  document.getElementById('prevName').textContent = (m||mo) ? (m+' '+mo+(a?' '+a:'')).trim() : 'Tu vehículo';
+  document.getElementById('prevMeta').textContent = km ? parseInt(km).toLocaleString()+' km' : 'Completá el formulario';
+  document.getElementById('prevPrice').textContent = p ? '₡'+parseInt(p).toLocaleString('es-CR') : '₡ —';
+}
+
+document.getElementById('btnSubmit').addEventListener('click', async function(){
+  var marca = document.getElementById('marca').value;
+  var modelo = document.getElementById('modelo').value;
+  var nombre = document.getElementById('nombre').value;
+  var telefono = document.getElementById('telefono').value;
+  if(!telefonoVerificado){
+    alert('Por favor verificá tu número de WhatsApp antes de publicar.');
+    return;
+  }
+  if(!marca || !modelo || !nombre || !telefono){
+    alert('Por favor completá los campos obligatorios (*)');
+    return;
+  }
+  this.disabled = true;
+  this.textContent = 'Publicando...';
+  var fd = new FormData();
+  fd.append('marca', marca);
+  fd.append('modelo', modelo);
+  fd.append('anio', document.getElementById('anio').value);
+  fd.append('km', document.getElementById('km').value);
+  fd.append('precio', document.getElementById('precio').value);
+  fd.append('combustible', document.getElementById('combustible').value);
+  fd.append('transmision', document.getElementById('transmision').value);
+  fd.append('color', document.getElementById('color').value);
+  fd.append('motor', document.getElementById('motor').value);
+  fd.append('descripcion', document.getElementById('desc').value);
+  fd.append('vendedor_nombre', nombre);
+  fd.append('vendedor_telefono', telefono);
+  fd.append('provincia', document.getElementById('provincia').value);
+  fd.append('canton', document.getElementById('canton').value);
+  fd.append('fuente', 'web');
+  selectedFiles.forEach(function(f){ fd.append('fotos', f); });
+  try{
+    var res = await fetch(API+'/anuncios', {method:'POST', body:fd});
+    if(res.ok){
+      document.getElementById('successOverlay').classList.add('show');
+    } else {
+      var err = await res.json();
+      alert('Error: '+err.error);
+      this.disabled = false;
+      this.textContent = 'Publicar anuncio gratis →';
+    }
+  } catch(e){
+    alert('Error de conexión. Intentá de nuevo.');
+    this.disabled = false;
+    this.textContent = 'Publicar anuncio gratis →';
+  }
+});
+</script>
+<script src="/chat_fix.js"></script><script src="/chat.js"></script><script>function toggleMenu(){var m=document.getElementById("mobileMenu");var h=document.getElementById("hamburger");m.classList.toggle("open");var s=h.querySelectorAll("span");if(m.classList.contains("open")){s[0].style.transform="rotate(45deg) translate(5px,5px)";s[1].style.opacity="0";s[2].style.transform="rotate(-45deg) translate(5px,-5px)"}else{s[0].style.transform="";s[1].style.opacity="1";s[2].style.transform=""}}document.addEventListener("click",function(e){var m=document.getElementById("mobileMenu");var h=document.getElementById("hamburger");if(m&&h&&!m.contains(e.target)&&!h.contains(e.target))m.classList.remove("open")});</script></body>
+</html>

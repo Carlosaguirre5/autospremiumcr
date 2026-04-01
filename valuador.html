@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Valuador de Autos con IA — Autos Premium CR</title>
+<meta name="description" content="Descubrí cuánto vale tu auto en Costa Rica con inteligencia artificial. Valuación gratuita e instantánea basada en el mercado costarricense.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="responsive.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0e1a;color:#fff}
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(0,45,71,0.97);position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(0,81,186,0.3)}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer}
+.logo-mark{background:#0051BA;color:#fff;font-weight:900;font-size:22px;padding:6px 10px;border-radius:6px}
+.logo-text{font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase}
+.logo-text span{color:#0051BA;background:#fff;padding:1px 5px;border-radius:3px;margin:0 2px}
+nav ul{display:flex;gap:32px;list-style:none}
+nav ul a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:14px}
+nav ul a:hover{color:#fff}
+.btn-nav{background:#0051BA;color:#fff;border:none;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#002D47 0%,#001a2e 60%,#0a0e1a 100%);padding:60px 48px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,81,186,0.15) 0%,transparent 70%);pointer-events:none}
+.ai-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,81,186,0.2);border:1px solid rgba(0,81,186,0.5);color:#6ab4ff;font-size:12px;font-weight:600;padding:6px 16px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;margin-bottom:24px}
+.hero h1{font-size:clamp(32px,5vw,60px);font-weight:900;line-height:1.1;margin-bottom:16px}
+.hero h1 span{color:#0051BA}
+.hero p{color:rgba(255,255,255,0.55);font-size:17px;max-width:520px;margin:0 auto 48px;line-height:1.7;font-weight:300}
+
+/* FORM */
+.valuador-form{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:36px;max-width:700px;margin:0 auto;position:relative;z-index:1}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field label{font-size:11px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px}
+.field input,.field select{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#fff;padding:12px 14px;font-size:14px;font-family:'Inter',sans-serif;transition:border-color .2s}
+.field input:focus,.field select:focus{outline:none;border-color:#0051BA;background:rgba(0,81,186,0.08)}
+.field select option{background:#002D47}
+.field input::placeholder{color:rgba(255,255,255,0.25)}
+.price-field{grid-column:1/-1}
+.btn-valuate{width:100%;background:linear-gradient(135deg,#0051BA,#0066e0);color:#fff;border:none;border-radius:12px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;margin-top:8px;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:10px}
+.btn-valuate:hover{opacity:.9}
+.btn-valuate:disabled{opacity:.5;cursor:not-allowed}
+
+/* RESULTADO */
+.resultado{display:none;max-width:700px;margin:32px auto 0;animation:fadeIn .5s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.resultado-header{background:#0d1929;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px;margin-bottom:16px;text-align:center}
+.veredicto{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.veredicto.justo{color:#4ade80}
+.veredicto.caro{color:#f87171}
+.veredicto.barato{color:#fbbf24}
+.precio-estimado{font-size:42px;font-weight:900;margin-bottom:6px}
+.precio-rango{font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:20px}
+.precio-barra{background:rgba(255,255,255,0.08);border-radius:8px;height:8px;position:relative;overflow:hidden;max-width:400px;margin:0 auto}
+.precio-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,#0051BA,#4ade80);transition:width 1s ease}
+.resultado-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.resultado-card{background:#0d1929;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px}
+.resultado-card h4{font-size:12px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
+.resultado-card ul{list-style:none}
+.resultado-card ul li{font-size:13px;color:rgba(255,255,255,0.65);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);line-height:1.5;display:flex;gap:8px}
+.resultado-card ul li:last-child{border-bottom:none}
+.resultado-card ul li::before{content:'→';color:#0051BA;flex-shrink:0}
+.resultado-full{background:#0d1929;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;margin-bottom:16px}
+.resultado-full h4{font-size:12px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
+.resultado-full p{font-size:14px;color:rgba(255,255,255,0.65);line-height:1.8;font-weight:300}
+.cta-resultado{background:linear-gradient(135deg,#002D47,#0051BA);border-radius:12px;padding:24px;text-align:center}
+.cta-resultado p{font-size:15px;margin-bottom:16px;font-weight:500}
+.cta-resultado-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-cta-pub{background:#fff;color:#002D47;border:none;border-radius:9px;padding:12px 28px;font-size:14px;font-weight:700;cursor:pointer}
+.btn-cta-share{background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);border-radius:9px;padding:12px 28px;font-size:14px;font-weight:600;cursor:pointer}
+
+/* LOADING */
+.loading-state{display:none;text-align:center;padding:48px;max-width:700px;margin:32px auto 0}
+.loading-dots{display:flex;justify-content:center;gap:8px;margin-bottom:20px}
+.dot{width:10px;height:10px;background:#0051BA;border-radius:50%;animation:bounce 1.2s infinite}
+.dot:nth-child(2){animation-delay:.2s}
+.dot:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,80%,100%{transform:scale(0.8);opacity:.5}40%{transform:scale(1.2);opacity:1}}
+.loading-text{font-size:15px;color:rgba(255,255,255,0.5);font-weight:300}
+
+/* HOW IT WORKS */
+.how-section{padding:72px 48px;background:#060c17}
+.how-section h2{font-size:28px;font-weight:800;text-align:center;margin-bottom:40px}
+.how-section h2 span{color:#0051BA}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:900px;margin:0 auto}
+.how-card{background:#0d1929;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:28px;text-align:center}
+.how-icon{font-size:36px;margin-bottom:16px}
+.how-card h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.how-card p{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.6;font-weight:300}
+
+footer{background:#000d1a;padding:40px 48px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.07)}
+.footer-copy{color:rgba(255,255,255,0.3);font-size:13px}
+.footer-links{display:flex;gap:24px}
+.footer-links a{color:rgba(255,255,255,0.3);font-size:13px;text-decoration:none}
+</style>
+<link rel="stylesheet" href="/responsive-valuador.css"><style>@media(max-width:768px){.nav-hide-mobile{display:none!important}.hamburger{display:flex!important}}</style></head>
+<body>
+<nav>
+  <div class="logo">
+    <img src="/logo.png" style="height:36px;width:auto" alt="Logo">
+    <div class="logo-text">AUTOS <span>PREMIUM</span> CR</div>
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="resultados.html">Vehículos</a></li>
+    <li><a href="valuador.html">Valuador IA</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contacto.html">Contáctenos</a></li>
+  </ul>
+
+  <button class="btn-nav" onclick="location.href='publicar.html'">+ Publicar anuncio</button>
+
+  <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menú">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- Mobile nav (outside nav for clean stacking) -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Inicio</a>
+  <a href="resultados.html">Vehículos</a>
+  <a href="valuador.html">Valuador IA</a>
+  <a href="blog.html">Blog</a>
+  <a href="contacto.html">Contáctenos</a>
+  <a href="publicar.html" style="color:#6ab4ff">+ Publicar anuncio</a>
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('hamburgerBtn');
+  var menu = document.getElementById('mobileNav');
+  function close(){
+    menu.classList.remove('open');
+    btn.children[0].style.transform='';
+    btn.children[1].style.opacity='1';
+    btn.children[2].style.transform='';
+  }
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var isOpen = menu.classList.toggle('open');
+    btn.children[0].style.transform = isOpen ? 'rotate(45deg) translate(6px,7px)' : '';
+    btn.children[1].style.opacity   = isOpen ? '0' : '1';
+    btn.children[2].style.transform = isOpen ? 'rotate(-45deg) translate(8px,-7px)' : '';
+  });
+  document.addEventListener('click', function(e){
+    if(menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) close();
+  });
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+})();
+</script>
+
+
+<div class="hero">
+  <div class="ai-badge">✨ Inteligencia Artificial</div>
+  <h1>¿Cuánto vale<br>tu <span>auto</span> en CR?</h1>
+  <p>Usá nuestra IA para descubrir el precio justo de cualquier vehículo en el mercado costarricense. Gratis e instantáneo.</p>
+
+  <div class="valuador-form">
+    <div class="form-grid">
+      <div class="field">
+        <label>Marca *</label>
+        <select id="marca">
+<option value="">Todas las marcas</option>
+<option value="Aion">Aion</option>
+<option value="Alfa Romeo">Alfa Romeo</option>
+<option value="AMC">AMC</option>
+<option value="Aro">Aro</option>
+<option value="Asia">Asia</option>
+<option value="Aston Martin">Aston Martin</option>
+<option value="Audi">Audi</option>
+<option value="Austin">Austin</option>
+<option value="BAIC">BAIC</option>
+<option value="Baw">Baw</option>
+<option value="Bentley">Bentley</option>
+<option value="Bluebird">Bluebird</option>
+<option value="BMW">BMW</option>
+<option value="Brilliance">Brilliance</option>
+<option value="Buick">Buick</option>
+<option value="BYD">BYD</option>
+<option value="Cadillac">Cadillac</option>
+<option value="Chana">Chana</option>
+<option value="Changan">Changan</option>
+<option value="Chery">Chery</option>
+<option value="Chevrolet">Chevrolet</option>
+<option value="Chrysler">Chrysler</option>
+<option value="Citroen">Citroen</option>
+<option value="CMC">CMC</option>
+<option value="Dacia">Dacia</option>
+<option value="Daewoo">Daewoo</option>
+<option value="Daihatsu">Daihatsu</option>
+<option value="Datsun">Datsun</option>
+<option value="Dodge/RAM">Dodge/RAM</option>
+<option value="Donfeng">Donfeng</option>
+<option value="Eagle">Eagle</option>
+<option value="Faw">Faw</option>
+<option value="Ferrari">Ferrari</option>
+<option value="Fiat">Fiat</option>
+<option value="Ford">Ford</option>
+<option value="Foton">Foton</option>
+<option value="Freightliner">Freightliner</option>
+<option value="Geely">Geely</option>
+<option value="Genesis">Genesis</option>
+<option value="Geo">Geo</option>
+<option value="GMC">GMC</option>
+<option value="Gonow">Gonow</option>
+<option value="Great Wall">Great Wall</option>
+<option value="Hafei">Hafei</option>
+<option value="Haima">Haima</option>
+<option value="Haval">Haval</option>
+<option value="Heibao">Heibao</option>
+<option value="Higer">Higer</option>
+<option value="Hino">Hino</option>
+<option value="Honda">Honda</option>
+<option value="Hummer">Hummer</option>
+<option value="Hycan">Hycan</option>
+<option value="Hyundai">Hyundai</option>
+<option value="Infiniti">Infiniti</option>
+<option value="International">International</option>
+<option value="Isuzu">Isuzu</option>
+<option value="Iveco">Iveco</option>
+<option value="JAC">JAC</option>
+<option value="Jaecoo">Jaecoo</option>
+<option value="Jaguar">Jaguar</option>
+<option value="Jeep">Jeep</option>
+<option value="Jetour">Jetour</option>
+<option value="Jinbei">Jinbei</option>
+<option value="JMC">JMC</option>
+<option value="Jonway">Jonway</option>
+<option value="Kaiyi">Kaiyi</option>
+<option value="Kenworth">Kenworth</option>
+<option value="Kia">Kia</option>
+<option value="Lada">Lada</option>
+<option value="Lamborghini">Lamborghini</option>
+<option value="Lancia">Lancia</option>
+<option value="Land Rover">Land Rover</option>
+<option value="Lexus">Lexus</option>
+<option value="Lifan">Lifan</option>
+<option value="Lincoln">Lincoln</option>
+<option value="Lotus">Lotus</option>
+<option value="Mack">Mack</option>
+<option value="Magiruz">Magiruz</option>
+<option value="Mahindra">Mahindra</option>
+<option value="Marcopolo">Marcopolo</option>
+<option value="Maserati">Maserati</option>
+<option value="Maxus">Maxus</option>
+<option value="Mazda">Mazda</option>
+<option value="Mercedes-Benz">Mercedes-Benz</option>
+<option value="Mercury">Mercury</option>
+<option value="MG">MG</option>
+<option value="Mini">Mini</option>
+<option value="Mitsubishi">Mitsubishi</option>
+<option value="Neta">Neta</option>
+<option value="Nissan">Nissan</option>
+<option value="Oldsmobile">Oldsmobile</option>
+<option value="Omoda">Omoda</option>
+<option value="Opel">Opel</option>
+<option value="Peterbilt">Peterbilt</option>
+<option value="Peugeot">Peugeot</option>
+<option value="Piaggio">Piaggio</option>
+<option value="Plymouth">Plymouth</option>
+<option value="Polarsun">Polarsun</option>
+<option value="Pontiac">Pontiac</option>
+<option value="Porsche">Porsche</option>
+<option value="Proton">Proton</option>
+<option value="Rambler">Rambler</option>
+<option value="Renault">Renault</option>
+<option value="Reva">Reva</option>
+<option value="Rivian">Rivian</option>
+<option value="Rolls Royce">Rolls Royce</option>
+<option value="Rover">Rover</option>
+<option value="Saab">Saab</option>
+<option value="Samsung">Samsung</option>
+<option value="Saturn">Saturn</option>
+<option value="Scania">Scania</option>
+<option value="Scion">Scion</option>
+<option value="Seat">Seat</option>
+<option value="Shineray">Shineray</option>
+<option value="Skoda">Skoda</option>
+<option value="Smart">Smart</option>
+<option value="Soueast">Soueast</option>
+<option value="Ssang Yong">Ssang Yong</option>
+<option value="Subaru">Subaru</option>
+<option value="Suzuki">Suzuki</option>
+<option value="Tesla">Tesla</option>
+<option value="Tianma">Tianma</option>
+<option value="Tiger Truck">Tiger Truck</option>
+<option value="Toyota">Toyota</option>
+<option value="VGV">VGV</option>
+<option value="Volkswagen">Volkswagen</option>
+<option value="Volvo">Volvo</option>
+<option value="Western Star">Western Star</option>
+<option value="Xiaomi">Xiaomi</option>
+<option value="Xpeng">Xpeng</option>
+<option value="Yugo">Yugo</option>
+<option value="Zap">Zap</option>
+<option value="Zeekr">Zeekr</option>
+<option value="Zotye">Zotye</option>
+</select>
+      </div>
+      <div class="field">
+        <label>Modelo *</label>
+        <input type="text" id="modelo" placeholder="Ej: Corolla, Civic, Tucson">
+      </div>
+      <div class="field">
+        <label>Año *</label>
+        <select id="anio">
+<option value="">Cualquier año</option>
+<option value="2026">2026</option>
+<option value="2025">2025</option>
+<option value="2024">2024</option>
+<option value="2023">2023</option>
+<option value="2022">2022</option>
+<option value="2021">2021</option>
+<option value="2020">2020</option>
+<option value="2019">2019</option>
+<option value="2018">2018</option>
+<option value="2017">2017</option>
+<option value="2016">2016</option>
+<option value="2015">2015</option>
+<option value="2014">2014</option>
+<option value="2013">2013</option>
+<option value="2012">2012</option>
+<option value="2011">2011</option>
+<option value="2010">2010</option>
+<option value="2009">2009</option>
+<option value="2008">2008</option>
+<option value="2007">2007</option>
+<option value="2006">2006</option>
+<option value="2005">2005</option>
+<option value="2004">2004</option>
+<option value="2003">2003</option>
+<option value="2002">2002</option>
+<option value="2001">2001</option>
+<option value="2000">2000</option>
+<option value="1999">1999</option>
+<option value="1998">1998</option>
+<option value="1997">1997</option>
+<option value="1996">1996</option>
+<option value="1995">1995</option>
+<option value="1994">1994</option>
+<option value="1993">1993</option>
+<option value="1992">1992</option>
+<option value="1991">1991</option>
+<option value="1990">1990</option>
+<option value="1989">1989</option>
+<option value="1988">1988</option>
+<option value="1987">1987</option>
+<option value="1986">1986</option>
+<option value="1985">1985</option>
+<option value="1984">1984</option>
+<option value="1983">1983</option>
+<option value="1982">1982</option>
+<option value="1981">1981</option>
+<option value="1980">1980</option>
+<option value="1979">1979</option>
+<option value="1978">1978</option>
+<option value="1977">1977</option>
+<option value="1976">1976</option>
+<option value="1975">1975</option>
+<option value="1974">1974</option>
+<option value="1973">1973</option>
+<option value="1972">1972</option>
+<option value="1971">1971</option>
+<option value="1970">1970</option>
+<option value="1969">1969</option>
+<option value="1968">1968</option>
+<option value="1967">1967</option>
+<option value="1966">1966</option>
+<option value="1965">1965</option>
+<option value="1964">1964</option>
+<option value="1963">1963</option>
+<option value="1962">1962</option>
+<option value="1961">1961</option>
+<option value="1960">1960</option>
+</select>
+      </div>
+      <div class="field">
+        <label>Kilometraje *</label>
+        <input type="number" id="km" placeholder="Ej: 80000">
+      </div>
+      <div class="field">
+        <label>Combustible</label>
+        <select id="combustible">
+          <option value="">Seleccionar</option>
+          <option>Gasolina</option><option>Diésel</option>
+          <option>Híbrido</option><option>Eléctrico</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Transmisión</label>
+        <select id="transmision">
+          <option value="">Seleccionar</option>
+          <option>Automático</option><option>Manual</option><option>CVT</option>
+        </select>
+      </div>
+      <div class="field price-field">
+        <label>Precio que tenés en mente (opcional)</label>
+        <input type="number" id="precio" placeholder="Ej: 9500000 — para saber si es justo">
+      </div>
+    </div>
+    <button class="btn-valuate" id="btnValuate" onclick="valuarAuto()">
+      ✨ Valuar mi auto con IA
+    </button>
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading-state" id="loadingState">
+    <div class="loading-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="loading-text" id="loadingText">Analizando el mercado costarricense...</div>
+  </div>
+
+  <!-- RESULTADO -->
+  <div class="resultado" id="resultado"></div>
+</div>
+
+<!-- CÓMO FUNCIONA -->
+<div class="how-section">
+  <h2>¿Cómo <span>funciona</span>?</h2>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-icon">📋</div>
+      <h3>Ingresá los datos</h3>
+      <p>Marca, modelo, año y kilometraje. Entre más datos des, más precisa será la valuación.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-icon">🤖</div>
+      <h3>La IA analiza el mercado</h3>
+      <p>Nuestra IA analiza miles de transacciones del mercado costarricense para darte un precio real.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-icon">✅</div>
+      <h3>Recibís tu valuación</h3>
+      <p>Precio estimado, rango de mercado, veredicto y recomendaciones personalizadas.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="logo"><img src="/logo.png" style="height:36px;width:auto"><div class="logo-text">AUTOS <span>PREMIUM</span> CR</div></div>
+  <div class="footer-copy">© 2026 Autos Premium CR. Todos los derechos reservados.</div>
+  <div class="footer-links"><a href="#">Privacidad</a><a href="#">Términos</a><a href="contacto.html">Contacto</a></div>
+</footer>
+
+<script>
+var loadingMessages = [
+  'Analizando el mercado costarricense...',
+  'Comparando modelos similares...',
+  'Evaluando depreciación y kilometraje...',
+  'Calculando precio justo...',
+  'Preparando tu reporte...'
+];
+var loadingInterval;
+
+function startLoading(){
+  var i = 0;
+  document.getElementById('loadingText').textContent = loadingMessages[0];
+  loadingInterval = setInterval(function(){
+    i = (i+1) % loadingMessages.length;
+    document.getElementById('loadingText').textContent = loadingMessages[i];
+  }, 2000);
+}
+
+function stopLoading(){
+  clearInterval(loadingInterval);
+}
+
+function fmt(n){
+  return n ? '₡'+parseInt(n).toLocaleString('es-CR') : '—';
+}
+
+async function valuarAuto(){
+  var marca = document.getElementById('marca').value;
+  var modelo = document.getElementById('modelo').value.trim();
+  var anio = document.getElementById('anio').value;
+  var km = document.getElementById('km').value;
+
+  if(!marca || !modelo || !anio || !km){
+    alert('Por favor completá marca, modelo, año y kilometraje.');
+    return;
+  }
+
+  var combustible = document.getElementById('combustible').value;
+  var transmision = document.getElementById('transmision').value;
+  var precio = document.getElementById('precio').value;
+
+  document.getElementById('btnValuate').disabled = true;
+  document.getElementById('btnValuate').textContent = '⏳ Analizando...';
+  document.getElementById('loadingState').style.display = 'block';
+  document.getElementById('resultado').style.display = 'none';
+  startLoading();
+
+  var prompt = `Sos un experto valuador de vehículos usados en Costa Rica con profundo conocimiento del mercado local.
+
+El usuario quiere valuar este vehículo:
+- Marca: ${marca}
+- Modelo: ${modelo}
+- Año: ${anio}
+- Kilometraje: ${km} km
+${combustible ? '- Combustible: '+combustible : ''}
+${transmision ? '- Transmisión: '+transmision : ''}
+${precio ? '- Precio que tiene en mente: ₡'+parseInt(precio).toLocaleString('es-CR') : ''}
+
+Respondé ÚNICAMENTE con un JSON válido con esta estructura exacta, sin texto adicional:
+{
+  "precio_estimado": número en colones (sin puntos ni comas),
+  "precio_minimo": número en colones,
+  "precio_maximo": número en colones,
+  "precio_usd": número en dólares aproximado,
+  "veredicto": "PRECIO JUSTO" o "PRECIO ALTO" o "PRECIO BAJO" o "BUEN NEGOCIO",
+  "veredicto_color": "justo" o "caro" o "barato",
+  "resumen": "2-3 oraciones explicando la valuación en el contexto costarricense",
+  "factores_positivos": ["factor1", "factor2", "factor3"],
+  "factores_negativos": ["factor1", "factor2"],
+  "recomendaciones_vendedor": ["recomendacion1", "recomendacion2"],
+  "recomendaciones_comprador": ["recomendacion1", "recomendacion2"]
+}`;
+
+  try {
+    var res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': await getApiKey(),
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    var data = await res.json();
+    var text = data.content[0].text;
+    var json = JSON.parse(text.replace(/```json|```/g,'').trim());
+
+    stopLoading();
+    document.getElementById('loadingState').style.display = 'none';
+    mostrarResultado(json, marca, modelo, anio, km, precio);
+
+  } catch(e) {
+    stopLoading();
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('btnValuate').disabled = false;
+    document.getElementById('btnValuate').innerHTML = '✨ Valuar mi auto con IA';
+    alert('Error al conectar con la IA. Intentá de nuevo.');
+    console.error(e);
+  }
+}
+
+async function getApiKey(){
+  var res = await fetch('/api/config');
+  var data = await res.json();
+  return data.anthropicKey;
+}
+
+function mostrarResultado(d, marca, modelo, anio, km, precioUsuario){
+  var porcent = Math.min(100, Math.max(10, ((d.precio_estimado - d.precio_minimo) / (d.precio_maximo - d.precio_minimo)) * 100));
+
+  var comparacion = '';
+  if(precioUsuario){
+    var diff = parseInt(precioUsuario) - d.precio_estimado;
+    var pct = Math.abs(Math.round((diff / d.precio_estimado) * 100));
+    if(Math.abs(diff) < d.precio_estimado * 0.05){
+      comparacion = '<div style="background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.2);border-radius:8px;padding:12px 16px;margin-top:16px;font-size:13px;color:#4ade80">✅ Tu precio de ₡'+parseInt(precioUsuario).toLocaleString('es-CR')+' está <strong>dentro del rango de mercado</strong></div>';
+    } else if(diff > 0){
+      comparacion = '<div style="background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.2);border-radius:8px;padding:12px 16px;margin-top:16px;font-size:13px;color:#f87171">⚠️ Tu precio está <strong>'+pct+'% por encima</strong> del estimado de mercado</div>';
+    } else {
+      comparacion = '<div style="background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2);border-radius:8px;padding:12px 16px;margin-top:16px;font-size:13px;color:#fbbf24">💡 Tu precio está <strong>'+pct+'% por debajo</strong> del estimado — ¡podés pedir más!</div>';
+    }
+  }
+
+  document.getElementById('resultado').innerHTML =
+    '<div class="resultado-header">'+
+      '<div class="veredicto '+d.veredicto_color+'">'+d.veredicto+'</div>'+
+      '<div class="precio-estimado">'+fmt(d.precio_estimado)+'</div>'+
+      '<div class="precio-rango">Rango de mercado: '+fmt(d.precio_minimo)+' — '+fmt(d.precio_maximo)+'</div>'+
+      '<div class="precio-barra"><div class="precio-fill" style="width:'+porcent+'%"></div></div>'+
+      comparacion+
+    '</div>'+
+
+    '<div class="resultado-full">'+
+      '<h4>📊 Análisis del mercado</h4>'+
+      '<p>'+d.resumen+'</p>'+
+    '</div>'+
+
+    '<div class="resultado-grid">'+
+      '<div class="resultado-card">'+
+        '<h4>✅ Factores positivos</h4>'+
+        '<ul class="nav-links nav-hide-mobile">'+d.factores_positivos.map(function(f){return'<li>'+f+'</li>';}).join('')+'</ul>'+
+      '</div>'+
+      '<div class="resultado-card">'+
+        '<h4>⚠️ Factores a considerar</h4>'+
+        '<ul>'+d.factores_negativos.map(function(f){return'<li>'+f+'</li>';}).join('')+'</ul>'+
+      '</div>'+
+      '<div class="resultado-card">'+
+        '<h4>💡 Si querés vender</h4>'+
+        '<ul>'+d.recomendaciones_vendedor.map(function(f){return'<li>'+f+'</li>';}).join('')+'</ul>'+
+      '</div>'+
+      '<div class="resultado-card">'+
+        '<h4>🛒 Si querés comprar</h4>'+
+        '<ul>'+d.recomendaciones_comprador.map(function(f){return'<li>'+f+'</li>';}).join('')+'</ul>'+
+      '</div>'+
+    '</div>'+
+
+    '<div class="cta-resultado">'+
+      '<p>¿Querés vender tu '+marca+' '+modelo+' '+anio+'?</p>'+
+      '<div class="cta-resultado-btns">'+
+        '<button class="btn-cta-pub" onclick="location.href=\'publicar.html\'">Publicar mi anuncio gratis</button>'+
+        '<button class="btn-cta-share" onclick="compartir()">📤 Compartir valuación</button>'+
+      '</div>'+
+    '</div>';
+
+  document.getElementById('resultado').style.display = 'block';
+  document.getElementById('btnValuate').disabled = false;
+  document.getElementById('btnValuate').innerHTML = '✨ Valuar otro auto';
+  document.getElementById('resultado').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function compartir(){
+  var marca = document.getElementById('marca').value;
+  var modelo = document.getElementById('modelo').value;
+  var anio = document.getElementById('anio').value;
+  var texto = '🚗 Valuación de '+marca+' '+modelo+' '+anio+' en Autos Premium CR\n\nDescubrí cuánto vale tu auto gratis en: https://autospremiumcostarica.com/valuador.html';
+  if(navigator.share){
+    navigator.share({title:'Valuador de Autos CR', text:texto, url:'https://autospremiumcostarica.com/valuador.html'});
+  } else {
+    navigator.clipboard.writeText(texto);
+    alert('¡Link copiado! Compartilo por WhatsApp.');
+  }
+}
+</script>
+<script src="/chat_fix.js"></script><script src="/chat.js"></script><script>function toggleMenu(){var m=document.getElementById("mobileMenu");var h=document.getElementById("hamburger");m.classList.toggle("open");var s=h.querySelectorAll("span");if(m.classList.contains("open")){s[0].style.transform="rotate(45deg) translate(5px,5px)";s[1].style.opacity="0";s[2].style.transform="rotate(-45deg) translate(5px,-5px)"}else{s[0].style.transform="";s[1].style.opacity="1";s[2].style.transform=""}}document.addEventListener("click",function(e){var m=document.getElementById("mobileMenu");var h=document.getElementById("hamburger");if(m&&h&&!m.contains(e.target)&&!h.contains(e.target))m.classList.remove("open")});</script></body>
+</html>

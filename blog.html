@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Blog de Autos — Consejos para Comprar y Vender en Costa Rica</title>
+<meta name="description" content="Consejos, guías y todo lo que necesitás saber para comprar o vender tu vehículo en Costa Rica. Financiamiento, revisión mecánica, precios y más.">
+<meta name="keywords" content="comprar auto usado Costa Rica, cómo vender auto Costa Rica, financiamiento autos CR">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="responsive.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0e1a;color:#fff}
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(0,45,71,0.97);position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(0,81,186,0.3)}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer}
+.logo-mark{background:#0051BA;color:#fff;font-weight:900;font-size:22px;padding:6px 10px;border-radius:6px}
+.logo-text{font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase}
+.logo-text span{color:#0051BA;background:#fff;padding:1px 5px;border-radius:3px;margin:0 2px}
+nav ul{display:flex;gap:32px;list-style:none}
+nav ul a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:14px}
+nav ul a:hover{color:#fff}
+.btn-nav{background:#0051BA;color:#fff;border:none;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
+.hero-bar{background:linear-gradient(135deg,#002D47,#001a2e);padding:56px 48px;text-align:center;border-bottom:1px solid rgba(0,81,186,0.2)}
+.hero-bar h1{font-size:36px;font-weight:900;margin-bottom:10px}
+.hero-bar h1 span{color:#0051BA}
+.hero-bar p{color:rgba(255,255,255,0.5);font-size:16px;max-width:500px;margin:0 auto;font-weight:300}
+.content{max-width:1100px;margin:0 auto;padding:56px 48px}
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.blog-card{background:#0d1929;border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .25s,border-color .25s}
+.blog-card:hover{transform:translateY(-4px);border-color:rgba(0,81,186,0.5)}
+.blog-img{height:180px;display:flex;align-items:center;justify-content:center;font-size:64px;position:relative}
+.blog-tag{position:absolute;top:12px;left:12px;background:#0051BA;color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px}
+.blog-info{padding:20px}
+.blog-meta{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.blog-date{font-size:11px;color:rgba(255,255,255,0.35)}
+.blog-read{font-size:11px;color:rgba(255,255,255,0.35)}
+.blog-title{font-size:17px;font-weight:700;margin-bottom:8px;line-height:1.4}
+.blog-excerpt{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7;font-weight:300;margin-bottom:16px}
+.blog-link{color:#6ab4ff;font-size:13px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.blog-link:hover{color:#fff}
+.featured-card{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:0;background:#0d1929;border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;cursor:pointer;transition:border-color .25s}
+.featured-card:hover{border-color:rgba(0,81,186,0.5)}
+.featured-img{height:280px;display:flex;align-items:center;justify-content:center;font-size:96px;background:linear-gradient(135deg,#001a2e,#002D47);position:relative}
+.featured-tag{position:absolute;top:16px;left:16px;background:#c8960a;color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px}
+.featured-info{padding:32px;display:flex;flex-direction:column;justify-content:center}
+.featured-info .blog-title{font-size:22px;margin-bottom:12px}
+.featured-info .blog-excerpt{font-size:14px;margin-bottom:20px}
+.cta-section{background:linear-gradient(135deg,#002D47,#0051BA);border-radius:16px;padding:48px;text-align:center;margin-top:48px}
+.cta-section h2{font-size:28px;font-weight:900;margin-bottom:10px}
+.cta-section p{color:rgba(255,255,255,0.75);font-size:15px;margin-bottom:28px}
+.btn-cta{background:#fff;color:#002D47;border:none;padding:14px 32px;border-radius:10px;font-size:15px;font-weight:800;cursor:pointer}
+footer{background:#000d1a;padding:40px 48px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.07);margin-top:0}
+.footer-copy{color:rgba(255,255,255,0.3);font-size:13px}
+.footer-links{display:flex;gap:24px}
+.footer-links a{color:rgba(255,255,255,0.3);font-size:13px;text-decoration:none}
+
+/* ARTICLE VIEW */
+.article-view{display:none;max-width:740px;margin:0 auto;padding:56px 48px}
+.article-back{display:inline-flex;align-items:center;gap:8px;color:#6ab4ff;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:32px;background:none;border:none;font-family:'Inter',sans-serif}
+.article-back:hover{color:#fff}
+.article-tag{display:inline-block;background:#0051BA;color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px}
+.article-title{font-size:32px;font-weight:900;line-height:1.2;margin-bottom:16px}
+.article-meta{display:flex;gap:16px;color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.article-body h2{font-size:20px;font-weight:700;margin:28px 0 12px;color:#fff}
+.article-body p{font-size:15px;color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:16px;font-weight:300}
+.article-body ul{margin:0 0 16px 20px}
+.article-body ul li{font-size:15px;color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:6px;font-weight:300}
+.article-tip{background:#0d1929;border-left:3px solid #0051BA;border-radius:0 10px 10px 0;padding:16px 20px;margin:20px 0}
+.article-tip p{color:rgba(255,255,255,0.75);font-size:14px;margin:0}
+</style>
+<style>.hamburger-btn{display:none;}.hamburger-btn span{display:block;height:3px;width:26px;background:#fff;border-radius:2px;transition:all .25s} @media(max-width:768px){nav{padding:14px 20px!important} nav ul,.nav-links{display:none!important} .btn-nav{display:none!important} .hamburger-btn{display:flex!important;flex-direction:column;justify-content:center;align-items:center;width:40px;height:40px;gap:6px;background:none;border:none;cursor:pointer;padding:4px}}</style></head>
+<body>
+<nav>
+  <div class="logo">
+    <img src="/logo.png" style="height:36px;width:auto" alt="Logo">
+    <div class="logo-text">AUTOS <span>PREMIUM</span> CR</div>
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="resultados.html">Vehículos</a></li>
+    <li><a href="valuador.html">Valuador IA</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contacto.html">Contáctenos</a></li>
+  </ul>
+
+  <button class="btn-nav" onclick="location.href='publicar.html'">+ Publicar anuncio</button>
+
+  <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menú">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- Mobile nav (outside nav for clean stacking) -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Inicio</a>
+  <a href="resultados.html">Vehículos</a>
+  <a href="valuador.html">Valuador IA</a>
+  <a href="blog.html">Blog</a>
+  <a href="contacto.html">Contáctenos</a>
+  <a href="publicar.html" style="color:#6ab4ff">+ Publicar anuncio</a>
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('hamburgerBtn');
+  var menu = document.getElementById('mobileNav');
+  function close(){
+    menu.classList.remove('open');
+    btn.children[0].style.transform='';
+    btn.children[1].style.opacity='1';
+    btn.children[2].style.transform='';
+  }
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var isOpen = menu.classList.toggle('open');
+    btn.children[0].style.transform = isOpen ? 'rotate(45deg) translate(6px,7px)' : '';
+    btn.children[1].style.opacity   = isOpen ? '0' : '1';
+    btn.children[2].style.transform = isOpen ? 'rotate(-45deg) translate(8px,-7px)' : '';
+  });
+  document.addEventListener('click', function(e){
+    if(menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) close();
+  });
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+})();
+</script>
+
+
+<div id="heroBar" class="hero-bar">
+  <h1>Blog <span>Autos Premium CR</span></h1>
+  <p>Consejos, guías y todo lo que necesitás saber para comprar o vender tu vehículo en Costa Rica.</p>
+</div>
+
+<div id="listView" class="content">
+  <div class="blog-grid">
+
+    <div class="featured-card" onclick="showArticle(0)">
+      <div class="featured-img">
+        🚗
+        <div class="featured-tag">⭐ Destacado</div>
+      </div>
+      <div class="featured-info">
+        <div class="blog-meta"><span class="blog-date">📅 Marzo 2026</span><span class="blog-read">⏱ 5 min lectura</span></div>
+        <div class="blog-title">Cómo vender tu auto rápido en Costa Rica: guía completa 2026</div>
+        <div class="blog-excerpt">Publicar y esperar no es suficiente. Te contamos los pasos exactos que usan los vendedores exitosos para cerrar negocios rápido y al mejor precio.</div>
+        <a class="blog-link">Leer artículo →</a>
+      </div>
+    </div>
+
+    <div class="blog-card" onclick="showArticle(1)">
+      <div class="blog-img" style="background:linear-gradient(135deg,#001a2e,#002D47)">🔍<div class="blog-tag">Compra</div></div>
+      <div class="blog-info">
+        <div class="blog-meta"><span class="blog-date">📅 Marzo 2026</span><span class="blog-read">⏱ 6 min</span></div>
+        <div class="blog-title">Guía para comprar auto usado en Costa Rica sin cometer errores</div>
+        <div class="blog-excerpt">Todo lo que tenés que revisar antes de firmar cualquier documento o hacer cualquier pago.</div>
+        <a class="blog-link">Leer artículo →</a>
+      </div>
+    </div>
+
+    <div class="blog-card" onclick="showArticle(2)">
+      <div class="blog-img" style="background:linear-gradient(135deg,#001829,#002040)">🏆<div class="blog-tag">Mercado</div></div>
+      <div class="blog-info">
+        <div class="blog-meta"><span class="blog-date">📅 Febrero 2026</span><span class="blog-read">⏱ 4 min</span></div>
+        <div class="blog-title">Los 10 autos más buscados en Costa Rica en 2026</div>
+        <div class="blog-excerpt">¿Cuáles son los modelos que más se venden y por qué? Te presentamos el ranking actualizado.</div>
+        <a class="blog-link">Leer artículo →</a>
+      </div>
+    </div>
+
+    <div class="blog-card" onclick="showArticle(3)">
+      <div class="blog-img" style="background:linear-gradient(135deg,#001a2e,#002D47)">🔧<div class="blog-tag">Consejos</div></div>
+      <div class="blog-info">
+        <div class="blog-meta"><span class="blog-date">📅 Febrero 2026</span><span class="blog-read">⏱ 5 min</span></div>
+        <div class="blog-title">Cómo revisar un auto usado antes de comprarlo: checklist completo</div>
+        <div class="blog-excerpt">Una revisión bien hecha puede ahorrarte millones. Seguí este checklist antes de cualquier compra.</div>
+        <a class="blog-link">Leer artículo →</a>
+      </div>
+    </div>
+
+    <div class="blog-card" onclick="showArticle(4)">
+      <div class="blog-img" style="background:linear-gradient(135deg,#001829,#002040)">💰<div class="blog-tag">Finanzas</div></div>
+      <div class="blog-info">
+        <div class="blog-meta"><span class="blog-date">📅 Enero 2026</span><span class="blog-read">⏱ 5 min</span></div>
+        <div class="blog-title">Financiamiento de autos en Costa Rica: lo que los bancos no te dicen</div>
+        <div class="blog-excerpt">Tasas, plazos, requisitos y los errores más comunes al tramitar un crédito para vehículo.</div>
+        <a class="blog-link">Leer artículo →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta-section">
+    <h2>¿Tenés un auto para vender?</h2>
+    <p>Publicá gratis en Autos Premium CR y llegá a miles de compradores en Costa Rica.</p>
+    <button class="btn-cta" onclick="location.href='publicar.html'">Publicar mi anuncio gratis</button>
+  </div>
+</div>
+
+<div id="articleView" class="article-view"></div>
+
+<footer>
+  <div class="logo"><img src="/logo.png" style="height:36px;width:auto"><div class="logo-text">AUTOS <span>PREMIUM</span> CR</div></div>
+  <div class="footer-copy">© 2026 Autos Premium CR. Todos los derechos reservados.</div>
+  <div class="footer-links"><a href="#">Privacidad</a><a href="#">Términos</a><a href="contacto.html">Contacto</a></div>
+</footer>
+
+<script>
+var articles = [
+  {
+    tag: "Venta",
+    title: "Cómo vender tu auto rápido en Costa Rica: guía completa 2026",
+    date: "Marzo 2026", read: "5 min lectura",
+    body: `
+      <p>Vender un auto en Costa Rica puede ser rápido o puede convertirse en un proceso frustrante de meses. La diferencia está en cómo lo hacés desde el primer día.</p>
+      <h2>1. Poné el precio correcto desde el inicio</h2>
+      <p>El error más común es sobrevalorar el vehículo pensando que "después se puede bajar". Un precio fuera de mercado ahuyenta compradores serios desde el primer día. Investigá cuánto se están vendiendo modelos similares en plataformas como Autos Premium CR y Crautos, y poné un precio competitivo.</p>
+      <div class="article-tip"><p>💡 Un precio 5% por debajo del mercado puede generar el doble de consultas y cerrar la venta en la mitad del tiempo.</p></div>
+      <h2>2. Las fotos lo son todo</h2>
+      <p>El 80% de los compradores decide si va a contactarte o no basándose únicamente en las fotos. Tomá fotos de día, con buena luz, desde múltiples ángulos: frente, perfil, trasera, interior, tablero, motor y detalles importantes.</p>
+      <ul class="nav-links nav-hide-mobile">
+        <li>Lavá el auto antes de fotografiarlo</li>
+        <li>Usá un fondo limpio y despejado</li>
+        <li>Subí mínimo 8 fotos</li>
+        <li>Incluí fotos honestas de cualquier detalle o rayón</li>
+      </ul>
+      <h2>3. Escribí una descripción completa</h2>
+      <p>Incluí todo: año, kilometraje, estado de llantas, último servicio, si tiene RITEVE vigente, si acepta vehículo como parte de pago, y tu disponibilidad para mostrarlo. Cuanta más información des, menos tiempo perdés respondiendo las mismas preguntas.</p>
+      <h2>4. Respondé rápido</h2>
+      <p>Los compradores en Costa Rica generalmente contactan varios vendedores al mismo tiempo. Si tardás más de 2 horas en responder, probablemente ya compraron otro.</p>
+      <h2>5. Publicá en múltiples plataformas</h2>
+      <p>No te limités a una sola plataforma. Publicá en Autos Premium CR, en grupos de Facebook y en WhatsApp. Más exposición significa más compradores potenciales y más posibilidad de cerrar al precio que querés.</p>
+      <div class="article-tip"><p>💡 Los mejores días para publicar son lunes y martes, cuando la gente está activa buscando después del fin de semana.</p></div>
+    `
+  },
+  {
+    tag: "Compra",
+    title: "Guía para comprar auto usado en Costa Rica sin cometer errores",
+    date: "Marzo 2026", read: "6 min lectura",
+    body: `
+      <p>Comprar un auto usado en Costa Rica puede ser una excelente decisión económica, pero también puede salir muy caro si no sabés qué revisar. Esta guía te ayuda a hacer una compra inteligente.</p>
+      <h2>Antes de ir a ver el auto</h2>
+      <p>Investigá el modelo que te interesa. Buscá problemas comunes, costo de repuestos y disponibilidad en el mercado costarricense. Algunos modelos tienen piezas muy caras o difíciles de conseguir.</p>
+      <h2>Revisión exterior</h2>
+      <ul>
+        <li>Revisá que todos los paneles estén alineados — indica si el auto tuvo golpes</li>
+        <li>Buscá diferencias de tono en la pintura que delaten reparaciones</li>
+        <li>Revisá el estado de los cauchos — deben tener desgaste parejo</li>
+        <li>Verificá que no haya óxido en el chasis ni en los umbrales de las puertas</li>
+      </ul>
+      <h2>Revisión mecánica básica</h2>
+      <ul>
+        <li>Arrancá el motor en frío y escuchá si hay ruidos extraños</li>
+        <li>Revisá el nivel y color del aceite — si está negro y sucio, hay descuido</li>
+        <li>Verificá que no haya humo azul (aceite) ni blanco (refrigerante) en el escape</li>
+        <li>Probá todos los sistemas: A/C, vidrios, luces, bocina</li>
+      </ul>
+      <div class="article-tip"><p>💡 Siempre llevá el auto a un mecánico de confianza antes de comprar. Una revisión de ₡30,000 puede ahorrarte millones.</p></div>
+      <h2>Verificación de documentos</h2>
+      <p>Verificá en el COSEVI que el número de placa y chasis coincidan. Confirmá que no tenga multas pendientes, restricciones de salida del país ni prendas. El vendedor debe ser el dueño registrado o tener poder notarial.</p>
+      <h2>El RITEVE</h2>
+      <p>Solicitá el RITEVE más reciente. Si está vencido, pedile al vendedor que lo pase antes de cerrar el trato, o negociá una rebaja en el precio para cubrirlo.</p>
+    `
+  },
+  {
+    tag: "Mercado",
+    title: "Los 10 autos más buscados en Costa Rica en 2026",
+    date: "Febrero 2026", read: "4 min lectura",
+    body: `
+      <p>El mercado de autos usados en Costa Rica tiene sus propias preferencias. Estas son las marcas y modelos que más se buscan y venden en 2026.</p>
+      <h2>Los favoritos del mercado costarricense</h2>
+      <ul>
+        <li><strong>Toyota Corolla</strong> — el rey indiscutible. Bajo consumo, repuestos económicos y altísima confiabilidad.</li>
+        <li><strong>Toyota RAV4</strong> — el SUV más popular, ideal para las carreteras de Costa Rica.</li>
+        <li><strong>Honda CR-V</strong> — segunda opción de SUV, muy apreciado por su espacio y eficiencia.</li>
+        <li><strong>Hyundai Tucson</strong> — excelente relación precio-calidad, muy demandado.</li>
+        <li><strong>Kia Sportage</strong> — diseño moderno y buena tecnología a precio accesible.</li>
+        <li><strong>Toyota Hilux</strong> — la pick-up más vendida, ideal para zonas rurales.</li>
+        <li><strong>Nissan Sentra</strong> — sedán económico y confiable para uso urbano.</li>
+        <li><strong>Honda Civic</strong> — deportivo, eficiente y con buena retención de valor.</li>
+        <li><strong>Hyundai Elantra</strong> — alternativa económica al Civic con buenas prestaciones.</li>
+        <li><strong>Mitsubishi Outlander</strong> — SUV espacioso con buen desempeño en carretera.</li>
+      </ul>
+      <div class="article-tip"><p>💡 Si buscás revender pronto, los Toyota y Honda tienen mejor retención de valor en el mercado costarricense.</p></div>
+      <h2>Tendencias 2026</h2>
+      <p>Los vehículos híbridos y eléctricos están ganando terreno rápidamente. El Toyota Prius, RAV4 Hybrid y los modelos BYD están apareciendo cada vez más en el mercado costarricense, impulsados por los incentivos fiscales y el alto costo de la gasolina.</p>
+    `
+  },
+  {
+    tag: "Consejos",
+    title: "Cómo revisar un auto usado antes de comprarlo: checklist completo",
+    date: "Febrero 2026", read: "5 min lectura",
+    body: `
+      <p>Una revisión completa antes de comprar puede evitarte gastos inesperados de millones de colones. Usá este checklist como guía.</p>
+      <h2>✅ Checklist exterior</h2>
+      <ul>
+        <li>Alineación de paneles y puertas</li>
+        <li>Uniformidad de la pintura</li>
+        <li>Estado de los cauchos (desgaste parejo)</li>
+        <li>Vidrios sin rajaduras</li>
+        <li>Luces delanteras y traseras funcionando</li>
+        <li>Sin óxido visible en carrocería ni chasis</li>
+      </ul>
+      <h2>✅ Checklist mecánico</h2>
+      <ul>
+        <li>Arranque en frío sin ruidos extraños</li>
+        <li>Aceite limpio y en nivel correcto</li>
+        <li>Refrigerante sin contaminación</li>
+        <li>Sin fugas de ningún tipo</li>
+        <li>Frenos que respondan bien</li>
+        <li>Dirección sin vibraciones ni ruidos</li>
+        <li>Caja que cambie suave (automático o manual)</li>
+      </ul>
+      <h2>✅ Checklist interior</h2>
+      <ul>
+        <li>Aire acondicionado que enfríe bien</li>
+        <li>Todos los vidrios eléctricos funcionando</li>
+        <li>Sistema de audio operativo</li>
+        <li>Cinturones de seguridad en buen estado</li>
+        <li>Sin olores a humedad o quemado</li>
+      </ul>
+      <div class="article-tip"><p>💡 Hacé una prueba de manejo de al menos 20 minutos en diferentes condiciones: ciudad, carretera y reversa.</p></div>
+      <h2>✅ Checklist de documentos</h2>
+      <ul>
+        <li>Cédula del vendedor coincide con el propietario en COSEVI</li>
+        <li>Sin multas ni restricciones pendientes</li>
+        <li>RITEVE vigente o negociado</li>
+        <li>Sin prendas ni gravámenes</li>
+        <li>Número de chasis visible y coincidente</li>
+      </ul>
+    `
+  },
+  {
+    tag: "Finanzas",
+    title: "Financiamiento de autos en Costa Rica: lo que los bancos no te dicen",
+    date: "Enero 2026", read: "5 min lectura",
+    body: `
+      <p>Financiar un auto en Costa Rica puede ser una buena opción si se hace bien, pero hay detalles importantes que muchos compradores descubren demasiado tarde.</p>
+      <h2>Tasas de interés reales</h2>
+      <p>Las tasas para créditos de vehículos en Costa Rica rondan entre el 9% y el 18% anual dependiendo del banco, el perfil del deudor y si el auto es nuevo o usado. El Banco Nacional y el BCR suelen ofrecer las tasas más competitivas para clientes con buen historial.</p>
+      <div class="article-tip"><p>💡 Siempre pedí la Tasa de Costo Efectivo (TCE), no solo la tasa nominal. La TCE incluye todos los costos del crédito.</p></div>
+      <h2>Plazos más comunes</h2>
+      <ul>
+        <li>Autos nuevos: hasta 84 meses (7 años)</li>
+        <li>Autos usados hasta 3 años: hasta 60 meses</li>
+        <li>Autos usados de 4 a 7 años: hasta 48 meses</li>
+        <li>Autos usados de más de 8 años: difícil de financiar</li>
+      </ul>
+      <h2>Requisitos típicos</h2>
+      <ul>
+        <li>Cédula de identidad vigente</li>
+        <li>Comprobante de ingresos (3 últimos salarios o declaración de renta)</li>
+        <li>Sin atrasos en el CIC (Central de Información Crediticia)</li>
+        <li>Cuota no mayor al 30-40% del ingreso mensual</li>
+      </ul>
+      <h2>Lo que los bancos no te dicen</h2>
+      <p>El seguro de vehículo es obligatorio con el crédito y suele ser contratado por el banco a través del INS, generalmente más caro que si lo gestionás vos directamente. También hay comisiones de apertura, avalúo del vehículo y otros gastos que pueden sumar entre ₡150,000 y ₡300,000 adicionales.</p>
+      <h2>¿Conviene financiar o pagar de contado?</h2>
+      <p>Si tenés el dinero disponible, pagar de contado siempre es mejor. Si necesitás financiar, asegurate de que la cuota mensual no comprometa más del 30% de tus ingresos y buscá el plazo más corto que puedas pagar cómodamente.</p>
+    `
+  }
+];
+
+function showArticle(idx){
+  var a = articles[idx];
+  document.getElementById('heroBar').style.display = 'none';
+  document.getElementById('listView').style.display = 'none';
+  var view = document.getElementById('articleView');
+  view.style.display = 'block';
+  view.innerHTML =
+    '<button class="article-back" onclick="showList()">← Volver al blog</button>'+
+    '<div class="article-tag">'+a.tag+'</div>'+
+    '<h1 class="article-title">'+a.title+'</h1>'+
+    '<div class="article-meta"><span>📅 '+a.date+'</span><span>⏱ '+a.read+'</span></div>'+
+    '<div class="article-body">'+a.body+'</div>'+
+    '<div style="margin-top:40px;padding:24px;background:#0d1929;border-radius:14px;text-align:center">'+
+      '<p style="font-size:15px;font-weight:600;margin-bottom:12px">¿Tenés un auto para vender?</p>'+
+      '<p style="font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:16px;font-weight:300">Publicá gratis en Autos Premium CR</p>'+
+      '<button onclick="location.href=\'publicar.html\'" style="background:#0051BA;color:#fff;border:none;border-radius:8px;padding:12px 28px;font-size:14px;font-weight:700;cursor:pointer">Publicar anuncio →</button>'+
+    '</div>';
+  window.scrollTo(0,0);
+}
+
+function showList(){
+  document.getElementById('heroBar').style.display = 'block';
+  document.getElementById('listView').style.display = 'block';
+  document.getElementById('articleView').style.display = 'none';
+  window.scrollTo(0,0);
+}
+</script>
+<script src="/chat_fix.js"></script><script src="/chat.js"></script></body>
+</html>

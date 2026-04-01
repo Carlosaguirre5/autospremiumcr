@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin — Autos Premium CR</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#070b14;color:#fff;display:flex;min-height:100vh}
+.sidenav{width:220px;background:#040810;border-right:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:50}
+.sidenav-logo{padding:20px 18px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:10px}
+.logo-mark{background:#0051BA;color:#fff;font-weight:900;font-size:18px;padding:5px 8px;border-radius:6px}
+.logo-text{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;line-height:1.3}
+.logo-text span{color:#0051BA;background:#fff;padding:1px 3px;border-radius:2px}
+.sidenav-section{padding:20px 12px 8px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.2);text-transform:uppercase;letter-spacing:1.5px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;margin:2px 6px;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.55);transition:all .2s}
+.nav-item:hover{background:rgba(255,255,255,0.05);color:#fff}
+.nav-item.active{background:rgba(0,81,186,0.2);color:#fff;border:1px solid rgba(0,81,186,0.3)}
+.nav-icon{width:18px;text-align:center;font-size:14px}
+.nav-badge{margin-left:auto;background:#e05252;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px}
+.sidenav-bottom{margin-top:auto;padding:16px;border-top:1px solid rgba(255,255,255,0.06)}
+.admin-avatar{width:34px;height:34px;background:#0051BA;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800}
+.main{margin-left:220px;flex:1;display:flex;flex-direction:column}
+.topbar{background:#040810;border-bottom:1px solid rgba(255,255,255,0.06);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40}
+.topbar-title{font-size:16px;font-weight:700}
+.content{padding:24px 28px;flex:1}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.metric{background:#0d1929;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:20px}
+.metric-icon{font-size:22px;margin-bottom:12px}
+.metric-val{font-size:28px;font-weight:800;margin-bottom:3px}
+.metric-label{font-size:12px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.8px}
+.metric-change{font-size:12px;margin-top:8px;color:#4ade80}
+.tabs{display:flex;gap:4px;margin-bottom:24px;background:rgba(255,255,255,0.03);border-radius:10px;padding:4px;width:fit-content}
+.tab{padding:8px 18px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;color:rgba(255,255,255,0.45);transition:all .2s}
+.tab.active{background:#0051BA;color:#fff;font-weight:600}
+.table-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.table-title{font-size:15px;font-weight:700}
+.btn-sm{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:7px;color:rgba(255,255,255,0.65);padding:7px 14px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif}
+.table-wrap{background:#0d1929;border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+th{background:#060c17;padding:11px 16px;text-align:left;font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid rgba(255,255,255,0.07)}
+td{padding:13px 16px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.05);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,0.02)}
+.car-cell{display:flex;align-items:center;gap:10px}
+.car-thumb{width:52px;height:40px;background:linear-gradient(135deg,#001a2e,#002D47);border-radius:6px;overflow:hidden;flex-shrink:0}
+.car-thumb img{width:100%;height:100%;object-fit:cover}
+.car-thumb-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.car-cell-name{font-weight:600;font-size:13px}
+.car-cell-sub{font-size:11px;color:rgba(255,255,255,0.35);margin-top:1px}
+.status{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:5px;font-size:11px;font-weight:700;text-transform:uppercase}
+.status::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.s-activo{background:rgba(74,222,128,0.1);color:#4ade80;border:1px solid rgba(74,222,128,0.2)}
+.s-activo::before{background:#4ade80}
+.s-pendiente{background:rgba(251,191,36,0.1);color:#fbbf24;border:1px solid rgba(251,191,36,0.2)}
+.s-pendiente::before{background:#fbbf24}
+.s-rechazado{background:rgba(224,82,82,0.1);color:#e05252;border:1px solid rgba(224,82,82,0.2)}
+.s-rechazado::before{background:#e05252}
+.row-actions{display:flex;gap:6px;flex-wrap:wrap}
+.act-btn{background:transparent;border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:5px 10px;font-size:11px;color:rgba(255,255,255,0.5);cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.act-btn:hover{border-color:rgba(255,255,255,0.3);color:#fff}
+.act-btn.approve{border-color:rgba(74,222,128,0.3);color:#4ade80}
+.act-btn.approve:hover{background:rgba(74,222,128,0.1)}
+.act-btn.reject{border-color:rgba(224,82,82,0.3);color:#e05252}
+.act-btn.reject:hover{background:rgba(224,82,82,0.1)}
+.act-btn.view{border-color:rgba(0,81,186,0.3);color:#6ab4ff}
+.act-btn.view:hover{background:rgba(0,81,186,0.1)}
+.toast{position:fixed;bottom:28px;right:28px;background:#0d1929;border:1px solid rgba(74,222,128,0.3);border-radius:10px;padding:14px 20px;font-size:14px;font-weight:500;display:none;align-items:center;gap:10px;z-index:300}
+.toast.show{display:flex}
+.toast.error{border-color:rgba(224,82,82,0.3);color:#e05252}
+.loading{text-align:center;padding:40px;color:rgba(255,255,255,0.4)}
+
+/* MODAL DETALLE */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:200;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+.modal-overlay.show{display:flex}
+.modal{background:#0d1929;border:1px solid rgba(255,255,255,0.1);border-radius:16px;width:100%;max-width:780px;margin:auto}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid rgba(255,255,255,0.07)}
+.modal-header h3{font-size:17px;font-weight:700}
+.modal-close{background:transparent;border:1px solid rgba(255,255,255,0.1);border-radius:7px;color:rgba(255,255,255,0.5);padding:6px 12px;cursor:pointer;font-size:13px;font-family:'Inter',sans-serif}
+.modal-close:hover{color:#fff;border-color:rgba(255,255,255,0.3)}
+.modal-body{padding:24px}
+.modal-gallery{display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:20px}
+.modal-main-img{height:280px;background:linear-gradient(135deg,#001a2e,#002D47);border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:80px}
+.modal-main-img img{width:100%;height:100%;object-fit:cover}
+.modal-thumbs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.modal-thumb{width:70px;height:54px;border-radius:6px;overflow:hidden;cursor:pointer;flex-shrink:0;border:2px solid transparent;background:linear-gradient(135deg,#001a2e,#002D47);display:flex;align-items:center;justify-content:center;font-size:20px}
+.modal-thumb img{width:100%;height:100%;object-fit:cover}
+.modal-thumb.active{border-color:#0051BA}
+.modal-specs{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(255,255,255,0.05);border-radius:10px;overflow:hidden;margin-bottom:16px}
+.modal-spec{background:#0a1525;padding:12px 14px}
+.modal-spec-label{font-size:10px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}
+.modal-spec-val{font-size:13px;font-weight:600}
+.modal-desc{background:#0a1525;border-radius:10px;padding:16px;margin-bottom:20px}
+.modal-desc h4{font-size:13px;font-weight:700;margin-bottom:8px;color:rgba(255,255,255,0.6)}
+.modal-desc p{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;white-space:pre-line}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07)}
+.btn-modal{border-radius:8px;padding:11px 24px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:all .2s}
+.btn-modal.cancel{background:rgba(255,255,255,0.06);color:#fff;border:1px solid rgba(255,255,255,0.1)}
+.btn-modal.approve{background:#22c55e;color:#fff}
+.btn-modal.approve:hover{background:#16a34a}
+.btn-modal.reject{background:#e05252;color:#fff}
+.btn-modal.reject:hover{background:#c43c3c}
+.modal-price{font-size:24px;font-weight:800;margin-bottom:4px}
+.modal-price-usd{font-size:13px;color:rgba(255,255,255,0.4)}
+.modal-seller{display:flex;align-items:center;gap:12px;background:#0a1525;border-radius:10px;padding:14px;margin-bottom:16px}
+.modal-seller-avatar{width:40px;height:40px;background:#0051BA;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0}
+.modal-seller-name{font-size:14px;font-weight:700}
+.modal-seller-tel{font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px}
+</style>
+</head>
+<body>
+
+<div class="sidenav">
+  <div class="sidenav-logo">
+    <div class="logo-mark">AP</div>
+    <div class="logo-text">AUTOS <span>PREMIUM</span> CR<br><span style="color:rgba(255,255,255,0.3);font-size:9px">Admin Panel</span></div>
+  </div>
+  <div class="sidenav-section">Principal</div>
+  <div class="nav-item active"><span class="nav-icon">📊</span> Dashboard</div>
+  <div class="nav-item" onclick="loadTab('pendiente',this)"><span class="nav-icon">⏳</span> Pendientes <span class="nav-badge" id="pendBadge">0</span></div>
+  <div class="nav-item" onclick="loadTab('activo',this)"><span class="nav-icon">🚗</span> Activos</div>
+  <div class="nav-item" onclick="loadTab('rechazado',this)"><span class="nav-icon">✕</span> Rechazados</div>
+  <div class="nav-item" onclick="location.href='index.html'"><span class="nav-icon">🌐</span> Ver sitio</div>
+  <div class="sidenav-bottom">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="admin-avatar">AP</div>
+      <div><div style="font-size:13px;font-weight:600">Administrador</div><div style="font-size:11px;color:rgba(255,255,255,0.35)">Autos Premium CR</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title">Dashboard</div>
+    <button class="btn-sm" onclick="loadData()">↻ Actualizar</button>
+  </div>
+  <div class="content">
+    <div class="metrics">
+      <div class="metric"><div class="metric-icon">🚗</div><div class="metric-val" id="mActivos">—</div><div class="metric-label">Anuncios activos</div></div>
+      <div class="metric"><div class="metric-icon">⏳</div><div class="metric-val" id="mPendientes">—</div><div class="metric-label">Pendientes</div><div class="metric-change" id="mPendChange"></div></div>
+      <div class="metric"><div class="metric-icon">✅</div><div class="metric-val" id="mTotal">—</div><div class="metric-label">Total anuncios</div></div>
+      <div class="metric"><div class="metric-icon">📅</div><div class="metric-val" id="mHoy">—</div><div class="metric-label">Publicados hoy</div></div>
+    </div>
+    <div class="tabs">
+      <div class="tab active" onclick="loadTab('todos',this)">Todos</div>
+      <div class="tab" onclick="loadTab('pendiente',this)">Pendientes</div>
+      <div class="tab" onclick="loadTab('activo',this)">Activos</div>
+      <div class="tab" onclick="loadTab('rechazado',this)">Rechazados</div>
+    </div>
+    <div class="table-header">
+      <div class="table-title">Anuncios</div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Vehículo</th>
+            <th>Vendedor</th>
+            <th>Precio</th>
+            <th>Fuente</th>
+            <th>Estado</th>
+            <th>Visitas</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"><tr><td colspan="7"><div class="loading">Cargando...</div></td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DETALLE -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Detalle del anuncio</h3>
+      <button class="modal-close" onclick="closeModal()">✕ Cerrar</button>
+    </div>
+    <div class="modal-body" id="modalBody">Cargando...</div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✅ <span id="toastMsg">Listo</span></div>
+
+<script>
+var API = 'https://autospremiumcostarica.com/api';
+var currentEstado = 'todos';
+var currentModalId = null;
+
+function fmt(n){ return n ? '₡'+parseInt(n).toLocaleString('es-CR') : '—'; }
+
+function statusHtml(s){
+  var map = {activo:'s-activo Activo', pendiente:'s-pendiente Pendiente', rechazado:'s-rechazado Rechazado'};
+  var parts = (map[s]||'s-pendiente Pendiente').split(' ');
+  return '<span class="status '+parts[0]+'">'+parts[1]+'</span>';
+}
+
+function thumbHtml(fotos){
+  var f = [];
+  try{ f = typeof fotos === 'string' ? JSON.parse(fotos) : (fotos||[]); } catch(e){}
+  if(f.length > 0 && f[0].url){
+    return '<div class="car-thumb"><img src="'+f[0].url+'"></div>';
+  }
+  return '<div class="car-thumb"><div class="car-thumb-placeholder">🚗</div></div>';
+}
+
+async function loadData(){
+  try{
+    var all  = await fetch(API+'/anuncios?limit=100&estado=activo').then(function(r){return r.json();});
+    var pend = await fetch(API+'/anuncios?limit=100&estado=pendiente').then(function(r){return r.json();});
+    var rech = await fetch(API+'/anuncios?limit=100&estado=rechazado').then(function(r){return r.json();});
+
+    var totalActivos = all.total||0;
+    var totalPend = pend.total||0;
+    document.getElementById('mActivos').textContent = totalActivos;
+    document.getElementById('mPendientes').textContent = totalPend;
+    document.getElementById('mTotal').textContent = (all.total||0)+(pend.total||0)+(rech.total||0);
+    document.getElementById('pendBadge').textContent = totalPend;
+    document.getElementById('mPendChange').textContent = totalPend > 0 ? '⚠️ Requieren revisión' : '✓ Al día';
+
+    var cars = [];
+    if(currentEstado==='todos') cars = [...(all.anuncios||[]),...(pend.anuncios||[]),...(rech.anuncios||[])];
+    else if(currentEstado==='activo') cars = all.anuncios||[];
+    else if(currentEstado==='pendiente') cars = pend.anuncios||[];
+    else if(currentEstado==='rechazado') cars = rech.anuncios||[];
+
+    var hoy = cars.filter(function(c){
+      var d = new Date(c.creado_en);
+      return d.toDateString() === new Date().toDateString();
+    }).length;
+    document.getElementById('mHoy').textContent = hoy;
+
+    if(!cars.length){
+      document.getElementById('tableBody').innerHTML = '<tr><td colspan="7"><div class="loading">No hay anuncios en esta categoría.</div></td></tr>';
+      return;
+    }
+
+    document.getElementById('tableBody').innerHTML = cars.map(function(c){
+      return '<tr>'+
+        '<td><div class="car-cell">'+thumbHtml(c.fotos)+'<div><div class="car-cell-name">'+(c.marca||'')+' '+(c.modelo||'')+' '+(c.anio||'')+'</div><div class="car-cell-sub">'+(c.km?c.km.toLocaleString()+' km':'—')+' · '+(c.provincia||'—')+'</div></div></div></td>'+
+        '<td style="color:rgba(255,255,255,0.65)">'+(c.vendedor_nombre||'—')+'</td>'+
+        '<td style="font-weight:700">'+fmt(c.precio)+'</td>'+
+        '<td><span style="font-size:11px;padding:3px 8px;border-radius:4px;background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.5)">'+(c.fuente||'web')+'</span></td>'+
+        '<td>'+statusHtml(c.estado)+'</td>'+
+        '<td style="color:rgba(255,255,255,0.5);font-size:12px">'+(c.visitas||0)+'</td>'+
+        '<td><div class="row-actions">'+
+          '<button class="act-btn view" onclick="verDetalle('+c.id+')">👁 Ver</button>'+
+          (c.estado==='pendiente'?'<button class="act-btn approve" onclick="cambiarEstado('+c.id+',\'activo\')">✓ Aprobar</button>':'')+ 
+          (c.estado==='activo'?'<button class="act-btn" onclick="location.href=\'detalle.html?id='+c.id+'\'" style="color:#6ab4ff;border-color:rgba(0,81,186,0.3)">Ver público</button>':'')+
+          '<button class="act-btn reject" onclick="cambiarEstado('+c.id+',\'rechazado\')">✕</button>'+
+        '</div></td>'+
+      '</tr>';
+    }).join('');
+  } catch(e){
+    document.getElementById('tableBody').innerHTML = '<tr><td colspan="7"><div class="loading">Error cargando datos.</div></td></tr>';
+  }
+}
+
+async function verDetalle(id){
+  currentModalId = id;
+  document.getElementById('modalTitle').textContent = 'Cargando...';
+  document.getElementById('modalBody').innerHTML = '<div class="loading">Cargando detalle...</div>';
+  document.getElementById('modalOverlay').classList.add('show');
+
+  try{
+    var a = await fetch(API+'/anuncios/'+id).then(function(r){return r.json();});
+    document.getElementById('modalTitle').textContent = (a.marca||'')+' '+(a.modelo||'')+' '+(a.anio||'');
+
+    var fotos = [];
+    try{ fotos = typeof a.fotos === 'string' ? JSON.parse(a.fotos) : (a.fotos||[]); } catch(e){}
+
+    var mainImg = fotos.length > 0 && fotos[0].url
+      ? '<img id="mMainImg" src="'+fotos[0].url+'">'
+      : '<span>🚗</span>';
+
+    var thumbsHtml = fotos.length > 0
+      ? fotos.map(function(f,i){
+          return '<div class="modal-thumb'+(i===0?' active':'')+'" onclick="setModalFoto(\''+f.url+'\',this)">'+(f.url?'<img src="'+f.url+'">':'🚗')+'</div>';
+        }).join('')
+      : '';
+
+    var initials = (a.vendedor_nombre||'V').split(' ').map(function(x){return x[0];}).join('').substring(0,2).toUpperCase();
+    var precio = a.precio ? '₡'+parseInt(a.precio).toLocaleString('es-CR') : 'Consultar';
+    var precioUsd = a.precio ? '~$'+Math.round(a.precio/500).toLocaleString('en-US') : '';
+
+    document.getElementById('modalBody').innerHTML =
+      '<div class="modal-gallery">'+
+        '<div class="modal-main-img" id="mMain">'+mainImg+'</div>'+
+        (thumbsHtml?'<div class="modal-thumbs">'+thumbsHtml+'</div>':'')+
+      '</div>'+
+      '<div style="margin-bottom:16px">'+
+        '<div class="modal-price">'+precio+'</div>'+
+        '<div class="modal-price-usd">'+precioUsd+'</div>'+
+      '</div>'+
+      '<div class="modal-seller">'+
+        '<div class="modal-seller-avatar">'+initials+'</div>'+
+        '<div><div class="modal-seller-name">'+(a.vendedor_nombre||'—')+'</div><div class="modal-seller-tel">📞 '+(a.vendedor_telefono||'Sin teléfono')+'</div></div>'+
+        '<div style="margin-left:auto;font-size:11px;color:rgba(255,255,255,0.3)">'+a.fuente+' · '+(a.provincia||'—')+'</div>'+
+      '</div>'+
+      '<div class="modal-specs">'+
+        '<div class="modal-spec"><div class="modal-spec-label">Marca</div><div class="modal-spec-val">'+(a.marca||'—')+'</div></div>'+
+        '<div class="modal-spec"><div class="modal-spec-label">Modelo</div><div class="modal-spec-val">'+(a.modelo||'—')+'</div></div>'+
+        '<div class="modal-spec"><div class="modal-spec-label">Año</div><div class="modal-spec-val">'+(a.anio||'—')+'</div></div>'+
+        '<div class="modal-spec"><div class="modal-spec-label">Kilometraje</div><div class="modal-spec-val">'+(a.km?a.km.toLocaleString()+' km':'—')+'</div></div>'+
+        '<div class="modal-spec"><div class="modal-spec-label">Combustible</div><div class="modal-spec-val">'+(a.combustible||'—')+'</div></div>'+
+        '<div class="modal-spec"><div class="modal-spec-label">Transmisión</div><div class="modal-spec-val">'+(a.transmision||'—')+'</div></div>'+
+        '<div class="modal-spec"><div class="modal-spec-label">Color</div><div class="modal-spec-val">'+(a.color||'—')+'</div></div>'+
+        '<div class="modal-spec"><div class="modal-spec-label">Cantón</div><div class="modal-spec-val">'+(a.canton||'—')+'</div></div>'+
+      '</div>'+
+      (a.descripcion?'<div class="modal-desc"><h4>Descripción del vendedor</h4><p>'+a.descripcion+'</p></div>':'')+
+      '<div class="modal-actions">'+
+        '<button class="btn-modal cancel" onclick="closeModal()">Cerrar</button>'+
+        (a.estado==='pendiente'?
+          '<button class="btn-modal reject" onclick="cambiarEstadoModal('+id+',\'rechazado\')">✕ Rechazar</button>'+
+          '<button class="btn-modal approve" onclick="cambiarEstadoModal('+id+',\'activo\')">✓ Aprobar</button>'
+        :
+          '<button class="btn-modal cancel" onclick="location.href=\'detalle.html?id='+id+'\'">Ver público →</button>'
+        )+
+      '</div>';
+
+  } catch(e){
+    document.getElementById('modalBody').innerHTML = '<div class="loading">Error cargando detalle.</div>';
+  }
+}
+
+function setModalFoto(url, el){
+  document.querySelectorAll('.modal-thumb').forEach(function(t){t.classList.remove('active');});
+  el.classList.add('active');
+  var main = document.getElementById('mMain');
+  if(main) main.innerHTML = '<img id="mMainImg" src="'+url+'">';
+}
+
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('show');
+  currentModalId = null;
+}
+
+async function cambiarEstadoModal(id, estado){
+  await cambiarEstado(id, estado);
+  closeModal();
+}
+
+async function cambiarEstado(id, estado){
+  try{
+    await fetch(API+'/anuncios/'+id+'/estado',{
+      method:'PATCH',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({estado:estado})
+    });
+    showToast(estado==='activo'?'✅ Anuncio aprobado y publicado':'Anuncio rechazado', estado==='activo'?'ok':'err');
+    loadData();
+  } catch(e){
+    showToast('Error al actualizar','err');
+  }
+}
+
+function loadTab(estado, el){
+  currentEstado = estado;
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  if(el) el.classList.add('active');
+  loadData();
+}
+
+function showToast(msg, type){
+  var t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.className = 'toast show'+(type==='err'?' error':'');
+  setTimeout(function(){t.classList.remove('show');}, 3000);
+}
+
+loadData();
+setInterval(loadData, 30000);
+</script>
+</body>
+</html>
