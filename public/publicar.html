@@ -580,20 +580,23 @@ fileInput.addEventListener('change', function(){
       var div = document.createElement('div');
       div.className = 'photo-thumb';
       div.innerHTML = '<img src="'+e.target.result+'"><button class="photo-remove">✕</button>'+(idx===0?'<div class="photo-main-badge">Principal</div>':'<div class="photo-main-badge" style="background:rgba(255,255,255,0.15);cursor:pointer">Hacer principal</div>');
-      div.querySelector('.photo-remove').onclick = function(e){
+      div.querySelector('.photo-remove').addEventListener('click', function(e){
         e.stopPropagation();
         selectedFiles.splice(selectedFiles.indexOf(fileRef),1);
         div.remove();
         actualizarBadges();
-      };
-      div.querySelector('.photo-main-badge').onclick = function(){
+      });
+      div.querySelector('.photo-main-badge').addEventListener('click', function(e){
+        e.stopPropagation();
         var i = selectedFiles.indexOf(fileRef);
         if(i > 0){
           selectedFiles.splice(i,1);
           selectedFiles.unshift(fileRef);
-          moverAPrincipal(div);
+          var prev = document.getElementById('photosPreview');
+          prev.insertBefore(div, prev.firstChild);
+          actualizarBadges();
         }
-      };
+      });
       prev.appendChild(div);
       if(idx === 0){
         document.getElementById('prevImg').innerHTML = '<img src="'+e.target.result+'">';
