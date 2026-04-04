@@ -591,7 +591,7 @@ fileInput.addEventListener('change', function(){
         if(i > 0){
           selectedFiles.splice(i,1);
           selectedFiles.unshift(fileRef);
-          actualizarBadges();
+          moverAPrincipal(div);
         }
       };
       prev.appendChild(div);
