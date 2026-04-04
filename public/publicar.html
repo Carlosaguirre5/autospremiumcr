@@ -573,15 +573,26 @@ fileInput.addEventListener('change', function(){
     if(selectedFiles.length >= 15) return;
     selectedFiles.push(f);
     var idx = selectedFiles.length - 1;
+    var fileRef = f;
     var reader = new FileReader();
     reader.onload = function(e){
       var prev = document.getElementById('photosPreview');
       var div = document.createElement('div');
       div.className = 'photo-thumb';
-      div.innerHTML = '<img src="'+e.target.result+'"><button class="photo-remove">✕</button>'+(idx===0?'<div class="photo-main-badge">Principal</div>':'');
-      div.querySelector('.photo-remove').onclick = function(){
-        selectedFiles.splice(idx,1);
+      div.innerHTML = '<img src="'+e.target.result+'"><button class="photo-remove">✕</button>'+(idx===0?'<div class="photo-main-badge">Principal</div>':'<div class="photo-main-badge" style="background:rgba(255,255,255,0.15);cursor:pointer">Hacer principal</div>');
+      div.querySelector('.photo-remove').onclick = function(e){
+        e.stopPropagation();
+        selectedFiles.splice(selectedFiles.indexOf(fileRef),1);
         div.remove();
+        actualizarBadges();
+      };
+      duerySelector('.photo-main-badge').onclick = function(){
+        var i = selectedFiles.indexOf(fileRef);
+        if(i > 0){
+          selectedFiles.splice(i,1);
+          selectedFiles.unshift(fileRef);
+          actualizarBadges();
+        }
       };
       prev.appendChild(div);
       if(idx === 0){
@@ -593,6 +604,24 @@ fileInput.addEventListener('change', function(){
   fileInput.value = '';
 });
 
+function actualizarBadges(){
+  var thumbs = document.querySelectorAll('.photo-thumb');
+  thumbs.forEach(function(t, i){
+    var badge = t.querySelector('.photo-main-badge');
+    if(badge){
+      if(i===0){
+        badge.textContent = 'Principal';
+        badgestyle.background = 'rgba(0,81,186,0.85)';
+        badge.style.cursor = 'default';
+        document.getElementById('prevImg').innerHTML = '<img src="'+t.querySelector('img').src+'">';
+      } else {
+        badge.textContent = 'Hacer principal';
+        badge.style.background = 'rgba(255,255,255,0.15)';
+        badge.style.cursor = 'pointer';
+      }
+    }
+  });
+}
 document.getElementById('marca').addEventListener('change', updatePreview);
 document.getElementById('modelo').addEventListener('input', updatePreview);
 document.getElementById('anio').addEventListener('change', updatePreview);
