@@ -586,7 +586,7 @@ fileInput.addEventListener('change', function(){
         div.remove();
         actualizarBadges();
       };
-      duerySelector('.photo-main-badge').onclick = function(){
+      div.querySelector('.photo-main-badge').onclick = function(){
         var i = selectedFiles.indexOf(fileRef);
         if(i > 0){
           selectedFiles.splice(i,1);
