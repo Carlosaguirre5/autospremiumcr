@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin Login — Autos Premium CR</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#070b14;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center}
+.login-card{background:#0d1929;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:48px 40px;width:100%;max-width:400px;text-align:center}
+.logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:32px}
+.logo img{height:48px;width:auto}
+.login-title{font-size:22px;font-weight:800;margin-bottom:6px}
+.login-sub{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:32px;font-weight:300}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;text-align:left}
+.field label{font-size:11px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.8px}
+.field input{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:#fff;padding:12px 14px;font-size:14px;font-family:'Inter',sans-serif;transition:border-color .2s}
+.field input:focus{outline:none;border-color:#0051BA}
+.btn-login{width:100%;background:#0051BA;color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;transition:background .2s}
+.btn-login:hover{background:#0040a0}
+.btn-login:disabled{opacity:.5;cursor:not-allowed}
+.error-msg{background:rgba(224,82,82,0.1);border:1px solid rgba(224,82,82,0.3);border-radius:8px;padding:10px 14px;font-size:13px;color:#e05252;margin-top:12px;display:none}
+</style>
+<link rel="canonical" href="https://autospremiumcostarica.com/admin-login.html" />
+</head>
+<body>
+<div class="login-card">
+  <div class="logo">
+    <img src="/logo.svg" alt="Autos Premium CR">
+  </div>
+  <div class="login-title">Panel de Administración</div>
+  <div class="login-sub">Ingresá tus credenciales para continuar</div>
+  <div class="field">
+    <label>Usuario</label>
+    <input type="text" id="usuario" placeholder="admin" autocomplete="username">
+  </div>
+  <div class="field">
+    <label>Contraseña</label>
+    <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+  </div>
+  <button class="btn-login" id="btnLogin" onclick="login()">Iniciar sesión</button>
+  <div class="error-msg" id="errorMsg">Usuario o contraseña incorrectos</div>
+</div>
+<script>
+var API = 'https://autospremiumcostarica.com/api';
+
+document.getElementById('password').addEventListener('keypress', function(e){
+  if(e.key === 'Enter') login();
+});
+
+async function login(){
+  var usuario = document.getElementById('usuario').value.trim();
+  var password = document.getElementById('password').value;
+  if(!usuario || !password){ return; }
+  var btn = document.getElementById('btnLogin');
+  btn.disabled = true;
+  btn.textContent = 'Verificando...';
+  document.getElementById('errorMsg').style.display = 'none';
+  try {
+    var res = await fetch(API+'/auth/admin/login', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({usuario, password})
+    });
+    var data = await res.json();
+    if(res.ok && data.token){
+      localStorage.setItem('adminToken', data.token);
+      location.href = 'admin.html';
+    } else {
+      document.getElementById('errorMsg').style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Iniciar sesión';
+    }
+  } catch(e){
+    document.getElementById('errorMsg').textContent = 'Error de conexión. Intentá de nuevo.';
+    document.getElementById('errorMsg').style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Iniciar sesión';
+  }
+}
+
+// Si ya tiene token válido, redirigir al admin
+var token = localStorage.getItem('adminToken');
+if(token){
+  fetch(API+'/auth/admin/verify', {
+    headers: {'Authorization': 'Bearer '+token}
+  }).then(function(r){
+    if(r.ok) location.href = 'admin.html';
+  });
+}
+</script>
+</body>
+</html>
