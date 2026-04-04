@@ -56,7 +56,14 @@ nav ul a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px}
 .share-label{font-size:13px;color:rgba(255,255,255,0.4)}
 .share-btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:7px;color:rgba(255,255,255,0.6);padding:6px 14px;font-size:12px;cursor:pointer}
 </style>
-<link rel="stylesheet" href="responsive.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.svg"><style>@media(max-width:768px){.nav-hide-mobile{display:none!important}.hamburger{display:flex!important}}</style></head>
+<link rel="stylesheet" href="responsive.css"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.svg"><style>@media(max-width:768px){.nav-hide-mobile{display:none!important}.hamburger{display:flex!important}}</style><script>
+  const detailUrl = new URL(window.location.href);
+  const detailIdParam = detailUrl.searchParams.get('id');
+  const canonical = document.createElement('link');
+  canonical.rel = 'canonical';
+  canonical.href = 'https://autospremiumcostarica.com/detalle.html' + (detailIdParam ? '?id=' + detailIdParam : '');
+  document.head.appendChild(canonical);
+</script></head>
 <body>
 <nav>
   <div class="logo">
