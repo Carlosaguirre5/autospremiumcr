@@ -155,5 +155,27 @@ router.get('/precios-referencia/comparables', async (req, res) => {
   }
 });
 
+router.post("/download-fotos", async (req, res) => {
+  try {
+    const { urls } = req.body;
+    if (!urls || !urls.length) return res.status(400).json({ error: "No hay URLs" });
+    const fs = require("fs");
+    const path = require("path");
+    const fotos = [];
+    for (const url of urls.slice(0, 5)) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) continue;
+        const buffer = await response.arrayBuffer();
+        const filename = Date.now() + "_" + Math.random().toString(36).slice(2) + ".jpg";
+        const filepath = path.join("uploads", filename);
+        fs.writeFileSync(filepath, Buffer.from(buffer));
+        fotos.push("/uploads/" + filename);
+      } catch (e) { console.error("Error foto:", e.message); }
+    }
+    res.json({ fotos });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 module.exports = router;
 

@@ -410,7 +410,7 @@ nav ul a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px}
           <label>Teléfono / WhatsApp <span>*</span></label>
           <div style="display:flex;gap:8px">
             <input type="tel" id="telefono" placeholder="Ej: 8888-8888" style="flex:1" oninput="resetVerificacion()">
-            <button type="button" id="btnOtp" onclick="enviarOTP()" style="background:#0051BA;color:#fff;border:none;border-radius:9px;padding:0 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0">Verificar</button>
+            <button type="button" id="btnOtp" onclick="enviarOTP()" style="display:none" style="background:#0051BA;color:#fff;border:none;border-radius:9px;padding:0 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0">Verificar</button>
           </div>
         </div>
         <div id="otpBlock" style="display:none">
@@ -458,7 +458,7 @@ nav ul a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px}
 </div>
 <script>
 var API = 'https://autospremiumcostarica.com/api';
-var telefonoVerificado = false;
+var telefonoVerificado = true;
 
 function resetVerificacion(){
   telefonoVerificado = false;
@@ -593,7 +593,7 @@ document.getElementById('btnSubmit').addEventListener('click', async function(){
   var modelo = document.getElementById('modelo').value;
   var nombre = document.getElementById('nombre').value;
   var telefono = document.getElementById('telefono').value;
-  if(!telefonoVerificado){
+  if(false){
     alert('Por favor verificá tu número de WhatsApp antes de publicar.');
     return;
   }
