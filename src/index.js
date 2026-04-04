@@ -86,3 +86,28 @@ app.post('/api/otp/verificar', (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
+
+app.get('/og/detalle', async (req, res) => {
+  try {
+    const { id } = req.query;
+    const result = await require('./db').query('SELECT * FROM anuncios WHERE id = $1', [id]);
+    const a = result.rows[0];
+    if (!a) return res.redirect('/detalle.html?id=' + id);
+    const foto = a.fotos && a.fotos[0] ? 'https://autospremiumcostarica.com' + a.fotos[0].url : 'https://autospremiumcostarica.com/og-image.png';
+    const titulo = `${a.marca} ${a.modelo} ${a.anio} — Autos Premium CR`;
+    const desc = `${a.km ? a.km.toLocaleString('es-CR') + ' km · ' : ''}${a.combustible || ''} · ₡${parseInt(a.precio).toLocaleString('es-CR')}`;
+    res.send(`<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title>${titulo}</title>
+<meta property="og:title" content="${titulo}">
+<meta property="og:description" content="${desc}">
+<meta property="og:image" content="${foto}">
+<meta property="og:url" content="https://autospremiumcostarica.com/detalle.html?id=${id}">
+property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta http-equiv="refresh" content="0;url=/detalle.html?id=${id}">
+</head><body></body></html>`);
+  } catch(e) {
+    res.redirect('/detalle.html?id=' + req.query.id);
+  }
+});
