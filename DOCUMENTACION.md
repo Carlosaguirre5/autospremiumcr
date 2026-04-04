@@ -365,16 +365,22 @@ cd /var/www/bot && python3 scraper_historico.py
 ---
 
 ## 15. Tareas Pendientes
-- [ ] Twilio: esperar respuesta de soporte para comprar número y activar WhatsApp Sender
-- [ ] Valuador: procesar CSV de Facebook y poblar `precios_referencia`
-- [ ] Valuador: actualizar `valuador.html` para usar datos reales de `precios_referencia`
-- [ ] Bot Facebook: crear cuenta secundaria nueva y reactivar
-- [ ] Activar cron del bot cada 30 minutos
-- [ ] Estrategia de facturación (anuncios destacados, planes para agencias)
-- [ ] Estrategia de marketing y posicionamiento
-- [ ] Verificación de identidad del vendedor (cédula + selfie)
-- [ ] Sistema de reputación vendedor/comprador
-- [ ] dbt sobre los datos de la plataforma
+
+[ ] Twilio: esperar respuesta de soporte para comprar número y activar WhatsApp Sender
+[ ] Bot Facebook: procesar CSV histórico (abr 2025 - mar 2026) para poblar precios_referencia
+[ ] Bot Facebook: crear cuenta secundaria nueva y reactivar bot, o usar cookies de Chrome
+[ ] Valuador: actualizar valuador.html para usar datos reales de precios_referencia
+[ ] Activar cron del bot cada 30 minutos
+[ ] OTP: reactivar verificación por WhatsApp cuando haya volumen suficiente
+[ ] Fix: fotos duplicadas al subir múltiples imágenes en publicar.html
+[ ] Fix: padding lateral derecho en publicar.html en móvil
+[ ] Fix: debug endpoint download-fotos en scraper_historico
+[ ] Estrategia de facturación (anuncios destacados, planes para agencias)
+[ ] Estrategia de marketing y posicionamiento
+[ ] Verificación de identidad del vendedor (cédula + selfie)
+[ ] Sistema de reputación vendedor/comprador
+[ ] dbt sobre los datos de la plataforma
+[ ] Agregar og:image a todas las páginas secundariontacto, valuador)
 
 ---
 
@@ -390,5 +396,22 @@ cd /var/www/bot && python3 scraper_historico.py
 | **Total estimado** | **~$19/mes** |
 
 ---
+
+## 17. Historial de Cambios
+
+### 4 abril 2026
+- **SEO**: Agregados canonical tags en todas las páginas HTML
+- **SEO**: Actualizado robots.txt — bloqueado /api/ y /admin
+- **SEO**: Actualizado sitemap.xml — agregado valuador.html
+- **SEO**: Agregado og:image en index.html
+- **OG Tags**: Nuevo endpoint GET /og/detalle?id=X para previews en WhatsApp
+- **Nginx**: Regla para interceptar bots sociales en /detalle.html y servir OG tags dinámicos
+- **publicar.html**: Sección "Accesorios" renombrada a "Equipamiento" con 39 opciones
+- **publicar.html**: OTP deshabilitado temporalmente (telefonoVerificado = true)
+- **publicar.html**: Botón "Verificar" oculto temporalmente
+- **publicar.html**: Selección de foto principal al publicar anuncio
+- **detalle.html**: Barra de contacto fija en parte inferior en móvil
+- **Facebook App**: Creada app "AutosPremiumCR" (ID: 1961512581150254) — Graph API bloqueada para grupos, requiere app review
+- **Twilio**: Email de verificación respondido — esperando aprobacs**: Primeros vehículos publicados manualmente (IDs 7 y 10)
 
 *Documento actualizado el 1 de abril de 2026. Actualizar cada vez que se hagan cambios importantes.*
